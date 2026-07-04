@@ -40,6 +40,19 @@ public sealed class GlobeRenderer
                     break;
             }
         }
+
+        if (e.type == SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN && e.button.button == SDL.SDL_BUTTON_LEFT)
+        {
+            var geo = Unproject(e.button.x, e.button.y);
+            if (geo.HasValue)
+            {
+                var zone = _earth.ZoneAt(geo.Value);
+                if (zone != null)
+                    Console.WriteLine($"Selected zone: {zone.Name} ({zone.Type})");
+                else
+                    Console.WriteLine($"Clicked at ({geo.Value.Lat:F1}, {geo.Value.Lon:F1}) - no zone found");
+            }
+        }
     }
 
     public void Render(IntPtr renderer, int windowWidth, int windowHeight)
@@ -215,5 +228,33 @@ public sealed class GlobeRenderer
         int px = _centerX + (int)(x * _radius);
         int py = _centerY - (int)(y * _radius);
         return (px, py, visible);
+    }
+
+    private GeoCoord? Unproject(int screenX, int screenY)
+    {
+        double nx = (screenX - _centerX) / (double)_radius;
+        double ny = -((screenY - _centerY) / (double)_radius);
+
+        double r2 = nx * nx + ny * ny;
+        if (r2 > 1.0)
+            return null;
+
+        double nz = Math.Sqrt(1.0 - r2);
+
+        double camLatR = _rotLat * Math.PI / 180.0;
+        double sinCam = Math.Sin(camLatR);
+        double cosCam = Math.Cos(camLatR);
+
+        double xRot = nx;
+        double yRot = ny * cosCam + nz * sinCam;
+        double zRot = -ny * sinCam + nz * cosCam;
+
+        double lat = Math.Asin(Math.Clamp(yRot, -1.0, 1.0)) * 180.0 / Math.PI;
+        double lon = Math.Atan2(xRot, zRot) * 180.0 / Math.PI + _rotLon;
+
+        if (lon > 180) lon -= 360;
+        if (lon < -180) lon += 360;
+
+        return new GeoCoord(lat, lon);
     }
 }
