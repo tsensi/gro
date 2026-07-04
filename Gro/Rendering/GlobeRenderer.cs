@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SDL2;
 using Gro.EarthModel;
 
@@ -16,6 +17,7 @@ public sealed class GlobeRenderer
     public GlobeRenderer(Earth earth)
     {
         _earth = earth;
+        ZoneStyleProvider.ApplyDefaults(_earth.Zones);
     }
 
     public void HandleInput(SDL.SDL_Event e)
@@ -111,27 +113,73 @@ public sealed class GlobeRenderer
     {
         foreach (var zone in _earth.Zones)
         {
-            switch (zone.Type)
+            var style = zone.Style;
+            var projected = ProjectBoundary(zone.Boundary);
+
+            if (style.FillEnabled && projected.Count >= 3)
             {
-                case ZoneType.Continent:
-                    SDL.SDL_SetRenderDrawColor(renderer, 60, 100, 60, 255);
-                    break;
-                case ZoneType.Country:
-                    SDL.SDL_SetRenderDrawColor(renderer, 100, 180, 100, 255);
-                    break;
-                case ZoneType.OceanBasin:
-                    SDL.SDL_SetRenderDrawColor(renderer, 40, 80, 140, 255);
-                    break;
-                case ZoneType.OceanZone:
-                    SDL.SDL_SetRenderDrawColor(renderer, 50, 100, 170, 255);
-                    break;
+                SDL.SDL_SetRenderDrawBlendMode(renderer, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND);
+                var fill = style.FillColor;
+                SDL.SDL_SetRenderDrawColor(renderer, fill.R, fill.G, fill.B, fill.A);
+                FillProjectedPolygon(renderer, projected);
             }
 
-            DrawPolygon(renderer, zone.Boundary);
+            var outline = style.OutlineColor;
+            SDL.SDL_SetRenderDrawColor(renderer, outline.R, outline.G, outline.B, outline.A);
+            DrawOutline(renderer, zone.Boundary, style.OutlineWidth);
         }
     }
 
-    private void DrawPolygon(IntPtr renderer, GeoCoord[] boundary)
+    private List<(int x, int y)> ProjectBoundary(GeoCoord[] boundary)
+    {
+        var points = new List<(int x, int y)>();
+        foreach (var coord in boundary)
+        {
+            var (px, py, visible) = Project(coord.Lat, coord.Lon);
+            if (visible)
+                points.Add((px, py));
+        }
+        return points;
+    }
+
+    private void FillProjectedPolygon(IntPtr renderer, List<(int x, int y)> points)
+    {
+        if (points.Count < 3) return;
+
+        int minY = int.MaxValue, maxY = int.MinValue;
+        foreach (var (_, y) in points)
+        {
+            if (y < minY) minY = y;
+            if (y > maxY) maxY = y;
+        }
+
+        minY = Math.Max(minY, _centerY - _radius);
+        maxY = Math.Min(maxY, _centerY + _radius);
+
+        var intersections = new List<int>();
+        for (int y = minY; y <= maxY; y++)
+        {
+            intersections.Clear();
+            int n = points.Count;
+            for (int i = 0, j = n - 1; i < n; j = i++)
+            {
+                int yi = points[i].y, yj = points[j].y;
+                if ((yi <= y && yj > y) || (yj <= y && yi > y))
+                {
+                    int xi = points[i].x, xj = points[j].x;
+                    int x = xi + (y - yi) * (xj - xi) / (yj - yi);
+                    intersections.Add(x);
+                }
+            }
+            intersections.Sort();
+            for (int i = 0; i + 1 < intersections.Count; i += 2)
+            {
+                SDL.SDL_RenderDrawLine(renderer, intersections[i], y, intersections[i + 1], y);
+            }
+        }
+    }
+
+    private void DrawOutline(IntPtr renderer, GeoCoord[] boundary, int width)
     {
         if (boundary.Length < 2) return;
 
@@ -142,7 +190,14 @@ public sealed class GlobeRenderer
             var (x2, y2, v2) = Project(boundary[j].Lat, boundary[j].Lon);
 
             if (v1 && v2)
+            {
                 SDL.SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+                for (int w = 1; w < width; w++)
+                {
+                    SDL.SDL_RenderDrawLine(renderer, x1, y1 + w, x2, y2 + w);
+                    SDL.SDL_RenderDrawLine(renderer, x1, y1 - w, x2, y2 - w);
+                }
+            }
         }
     }
 

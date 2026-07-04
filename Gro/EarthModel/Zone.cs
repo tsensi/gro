@@ -1,3 +1,5 @@
+using Gro.Rendering;
+
 namespace Gro.EarthModel;
 
 public sealed class Zone
@@ -6,6 +8,7 @@ public sealed class Zone
     public required ZoneType Type { get; init; }
     public required string? ParentName { get; init; }
     public required GeoCoord[] Boundary { get; init; }
+    public ZoneStyle Style { get; set; } = new();
 
     public GeoCoord Centroid
     {

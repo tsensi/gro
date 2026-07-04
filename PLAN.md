@@ -7,7 +7,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Set up a basic earth model in pure C#, dividing the globe into countries or states using geo-coordinates. Divide the ocean into zones that correspond to their human names, e.g. Eastern Mediterranean. Research and add tasks, starting at the top level hierarchy (continents, oceans) and refining to a cell size around 1000km.
 - [x] Add a simple visualization of the polygons on the globe. In the SDL main window, render the globe showing the outlines. Use something like globe.gl as inspiration. Research, then add tasks to implement this step by step.
 - [x] Document how to run the project here.
-- [ ] Add a way render each zone in a different style, varying outline color, width, and fill color and width
+- [x] Add a way render each zone in a different style, varying outline color, width, and fill color and width
 - [ ] Add mouse input, allowing to select any zone on the globe. Log the selected zone to the console.
 
 ## How to run
