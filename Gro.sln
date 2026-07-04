@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gro", "Gro\Gro.csproj", "{DF8C30D0-BA44-444A-B6FC-C7EC2CE73DF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gro.Tests", "Gro.Tests\Gro.Tests.csproj", "{ECD1FCA0-36EB-4F69-BF1D-11F3DE2A2A52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{DF8C30D0-BA44-444A-B6FC-C7EC2CE73DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF8C30D0-BA44-444A-B6FC-C7EC2CE73DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF8C30D0-BA44-444A-B6FC-C7EC2CE73DF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECD1FCA0-36EB-4F69-BF1D-11F3DE2A2A52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECD1FCA0-36EB-4F69-BF1D-11F3DE2A2A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECD1FCA0-36EB-4F69-BF1D-11F3DE2A2A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECD1FCA0-36EB-4F69-BF1D-11F3DE2A2A52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
