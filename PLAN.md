@@ -6,3 +6,27 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Set up a baseline C# project. Make sure it runs using SDL. Add tasks here to implement it step by step. If anything requires user input, mark it as INPUT NEEDED and mask the task as done using [x]
 - [x] Set up a basic earth model in pure C#, dividing the globe into countries or states using geo-coordinates. Divide the ocean into zones that correspond to their human names, e.g. Eastern Mediterranean. Research and add tasks, starting at the top level hierarchy (continents, oceans) and refining to a cell size around 1000km.
 - [x] Add a simple visualization of the polygons on the globe. In the SDL main window, render the globe showing the outlines. Use something like globe.gl as inspiration. Research, then add tasks to implement this step by step.
+- [x] Document how to run the project here.
+- [ ] Add a way render each zone in a different style, varying outline color, width, and fill color and width
+- [ ] Add mouse input, allowing to select any zone on the globe. Log the selected zone to the console.
+
+## How to run
+
+Prerequisites: .NET 8 SDK, SDL2 (`libSDL2-dev` on Ubuntu/Debian).
+
+```sh
+# Build
+dotnet build
+
+# Run (opens an SDL window with the globe visualization)
+dotnet run --project Gro
+
+# Run tests
+dotnet test
+```
+
+If `dotnet` reports "No .NET SDKs were found", ensure `~/.dotnet` is on your PATH:
+```sh
+export DOTNET_ROOT="$HOME/.dotnet"
+export PATH="$DOTNET_ROOT:$PATH"
+```
