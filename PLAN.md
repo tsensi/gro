@@ -26,7 +26,31 @@ The tests currently are failing, but running them all overwhelms the the token l
 - [x] Look at Zone.cs Is it too large or complex? Can we extract algorithms like point-inside? If yes, add tasks here to do so
   - Conclusion: No. Zone.cs is 87 lines with a single responsibility. The point-in-polygon, centroid, and antimeridian logic are tightly coupled to Boundary and not reused elsewhere. No extraction needed.
 - [x] Change the default behavior of the zone tests to run sequentially for each zone, instead of a large O(n^2) double loop. This means we have to dynamically create test cases for each zone. However, this is fine. They don't have to be harnessed unit tests, this should be a separate CLI tool.
-- [ ] Now, create tasks for each letter of the alphabet. Run the zone overlap tests only for zones that start with that letter and fix the overlap errors that come up. For each country that comes up, add a task here to research its goegraphic outline (coarse polygon, 100km resolution) and fix it.
+- [x] Now, create tasks for each letter of the alphabet. Run the zone overlap tests only for zones that start with that letter and fix the overlap errors that come up. For each country that comes up, add a task here to research its goegraphic outline (coarse polygon, 100km resolution) and fix it. Again, do NOT run a single for loop for all letters. Create individual tasks here, in PLAN.md
+  - [ ] Zone overlap fixes: letter A (Africa, Asia, Antarctica, Albania, Algeria, Angola, Afghanistan, Argentina, Australia, Austria, Arabia zones, Arctic/Atlantic/Andaman ocean zones)
+  - [ ] Zone overlap fixes: letter B (Belgium, Belarus, Bangladesh, Benin, Bhutan, Bosnia, Botswana, Brazil, Bulgaria, Burkina Faso, Burundi, Baltic/Barents/Bay/Beaufort/Bering/Black ocean zones)
+  - [ ] Zone overlap fixes: letter C (Canada regions, Cameroon, Cambodia, Chad, China regions, Colombia, Costa Rica-Panama, Croatia, Cuba, Czech Republic, Caribbean/Central/Coral ocean zones)
+  - [ ] Zone overlap fixes: letter D (Denmark, Djibouti, DR Congo)
+  - [ ] Zone overlap fixes: letter E (Egypt, Equatorial Guinea, Eritrea, Estonia, Eswatini, Ethiopia, Europe, East China Sea, Eastern Mediterranean, East Siberian Sea, Equatorial Pacific)
+  - [ ] Zone overlap fixes: letter F (Fiji, Finland, France, French Polynesia)
+  - [ ] Zone overlap fixes: letter G (Gabon, Gambia, Georgia-Armenia-Azerbaijan, Germany, Ghana, Greece, Greenland, Guatemala-Belize, Guinea, Guinea-Bissau, Gulf/Greenland ocean zones)
+  - [ ] Zone overlap fixes: letter H (Haiti-Dominican Republic, Honduras-El Salvador-Nicaragua, Hungary)
+  - [ ] Zone overlap fixes: letter I (Iceland, India, Indonesia, Iran, Iraq, Ireland, Italy, Ivory Coast, Indian Ocean)
+  - [ ] Zone overlap fixes: letter J (Jamaica, Japan, Jordan)
+  - [ ] Zone overlap fixes: letter K (Kazakhstan, Kenya, Kyrgyzstan, Kara Sea)
+  - [ ] Zone overlap fixes: letter L (Laos, Latvia, Lebanon-Israel, Lesotho, Liberia, Libya, Lithuania, Laptev Sea)
+  - [ ] Zone overlap fixes: letter M (Madagascar, Malawi, Malaysia, Mali, Mauritania, Mexico regions, Micronesia, Moldova, Mongolia, Montenegro, Morocco, Mozambique, Myanmar, Mediterranean/Mozambique Channel ocean zones)
+  - [ ] Zone overlap fixes: letter N (Namibia, Nepal, Netherlands, New Zealand, Niger, Nigeria, North Korea, North Macedonia, Norway, North America, North Sea, Northeast/Northwest/Norwegian ocean zones)
+  - [ ] Zone overlap fixes: letter O (Oceania, Oman)
+  - [ ] Zone overlap fixes: letter P (Pakistan, Papua New Guinea, Philippines, Poland, Portugal, Pacific Ocean, Persian Gulf, Philippine Sea)
+  - [ ] Zone overlap fixes: letter R (Republic of Congo, Romania, Russia regions, Rwanda, Red Sea)
+  - [ ] Zone overlap fixes: letter S (Samoa-Tonga, Saudi Arabia, Senegal, Serbia, Sierra Leone, Slovakia, Slovenia, Solomon Islands, Somalia, South Africa, South Korea, South Sudan, Spain, Sri Lanka, Sudan, Sweden, Switzerland, Syria, South America, Southern Ocean, Sargasso/South China/Southeast/Southwest ocean zones)
+  - [ ] Zone overlap fixes: letter T (Taiwan, Tajikistan, Tanzania, Thailand, Togo, Tunisia, Turkey, Turkmenistan, Tasman Sea)
+  - [ ] Zone overlap fixes: letter U (UAE-Qatar-Kuwait-Bahrain, Uganda, Ukraine, United Kingdom, United States regions, Uzbekistan)
+  - [ ] Zone overlap fixes: letter V (Vanuatu-New Caledonia, Vietnam)
+  - [ ] Zone overlap fixes: letter W (Western Mediterranean)
+  - [ ] Zone overlap fixes: letter Y (Yemen)
+  - [ ] Zone overlap fixes: letter Z (Zambia, Zimbabwe)
 - [ ] Now, after fixing, create tasks again for each letter of the alphabet and run the tests only for zones with that letter. Fix any remaining issues.
 - [ ] Use the improved tooling to make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
 - [ ] Fix any remaining zone coverage test failures
