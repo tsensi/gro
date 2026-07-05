@@ -249,4 +249,57 @@ public class ZoneCoverageTests
         Assert.True(zone!.Contains(point),
             $"Zone '{expectedCountry}' does not contain point at ({lat},{lon})");
     }
+
+    [Theory]
+    [InlineData(55.0, 73.4, "Russia (West Siberia)")]     // Omsk
+    [InlineData(52.3, 104.3, "Russia (East Siberia)")]    // Irkutsk
+    [InlineData(43.1, 131.9, "Russia (Far East)")]        // Vladivostok
+    [InlineData(39.9, 116.4, "China (North)")]            // Beijing
+    [InlineData(31.2, 121.5, "China (South)")]            // Shanghai
+    [InlineData(43.8, 87.6, "China (West)")]              // Urumqi
+    [InlineData(47.9, 106.9, "Mongolia")]                 // Ulaanbaatar
+    [InlineData(35.7, 139.7, "Japan")]                    // Tokyo
+    [InlineData(37.6, 127.0, "South Korea")]              // Seoul
+    [InlineData(39.0, 125.8, "North Korea")]              // Pyongyang
+    [InlineData(25.0, 121.5, "Taiwan")]                   // Taipei
+    [InlineData(21.0, 105.8, "Vietnam")]                  // Hanoi
+    [InlineData(13.75, 100.5, "Thailand")]                // Bangkok
+    [InlineData(16.87, 96.2, "Myanmar")]                  // Yangon
+    [InlineData(11.55, 104.92, "Cambodia")]               // Phnom Penh
+    [InlineData(17.97, 102.63, "Laos")]                   // Vientiane
+    [InlineData(3.14, 101.69, "Malaysia")]                // Kuala Lumpur
+    [InlineData(14.6, 121.0, "Philippines")]              // Manila
+    [InlineData(-6.2, 106.8, "Indonesia")]                // Jakarta
+    [InlineData(28.6, 77.2, "India")]                     // New Delhi
+    [InlineData(33.7, 73.0, "Pakistan")]                  // Islamabad
+    [InlineData(23.8, 90.4, "Bangladesh")]                // Dhaka
+    [InlineData(6.93, 79.85, "Sri Lanka")]                // Colombo
+    [InlineData(27.7, 85.3, "Nepal")]                     // Kathmandu
+    [InlineData(27.5, 89.6, "Bhutan")]                    // Thimphu
+    [InlineData(34.5, 69.2, "Afghanistan")]               // Kabul
+    [InlineData(51.17, 71.45, "Kazakhstan")]              // Astana
+    [InlineData(41.3, 69.3, "Uzbekistan")]                // Tashkent
+    [InlineData(37.95, 58.38, "Turkmenistan")]            // Ashgabat
+    [InlineData(42.87, 74.59, "Kyrgyzstan")]              // Bishkek
+    [InlineData(38.56, 68.77, "Tajikistan")]              // Dushanbe
+    [InlineData(39.93, 32.86, "Turkey")]                  // Ankara
+    [InlineData(24.7, 46.7, "Saudi Arabia")]              // Riyadh
+    [InlineData(35.7, 51.4, "Iran")]                      // Tehran
+    [InlineData(33.3, 44.4, "Iraq")]                      // Baghdad
+    [InlineData(33.5, 36.3, "Syria")]                     // Damascus
+    [InlineData(31.95, 35.93, "Jordan")]                  // Amman
+    [InlineData(33.89, 35.5, "Lebanon-Israel")]           // Beirut
+    [InlineData(15.35, 44.21, "Yemen")]                   // Sanaa
+    [InlineData(23.6, 58.5, "Oman")]                      // Muscat
+    [InlineData(25.3, 51.5, "UAE-Qatar-Kuwait-Bahrain")]  // Doha
+    [InlineData(41.72, 44.78, "Georgia-Armenia-Azerbaijan")] // Tbilisi
+    public void AsianCapital_IsInCorrectCountryZone(double lat, double lon, string expectedCountry)
+    {
+        var point = new GeoCoord(lat, lon);
+        var zone = _earth.FindZone(expectedCountry);
+
+        Assert.NotNull(zone);
+        Assert.True(zone!.Contains(point),
+            $"Zone '{expectedCountry}' does not contain its capital at ({lat},{lon})");
+    }
 }

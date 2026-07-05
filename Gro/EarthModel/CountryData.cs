@@ -853,27 +853,172 @@ internal static class CountryData
             new GeoCoord(-26, 43), new GeoCoord(-20, 43),
         }));
 
-        // Asia
-        zones.Add(MakeCountry("Russia (Asian)", "Asia", new[]
+        // Asia - Russia (3 regions)
+        zones.Add(MakeCountry("Russia (West Siberia)", "Asia", new[]
         {
-            new GeoCoord(77, 60), new GeoCoord(77, 180),
-            new GeoCoord(65, 180), new GeoCoord(55, 163),
-            new GeoCoord(50, 140), new GeoCoord(43, 132),
+            new GeoCoord(77, 60), new GeoCoord(77, 100),
+            new GeoCoord(70, 100), new GeoCoord(55, 100),
             new GeoCoord(50, 80), new GeoCoord(50, 60),
             new GeoCoord(55, 60), new GeoCoord(65, 60),
             new GeoCoord(70, 60),
         }));
 
-        zones.Add(MakeCountry("China", "Asia", new[]
+        zones.Add(MakeCountry("Russia (East Siberia)", "Asia", new[]
         {
-            new GeoCoord(50, 80), new GeoCoord(50, 128),
-            new GeoCoord(43, 132), new GeoCoord(40, 124),
-            new GeoCoord(35, 120), new GeoCoord(25, 120),
-            new GeoCoord(22, 108), new GeoCoord(21, 100),
-            new GeoCoord(28, 87), new GeoCoord(35, 74),
-            new GeoCoord(40, 74), new GeoCoord(45, 80),
+            new GeoCoord(77, 100), new GeoCoord(77, 140),
+            new GeoCoord(70, 140), new GeoCoord(60, 140),
+            new GeoCoord(50, 130), new GeoCoord(50, 100),
+            new GeoCoord(55, 100), new GeoCoord(70, 100),
         }));
 
+        zones.Add(MakeCountry("Russia (Far East)", "Asia", new[]
+        {
+            new GeoCoord(77, 140), new GeoCoord(77, 180),
+            new GeoCoord(65, 180), new GeoCoord(55, 163),
+            new GeoCoord(50, 140), new GeoCoord(43, 132),
+            new GeoCoord(43, 130), new GeoCoord(50, 130),
+            new GeoCoord(60, 140), new GeoCoord(70, 140),
+        }));
+
+        // Asia - China (3 regions)
+        zones.Add(MakeCountry("China (West)", "Asia", new[]
+        {
+            new GeoCoord(50, 80), new GeoCoord(50, 100),
+            new GeoCoord(42, 96), new GeoCoord(42, 90),
+            new GeoCoord(35, 90), new GeoCoord(28, 87),
+            new GeoCoord(35, 74), new GeoCoord(40, 74),
+            new GeoCoord(45, 80),
+        }));
+
+        zones.Add(MakeCountry("China (North)", "Asia", new[]
+        {
+            new GeoCoord(50, 100), new GeoCoord(50, 128),
+            new GeoCoord(43, 132), new GeoCoord(40, 124),
+            new GeoCoord(35, 120), new GeoCoord(32, 122),
+            new GeoCoord(32, 105), new GeoCoord(35, 90),
+            new GeoCoord(42, 90), new GeoCoord(42, 96),
+        }));
+
+        zones.Add(MakeCountry("China (South)", "Asia", new[]
+        {
+            new GeoCoord(35, 90), new GeoCoord(32, 105),
+            new GeoCoord(32, 122), new GeoCoord(25, 120),
+            new GeoCoord(22, 108), new GeoCoord(21, 100),
+            new GeoCoord(28, 87),
+        }));
+
+        // Asia - Mongolia
+        zones.Add(MakeCountry("Mongolia", "Asia", new[]
+        {
+            new GeoCoord(50, 88), new GeoCoord(50, 116),
+            new GeoCoord(47, 120), new GeoCoord(44, 115),
+            new GeoCoord(42, 107), new GeoCoord(42, 96),
+            new GeoCoord(45, 88), new GeoCoord(48, 88),
+        }));
+
+        // Asia - East Asia
+        zones.Add(MakeCountry("Japan", "Asia", new[]
+        {
+            new GeoCoord(45, 141), new GeoCoord(45, 146),
+            new GeoCoord(43, 146), new GeoCoord(38, 142),
+            new GeoCoord(35, 141), new GeoCoord(33, 140),
+            new GeoCoord(31, 131), new GeoCoord(33, 130),
+            new GeoCoord(35, 132), new GeoCoord(37, 137),
+            new GeoCoord(40, 140), new GeoCoord(42, 140),
+        }));
+
+        zones.Add(MakeCountry("South Korea", "Asia", new[]
+        {
+            new GeoCoord(38, 126), new GeoCoord(38, 130),
+            new GeoCoord(35, 130), new GeoCoord(34, 127),
+            new GeoCoord(35, 126), new GeoCoord(37, 126),
+        }));
+
+        zones.Add(MakeCountry("North Korea", "Asia", new[]
+        {
+            new GeoCoord(43, 124), new GeoCoord(43, 130),
+            new GeoCoord(40, 130), new GeoCoord(38, 130),
+            new GeoCoord(38, 126), new GeoCoord(40, 124),
+        }));
+
+        zones.Add(MakeCountry("Taiwan", "Asia", new[]
+        {
+            new GeoCoord(25.5, 120), new GeoCoord(25.5, 122),
+            new GeoCoord(23, 122), new GeoCoord(22, 120.5),
+            new GeoCoord(23, 120), new GeoCoord(24, 120),
+        }));
+
+        // Asia - Southeast Asia
+        zones.Add(MakeCountry("Vietnam", "Asia", new[]
+        {
+            new GeoCoord(23, 103), new GeoCoord(22, 108),
+            new GeoCoord(17, 108), new GeoCoord(11, 109),
+            new GeoCoord(8.5, 105), new GeoCoord(10, 104),
+            new GeoCoord(14, 108), new GeoCoord(18, 104),
+            new GeoCoord(21, 103),
+        }));
+
+        zones.Add(MakeCountry("Thailand", "Asia", new[]
+        {
+            new GeoCoord(21, 98), new GeoCoord(20, 104),
+            new GeoCoord(18, 104), new GeoCoord(14, 105),
+            new GeoCoord(13, 101), new GeoCoord(10, 99),
+            new GeoCoord(6, 100), new GeoCoord(8, 98),
+            new GeoCoord(14, 98), new GeoCoord(18, 98),
+        }));
+
+        zones.Add(MakeCountry("Myanmar", "Asia", new[]
+        {
+            new GeoCoord(28, 96), new GeoCoord(26, 98),
+            new GeoCoord(21, 100), new GeoCoord(21, 98),
+            new GeoCoord(18, 98), new GeoCoord(14, 98),
+            new GeoCoord(10, 98), new GeoCoord(16, 94),
+            new GeoCoord(20, 92), new GeoCoord(26, 92),
+            new GeoCoord(28, 94),
+        }));
+
+        zones.Add(MakeCountry("Cambodia", "Asia", new[]
+        {
+            new GeoCoord(14, 103), new GeoCoord(14, 108),
+            new GeoCoord(10, 107), new GeoCoord(10, 103),
+            new GeoCoord(11, 103),
+        }));
+
+        zones.Add(MakeCountry("Laos", "Asia", new[]
+        {
+            new GeoCoord(22, 100), new GeoCoord(22, 103),
+            new GeoCoord(18, 104), new GeoCoord(14, 108),
+            new GeoCoord(14, 105), new GeoCoord(14, 103),
+            new GeoCoord(18, 100), new GeoCoord(20, 100),
+        }));
+
+        zones.Add(MakeCountry("Malaysia", "Asia", new[]
+        {
+            new GeoCoord(7, 100), new GeoCoord(7, 104),
+            new GeoCoord(4, 104), new GeoCoord(1, 104),
+            new GeoCoord(1, 100), new GeoCoord(3, 100),
+            new GeoCoord(5, 100),
+        }));
+
+        zones.Add(MakeCountry("Philippines", "Asia", new[]
+        {
+            new GeoCoord(19, 120), new GeoCoord(19, 126),
+            new GeoCoord(14, 126), new GeoCoord(10, 126),
+            new GeoCoord(6, 125), new GeoCoord(6, 120),
+            new GeoCoord(10, 119), new GeoCoord(14, 120),
+            new GeoCoord(16, 120),
+        }));
+
+        zones.Add(MakeCountry("Indonesia", "Asia", new[]
+        {
+            new GeoCoord(5, 95), new GeoCoord(2, 99),
+            new GeoCoord(-3, 104), new GeoCoord(-7, 106),
+            new GeoCoord(-8, 115), new GeoCoord(-8, 140),
+            new GeoCoord(-2, 141), new GeoCoord(2, 128),
+            new GeoCoord(4, 118), new GeoCoord(6, 106),
+        }));
+
+        // Asia - South Asia
         zones.Add(MakeCountry("India", "Asia", new[]
         {
             new GeoCoord(35, 74), new GeoCoord(32, 77),
@@ -885,14 +1030,104 @@ internal static class CountryData
             new GeoCoord(30, 66), new GeoCoord(34, 72),
         }));
 
-        zones.Add(MakeCountry("Japan", "Asia", new[]
+        zones.Add(MakeCountry("Pakistan", "Asia", new[]
         {
-            new GeoCoord(45, 141), new GeoCoord(45, 146),
-            new GeoCoord(43, 146), new GeoCoord(38, 142),
-            new GeoCoord(35, 141), new GeoCoord(33, 140),
-            new GeoCoord(31, 131), new GeoCoord(33, 130),
-            new GeoCoord(35, 132), new GeoCoord(37, 137),
-            new GeoCoord(40, 140), new GeoCoord(42, 140),
+            new GeoCoord(37, 71), new GeoCoord(36, 76),
+            new GeoCoord(34, 74), new GeoCoord(30, 72),
+            new GeoCoord(25, 68), new GeoCoord(24, 66),
+            new GeoCoord(25, 62), new GeoCoord(27, 63),
+            new GeoCoord(30, 61), new GeoCoord(32, 61),
+            new GeoCoord(35, 64), new GeoCoord(37, 67),
+        }));
+
+        zones.Add(MakeCountry("Bangladesh", "Asia", new[]
+        {
+            new GeoCoord(26, 88), new GeoCoord(26, 92),
+            new GeoCoord(22, 92), new GeoCoord(21, 92),
+            new GeoCoord(21, 89), new GeoCoord(22, 88),
+            new GeoCoord(24, 88),
+        }));
+
+        zones.Add(MakeCountry("Sri Lanka", "Asia", new[]
+        {
+            new GeoCoord(10, 79.5), new GeoCoord(10, 82),
+            new GeoCoord(7, 82), new GeoCoord(6, 80),
+            new GeoCoord(7, 79.5), new GeoCoord(9, 79.5),
+        }));
+
+        zones.Add(MakeCountry("Nepal", "Asia", new[]
+        {
+            new GeoCoord(30, 80), new GeoCoord(30, 88),
+            new GeoCoord(28, 88), new GeoCoord(27, 84),
+            new GeoCoord(27, 80), new GeoCoord(29, 80),
+        }));
+
+        zones.Add(MakeCountry("Bhutan", "Asia", new[]
+        {
+            new GeoCoord(28, 89), new GeoCoord(28, 92),
+            new GeoCoord(27, 92), new GeoCoord(26.5, 90),
+            new GeoCoord(27, 89), new GeoCoord(27.5, 89),
+        }));
+
+        zones.Add(MakeCountry("Afghanistan", "Asia", new[]
+        {
+            new GeoCoord(37, 61), new GeoCoord(37, 67),
+            new GeoCoord(37, 71), new GeoCoord(36, 72),
+            new GeoCoord(35, 71), new GeoCoord(34, 71),
+            new GeoCoord(31, 69), new GeoCoord(30, 61),
+            new GeoCoord(32, 61),
+        }));
+
+        // Asia - Central Asia
+        zones.Add(MakeCountry("Kazakhstan", "Asia", new[]
+        {
+            new GeoCoord(55, 60), new GeoCoord(54, 69),
+            new GeoCoord(51, 77), new GeoCoord(47, 85),
+            new GeoCoord(44, 80), new GeoCoord(41, 69),
+            new GeoCoord(41, 55), new GeoCoord(43, 51),
+            new GeoCoord(46, 50), new GeoCoord(50, 51),
+            new GeoCoord(52, 55),
+        }));
+
+        zones.Add(MakeCountry("Uzbekistan", "Asia", new[]
+        {
+            new GeoCoord(45, 56), new GeoCoord(45, 68),
+            new GeoCoord(42, 71), new GeoCoord(40, 69),
+            new GeoCoord(38, 66), new GeoCoord(37, 61),
+            new GeoCoord(41, 55), new GeoCoord(42, 56),
+        }));
+
+        zones.Add(MakeCountry("Turkmenistan", "Asia", new[]
+        {
+            new GeoCoord(42, 53), new GeoCoord(41, 55),
+            new GeoCoord(38, 66), new GeoCoord(37, 61),
+            new GeoCoord(35, 61), new GeoCoord(36, 54),
+            new GeoCoord(38, 53), new GeoCoord(40, 53),
+        }));
+
+        zones.Add(MakeCountry("Kyrgyzstan", "Asia", new[]
+        {
+            new GeoCoord(43, 69), new GeoCoord(43, 80),
+            new GeoCoord(40, 80), new GeoCoord(39, 74),
+            new GeoCoord(40, 69), new GeoCoord(42, 69),
+        }));
+
+        zones.Add(MakeCountry("Tajikistan", "Asia", new[]
+        {
+            new GeoCoord(41, 67), new GeoCoord(40, 69),
+            new GeoCoord(39, 74), new GeoCoord(37, 74),
+            new GeoCoord(37, 71), new GeoCoord(37, 67),
+            new GeoCoord(38, 67), new GeoCoord(39, 67),
+        }));
+
+        // Asia - West Asia / Middle East
+        zones.Add(MakeCountry("Turkey", "Asia", new[]
+        {
+            new GeoCoord(42, 26), new GeoCoord(41, 33),
+            new GeoCoord(41, 40), new GeoCoord(40, 44),
+            new GeoCoord(37, 44), new GeoCoord(36, 36),
+            new GeoCoord(37, 30), new GeoCoord(36, 28),
+            new GeoCoord(38, 26), new GeoCoord(40, 26),
         }));
 
         zones.Add(MakeCountry("Saudi Arabia", "Asia", new[]
@@ -908,46 +1143,74 @@ internal static class CountryData
         {
             new GeoCoord(40, 44), new GeoCoord(39, 48),
             new GeoCoord(37, 54), new GeoCoord(37, 61),
-            new GeoCoord(32, 61), new GeoCoord(26, 61),
-            new GeoCoord(25, 57), new GeoCoord(27, 52),
-            new GeoCoord(30, 48), new GeoCoord(33, 44),
-            new GeoCoord(37, 44),
+            new GeoCoord(35, 61), new GeoCoord(32, 61),
+            new GeoCoord(26, 61), new GeoCoord(25, 57),
+            new GeoCoord(27, 52), new GeoCoord(30, 48),
+            new GeoCoord(33, 44), new GeoCoord(37, 44),
         }));
 
-        zones.Add(MakeCountry("Indonesia", "Asia", new[]
+        zones.Add(MakeCountry("Iraq", "Asia", new[]
         {
-            new GeoCoord(5, 95), new GeoCoord(2, 99),
-            new GeoCoord(-3, 104), new GeoCoord(-7, 106),
-            new GeoCoord(-8, 115), new GeoCoord(-8, 140),
-            new GeoCoord(-2, 141), new GeoCoord(2, 128),
-            new GeoCoord(4, 118), new GeoCoord(6, 106),
+            new GeoCoord(37, 40), new GeoCoord(37, 44),
+            new GeoCoord(35, 46), new GeoCoord(33, 46),
+            new GeoCoord(30, 48), new GeoCoord(29, 47),
+            new GeoCoord(32, 39), new GeoCoord(34, 38),
+            new GeoCoord(36, 40),
         }));
 
-        zones.Add(MakeCountry("Kazakhstan", "Asia", new[]
+        zones.Add(MakeCountry("Syria", "Asia", new[]
         {
-            new GeoCoord(55, 60), new GeoCoord(54, 69),
-            new GeoCoord(51, 77), new GeoCoord(47, 85),
-            new GeoCoord(44, 80), new GeoCoord(41, 69),
-            new GeoCoord(41, 55), new GeoCoord(43, 51),
-            new GeoCoord(46, 50), new GeoCoord(50, 51),
-            new GeoCoord(52, 55),
+            new GeoCoord(37, 36), new GeoCoord(37, 42),
+            new GeoCoord(35, 42), new GeoCoord(33, 42),
+            new GeoCoord(33, 36), new GeoCoord(34, 36),
+            new GeoCoord(36, 36),
         }));
 
-        zones.Add(MakeCountry("Mongolia", "Asia", new[]
+        zones.Add(MakeCountry("Jordan", "Asia", new[]
         {
-            new GeoCoord(50, 88), new GeoCoord(50, 116),
-            new GeoCoord(47, 120), new GeoCoord(44, 115),
-            new GeoCoord(42, 107), new GeoCoord(42, 96),
-            new GeoCoord(45, 88), new GeoCoord(48, 88),
+            new GeoCoord(33, 35), new GeoCoord(33, 39),
+            new GeoCoord(32, 39), new GeoCoord(29, 37),
+            new GeoCoord(29, 35), new GeoCoord(31, 35),
         }));
 
-        zones.Add(MakeCountry("Turkey", "Asia", new[]
+        zones.Add(MakeCountry("Lebanon-Israel", "Asia", new[]
         {
-            new GeoCoord(42, 26), new GeoCoord(41, 33),
-            new GeoCoord(41, 40), new GeoCoord(40, 44),
-            new GeoCoord(37, 44), new GeoCoord(36, 36),
-            new GeoCoord(37, 30), new GeoCoord(36, 28),
-            new GeoCoord(38, 26), new GeoCoord(40, 26),
+            new GeoCoord(34.5, 35), new GeoCoord(34.5, 36.5),
+            new GeoCoord(33, 36.5), new GeoCoord(31, 35.5),
+            new GeoCoord(29.5, 35), new GeoCoord(31, 34),
+            new GeoCoord(33, 35),
+        }));
+
+        zones.Add(MakeCountry("Yemen", "Asia", new[]
+        {
+            new GeoCoord(18, 42), new GeoCoord(16, 52),
+            new GeoCoord(13, 52), new GeoCoord(12, 45),
+            new GeoCoord(13, 43), new GeoCoord(15, 42),
+        }));
+
+        zones.Add(MakeCountry("Oman", "Asia", new[]
+        {
+            new GeoCoord(26, 56), new GeoCoord(24, 59),
+            new GeoCoord(21, 59), new GeoCoord(17, 54),
+            new GeoCoord(16, 52), new GeoCoord(20, 55),
+            new GeoCoord(23, 57), new GeoCoord(25, 56),
+        }));
+
+        zones.Add(MakeCountry("UAE-Qatar-Kuwait-Bahrain", "Asia", new[]
+        {
+            new GeoCoord(30, 47), new GeoCoord(29, 47),
+            new GeoCoord(28, 49), new GeoCoord(24, 51),
+            new GeoCoord(22, 51), new GeoCoord(22, 55),
+            new GeoCoord(24, 56), new GeoCoord(26, 56),
+            new GeoCoord(30, 48),
+        }));
+
+        zones.Add(MakeCountry("Georgia-Armenia-Azerbaijan", "Asia", new[]
+        {
+            new GeoCoord(43, 40), new GeoCoord(42, 50),
+            new GeoCoord(39, 50), new GeoCoord(39, 44),
+            new GeoCoord(40, 44), new GeoCoord(41, 40),
+            new GeoCoord(42, 40),
         }));
 
         // Oceania
