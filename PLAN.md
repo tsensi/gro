@@ -36,7 +36,7 @@ The tests currently are failing, but running them all overwhelms the the token l
 - [x] Now, create tasks for each letter of the alphabet. Run the zone overlap tests only for zones that start with that letter and fix the overlap errors that come up. For each country that comes up, add a task here to run the split-difference mode between two countries. If one intersection partner is an ocean, subtract it from the country zone.
   - [x] Zone overlap fixes: letter A (Africa, Asia, Antarctica, Albania, Algeria, Angola, Afghanistan, Argentina, Australia, Austria, Arabia zones, Arctic/Atlantic/Andaman ocean zones)
   - [x] Zone overlap fixes: letter B (Belgium, Belarus, Bangladesh, Benin, Bhutan, Bosnia, Botswana, Brazil, Bulgaria, Burkina Faso, Burundi, Baltic/Barents/Bay/Beaufort/Bering/Black ocean zones)
-  - [ ] Zone overlap fixes: letter C (Canada regions, Cameroon, Cambodia, Chad, China regions, Colombia, Costa Rica-Panama, Croatia, Cuba, Czech Republic, Caribbean/Central/Coral ocean zones)
+  - [x] Zone overlap fixes: letter C (Canada regions, Cameroon, Cambodia, Chad, China regions, Colombia, Costa Rica-Panama, Croatia, Cuba, Czech Republic, Caribbean/Central/Coral ocean zones)
   - [ ] Zone overlap fixes: letter D (Denmark, Djibouti, DR Congo)
   - [ ] Zone overlap fixes: letter E (Egypt, Equatorial Guinea, Eritrea, Estonia, Eswatini, Ethiopia, Europe, East China Sea, Eastern Mediterranean, East Siberian Sea, Equatorial Pacific)
   - [ ] Zone overlap fixes: letter F (Fiji, Finland, France, French Polynesia)

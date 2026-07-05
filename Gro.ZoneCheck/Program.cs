@@ -104,6 +104,52 @@ foreach (var zone in allZones)
         Pass($"[{zone.Name}] parent '{zone.ParentName}' exists");
 }
 
+// --- Check 3b: Child zone overlap detection (filtered zones vs siblings) ---
+Console.WriteLine("\n=== Child Zone Overlap Checks ===");
+var childZones = allZones.Where(z => z.ParentName != null).ToList();
+var filteredChildren = childZones
+    .Where(z => filterPrefix == null || z.Name.StartsWith(filterPrefix, StringComparison.OrdinalIgnoreCase))
+    .ToList();
+
+foreach (var zone in filteredChildren)
+{
+    var siblings = childZones
+        .Where(z => z.ParentName == zone.ParentName && z != zone)
+        .ToList();
+
+    double minLat = zone.Boundary.Min(b => b.Lat) - 0.5;
+    double maxLat = zone.Boundary.Max(b => b.Lat) + 0.5;
+    double minLon = zone.Boundary.Min(b => b.Lon) - 0.5;
+    double maxLon = zone.Boundary.Max(b => b.Lon) + 0.5;
+
+    var overlapPoints = new List<(GeoCoord Point, string OtherZone)>();
+
+    for (double lat = minLat; lat <= maxLat; lat += 2)
+    {
+        for (double lon = minLon; lon <= maxLon; lon += 2)
+        {
+            var point = new GeoCoord(lat, lon);
+            if (!zone.Contains(point))
+                continue;
+
+            foreach (var sib in siblings)
+            {
+                if (sib.Contains(point))
+                    overlapPoints.Add((point, sib.Name));
+            }
+        }
+    }
+
+    if (overlapPoints.Count == 0)
+        Pass($"[{zone.Name}] no sibling overlaps");
+    else
+    {
+        var grouped = overlapPoints.GroupBy(o => o.OtherZone);
+        foreach (var g in grouped)
+            Fail($"[{zone.Name}] overlaps sibling [{g.Key}] at {g.Count()} point(s): {string.Join(", ", g.Take(3).Select(p => $"({p.Point.Lat},{p.Point.Lon})"))}");
+    }
+}
+
 // --- Check 4: Capital city containment (sequential per zone) ---
 Console.WriteLine("\n=== Capital City Containment Checks ===");
 var capitalTests = new (double Lat, double Lon, string Zone)[]
