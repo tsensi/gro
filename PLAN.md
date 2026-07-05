@@ -34,7 +34,7 @@ The tests currently are failing, but running them all overwhelms the the token l
 - [x] Create a CLI tool to fix intersections between zones. Add a mode that subtracts one polygon from another.
 - [x] Add a "split-difference" mode to the fix-intersection tool. It intersects both polygons, then find the median line in the intersection area and adjusts both polygons to become a compromise solution.
 - [x] Now, create tasks for each letter of the alphabet. Run the zone overlap tests only for zones that start with that letter and fix the overlap errors that come up. For each country that comes up, add a task here to run the split-difference mode between two countries. If one intersection partner is an ocean, subtract it from the country zone.
-  - [ ] Zone overlap fixes: letter A (Africa, Asia, Antarctica, Albania, Algeria, Angola, Afghanistan, Argentina, Australia, Austria, Arabia zones, Arctic/Atlantic/Andaman ocean zones)
+  - [x] Zone overlap fixes: letter A (Africa, Asia, Antarctica, Albania, Algeria, Angola, Afghanistan, Argentina, Australia, Austria, Arabia zones, Arctic/Atlantic/Andaman ocean zones)
   - [ ] Zone overlap fixes: letter B (Belgium, Belarus, Bangladesh, Benin, Bhutan, Bosnia, Botswana, Brazil, Bulgaria, Burkina Faso, Burundi, Baltic/Barents/Bay/Beaufort/Bering/Black ocean zones)
   - [ ] Zone overlap fixes: letter C (Canada regions, Cameroon, Cambodia, Chad, China regions, Colombia, Costa Rica-Panama, Croatia, Cuba, Czech Republic, Caribbean/Central/Coral ocean zones)
   - [ ] Zone overlap fixes: letter D (Denmark, Djibouti, DR Congo)
