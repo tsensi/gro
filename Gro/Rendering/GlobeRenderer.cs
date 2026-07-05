@@ -92,7 +92,7 @@ public sealed class GlobeRenderer
         }
     }
 
-    public void Render(IntPtr renderer, int windowWidth, int windowHeight)
+    public void Render(IntPtr renderer, int windowWidth, int windowHeight, bool present = true)
     {
         _centerX = windowWidth / 2;
         _centerY = windowHeight / 2;
@@ -105,7 +105,8 @@ public sealed class GlobeRenderer
         DrawGraticule(renderer);
         DrawZones(renderer);
 
-        SDL.SDL_RenderPresent(renderer);
+        if (present)
+            SDL.SDL_RenderPresent(renderer);
     }
 
     private void DrawGlobeOutline(IntPtr renderer)

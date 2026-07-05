@@ -19,8 +19,11 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Antarctica should be split into 5 zones.
 - [x] The ocean zones are too large, break them into smaller segments.
 - [x] Document the current state of the project with naming and decisions in CLAUDE.md
-- [ ] Make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
-- [ ] Create a simple immediate-mode UI toolkit inspired by React.
+
+- [x] Make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
+ 
+- [x] Create a simple immediate-mode UI toolkit inspired by React.
+- [ ] Fix zone coverage test failures: OceanData overlaps with continents (Atlantic/South America, Atlantic/Africa, Atlantic/North America, Arctic/Asia) and uncovered gaps
 - [ ] Allow selecting a zone. Animate a UI panel in showing the zone's name and stats. There is a close button on the panel to dismiss it, animating it out
 - [ ] Add a simple ECS framework that can attach entities to zones.
 - [ ] Add a ticker system. Use it to tick all parts of the simulation. Prepare a document SIMULATION.md and update it as the game grows
