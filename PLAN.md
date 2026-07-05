@@ -31,7 +31,7 @@ The tests currently are failing, but running them all overwhelms the the token l
 - [x] Extract CountryData.cs into JSON and load it at app start. Each country zone should be one file.
 - [x] Extract OceanData.cs into JSON and load it at app start. Each ocean ZONE should be one file.
 - [x] We need better tools to deal with overlaps. Add tasks here to add CLI tools to validate, normalize polygons in the JSON format.
-- [ ] Create a CLI tool to fix intersections between zones. Add a mode that subtracts one polygon from another.
+- [x] Create a CLI tool to fix intersections between zones. Add a mode that subtracts one polygon from another.
 - [ ] Add a "split-difference" mode to the fix-intersection tool. It intersects both polygons, then find the median line in the intersection area and adjusts both polygons to become a compromise solution.
 - [x] Now, create tasks for each letter of the alphabet. Run the zone overlap tests only for zones that start with that letter and fix the overlap errors that come up. For each country that comes up, add a task here to run the split-difference mode between two countries. If one intersection partner is an ocean, subtract it from the country zone.
   - [ ] Zone overlap fixes: letter A (Africa, Asia, Antarctica, Albania, Algeria, Angola, Afghanistan, Argentina, Australia, Austria, Arabia zones, Arctic/Atlantic/Andaman ocean zones)

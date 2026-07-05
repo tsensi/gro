@@ -14,6 +14,7 @@ return command switch
 {
     "validate" => RunValidate(remainingArgs),
     "normalize" => RunNormalize(remainingArgs),
+    "subtract" => RunSubtract(remainingArgs),
     _ => PrintUsage()
 };
 
@@ -24,15 +25,17 @@ static int PrintUsage()
     Console.WriteLine("Usage:");
     Console.WriteLine("  dotnet run --project Gro.ZoneTool -- validate [path|--all]");
     Console.WriteLine("  dotnet run --project Gro.ZoneTool -- normalize [path|--all] [--dry-run]");
+    Console.WriteLine("  dotnet run --project Gro.ZoneTool -- subtract <subject.json> <clip.json> [--dry-run]");
     Console.WriteLine();
     Console.WriteLine("Commands:");
     Console.WriteLine("  validate    Check zone files against the schema and validation rules");
     Console.WriteLine("  normalize   Rewrite zone files with correct rounding, closure, and formatting");
+    Console.WriteLine("  subtract    Subtract clip polygon from subject polygon, writing result to subject");
     Console.WriteLine();
     Console.WriteLine("Options:");
     Console.WriteLine("  path        Path to a specific .json file or directory");
     Console.WriteLine("  --all       Process all zone files (default if no path given)");
-    Console.WriteLine("  --dry-run   Show what normalize would change without writing");
+    Console.WriteLine("  --dry-run   Show what would change without writing");
     return 1;
 }
 
@@ -403,4 +406,425 @@ static string RelativePath(string path)
     return path;
 }
 
+static int RunSubtract(string[] args)
+{
+    var paths = args.Where(a => !a.StartsWith("--")).ToArray();
+    bool dryRun = args.Contains("--dry-run");
+
+    if (paths.Length < 2)
+    {
+        Console.WriteLine("ERROR: subtract requires two arguments: <subject.json> <clip.json>");
+        Console.WriteLine("  The clip polygon is subtracted from the subject polygon.");
+        Console.WriteLine("  The result overwrites the subject file.");
+        return 1;
+    }
+
+    var subjectPath = paths[0];
+    var clipPath = paths[1];
+
+    if (!File.Exists(subjectPath))
+    {
+        Console.WriteLine($"ERROR: Subject file not found: {subjectPath}");
+        return 1;
+    }
+    if (!File.Exists(clipPath))
+    {
+        Console.WriteLine($"ERROR: Clip file not found: {clipPath}");
+        return 1;
+    }
+
+    var subject = LoadZonePoints(subjectPath);
+    var clip = LoadZonePoints(clipPath);
+    if (subject == null || clip == null)
+        return 1;
+
+    var result = PolygonSubtract(subject.Value.Points, clip.Value.Points);
+
+    if (result == null || result.Count < 3)
+    {
+        Console.WriteLine("WARNING: Subtraction resulted in an empty or degenerate polygon.");
+        Console.WriteLine("  The subject polygon is entirely contained within the clip polygon.");
+        Console.WriteLine("  No changes written.");
+        return 1;
+    }
+
+    // Round to 3 decimal places
+    for (int i = 0; i < result.Count; i++)
+        result[i] = (Math.Round(result[i].Lon, 3), Math.Round(result[i].Lat, 3));
+
+    // Close the ring
+    if (result[0] != result[^1])
+        result.Add(result[0]);
+
+    var (name, type, parent, _) = subject.Value;
+    var newJson = BuildJson(name, type, parent, result);
+
+    if (dryRun)
+    {
+        Console.WriteLine($"WOULD MODIFY: {RelativePath(subjectPath)}");
+        Console.WriteLine($"  Before: {subject.Value.Points.Count} vertices");
+        Console.WriteLine($"  After:  {result.Count} vertices");
+        return 0;
+    }
+
+    File.WriteAllText(subjectPath, newJson);
+    Console.WriteLine($"MODIFIED: {RelativePath(subjectPath)}");
+    Console.WriteLine($"  Subtracted [{clip.Value.Name}] from [{name}]");
+    Console.WriteLine($"  Before: {subject.Value.Points.Count} vertices, After: {result.Count} vertices");
+    return 0;
+}
+
+static (string Name, string Type, string? Parent, List<(double Lon, double Lat)> Points)? LoadZonePoints(string path)
+{
+    try
+    {
+        var json = File.ReadAllText(path);
+        var doc = JsonDocument.Parse(json);
+        var root = doc.RootElement;
+
+        var name = root.GetProperty("name").GetString()!;
+        var type = root.GetProperty("type").GetString()!;
+        var parentProp = root.GetProperty("parent");
+        string? parent = parentProp.ValueKind == JsonValueKind.Null ? null : parentProp.GetString();
+
+        var boundaryProp = root.GetProperty("boundary");
+        var points = new List<(double Lon, double Lat)>();
+        for (int i = 0; i < boundaryProp.GetArrayLength(); i++)
+        {
+            var pair = boundaryProp[i];
+            points.Add((pair[0].GetDouble(), pair[1].GetDouble()));
+        }
+
+        // Remove closing point for computation (we work with open rings)
+        if (points.Count > 1 && points[0] == points[^1])
+            points.RemoveAt(points.Count - 1);
+
+        return (name, type, parent, points);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"ERROR: Cannot load {RelativePath(path)}: {ex.Message}");
+        return null;
+    }
+}
+
+// Polygon subtraction: A - B using Weiler-Atherton boundary-walking approach.
+// Returns the portion of A that does not overlap with B.
+static List<(double Lon, double Lat)>? PolygonSubtract(
+    List<(double Lon, double Lat)> subject,
+    List<(double Lon, double Lat)> clip)
+{
+    // Step 1: Check if there's any overlap at all
+    bool anySubjectInsideClip = false;
+    bool anySubjectOutsideClip = false;
+    foreach (var p in subject)
+    {
+        if (PointInPolygon(p, clip))
+            anySubjectInsideClip = true;
+        else
+            anySubjectOutsideClip = true;
+        if (anySubjectInsideClip && anySubjectOutsideClip) break;
+    }
+
+    if (!anySubjectInsideClip)
+    {
+        // Check if any clip edges intersect subject edges
+        bool hasIntersection = false;
+        for (int i = 0; i < subject.Count && !hasIntersection; i++)
+        {
+            var a1 = subject[i];
+            var a2 = subject[(i + 1) % subject.Count];
+            for (int j = 0; j < clip.Count; j++)
+            {
+                var b1 = clip[j];
+                var b2 = clip[(j + 1) % clip.Count];
+                if (SegmentIntersection(a1, a2, b1, b2) != null)
+                {
+                    hasIntersection = true;
+                    break;
+                }
+            }
+        }
+        if (!hasIntersection)
+            return new List<(double Lon, double Lat)>(subject); // No overlap
+    }
+
+    if (!anySubjectOutsideClip)
+    {
+        // Check if any clip edges intersect subject edges (subject might fully contain clip)
+        bool hasIntersection = false;
+        for (int i = 0; i < subject.Count && !hasIntersection; i++)
+        {
+            var a1 = subject[i];
+            var a2 = subject[(i + 1) % subject.Count];
+            for (int j = 0; j < clip.Count; j++)
+            {
+                var b1 = clip[j];
+                var b2 = clip[(j + 1) % clip.Count];
+                if (SegmentIntersection(a1, a2, b1, b2) != null)
+                {
+                    hasIntersection = true;
+                    break;
+                }
+            }
+        }
+        if (!hasIntersection)
+            return null; // Subject entirely inside clip
+    }
+
+    // Step 2: Build augmented subject polygon with intersection points
+    var augSubject = BuildAugmentedPolygon(subject, clip);
+    var augClip = BuildAugmentedPolygon(clip, subject);
+
+    // Step 3: Walk the boundary to construct the result
+    var result = WalkSubtraction(augSubject, augClip, clip);
+    return result;
+}
+
+static List<(double Lon, double Lat)>? WalkSubtraction(
+    List<AugPoint> augSubject,
+    List<AugPoint> augClip,
+    List<(double Lon, double Lat)> clipPoly)
+{
+    // Find a starting point on the subject that's outside the clip
+    int startIdx = -1;
+    for (int i = 0; i < augSubject.Count; i++)
+    {
+        if (!augSubject[i].IsIntersection && !PointInPolygon(augSubject[i].Point, clipPoly))
+        {
+            startIdx = i;
+            break;
+        }
+    }
+
+    if (startIdx == -1)
+    {
+        // All subject vertices are inside clip. Try starting from an intersection exit point.
+        for (int i = 0; i < augSubject.Count; i++)
+        {
+            if (augSubject[i].IsIntersection && augSubject[i].IsExit)
+            {
+                startIdx = i;
+                break;
+            }
+        }
+        if (startIdx == -1)
+            return null;
+    }
+
+    var result = new List<(double Lon, double Lat)>();
+    var visited = new HashSet<int>();
+    int current = startIdx;
+    bool onSubject = true;
+    int safety = augSubject.Count + augClip.Count + 100;
+
+    while (safety-- > 0)
+    {
+        if (onSubject)
+        {
+            var pt = augSubject[current];
+            result.Add(pt.Point);
+
+            if (pt.IsIntersection && pt.IsEntry && !visited.Contains(current))
+            {
+                visited.Add(current);
+                // Switch to clip boundary (walk in reverse on clip = CW direction)
+                int clipIdx = FindMatchingPoint(augClip, pt.Point);
+                if (clipIdx >= 0)
+                {
+                    onSubject = false;
+                    current = clipIdx;
+                    // Move backward on clip (reverse direction for subtraction)
+                    current = (current - 1 + augClip.Count) % augClip.Count;
+                    continue;
+                }
+            }
+
+            current = (current + 1) % augSubject.Count;
+            if (current == startIdx)
+                break;
+        }
+        else
+        {
+            var pt = augClip[current];
+            result.Add(pt.Point);
+
+            if (pt.IsIntersection)
+            {
+                // Check if this intersection gets us back to subject
+                int subjIdx = FindMatchingPoint(augSubject, pt.Point);
+                if (subjIdx >= 0)
+                {
+                    onSubject = true;
+                    current = (subjIdx + 1) % augSubject.Count;
+                    if (current == startIdx)
+                        break;
+                    continue;
+                }
+            }
+
+            // Walk clip in reverse
+            current = (current - 1 + augClip.Count) % augClip.Count;
+        }
+    }
+
+    return result.Count >= 3 ? result : null;
+}
+
+static int FindMatchingPoint(List<AugPoint> augPoly, (double Lon, double Lat) point)
+{
+    double bestDist = double.MaxValue;
+    int bestIdx = -1;
+    for (int i = 0; i < augPoly.Count; i++)
+    {
+        if (!augPoly[i].IsIntersection) continue;
+        double dx = augPoly[i].Point.Lon - point.Lon;
+        double dy = augPoly[i].Point.Lat - point.Lat;
+        double dist = dx * dx + dy * dy;
+        if (dist < bestDist)
+        {
+            bestDist = dist;
+            bestIdx = i;
+        }
+    }
+    return bestDist < 1e-8 ? bestIdx : -1;
+}
+
+static List<AugPoint> BuildAugmentedPolygon(
+    List<(double Lon, double Lat)> poly,
+    List<(double Lon, double Lat)> otherPoly)
+{
+    var result = new List<AugPoint>();
+
+    for (int i = 0; i < poly.Count; i++)
+    {
+        var a1 = poly[i];
+        var a2 = poly[(i + 1) % poly.Count];
+
+        bool a1Inside = PointInPolygon(a1, otherPoly);
+
+        result.Add(new AugPoint { Point = a1, IsIntersection = false, T = 0 });
+
+        // Find all intersections of this edge with otherPoly edges
+        var edgeIntersections = new List<(double T, (double Lon, double Lat) Point, bool Entering)>();
+
+        for (int j = 0; j < otherPoly.Count; j++)
+        {
+            var b1 = otherPoly[j];
+            var b2 = otherPoly[(j + 1) % otherPoly.Count];
+            var ix = SegmentIntersection(a1, a2, b1, b2);
+            if (ix != null)
+            {
+                double t = ParameterOnSegment(a1, a2, ix.Value);
+                if (t > 1e-9 && t < 1.0 - 1e-9)
+                {
+                    // Determine if entering or exiting otherPoly
+                    // Use cross product of subject edge direction with clip edge direction
+                    double edgeDx = a2.Lon - a1.Lon;
+                    double edgeDy = a2.Lat - a1.Lat;
+                    double clipDx = b2.Lon - b1.Lon;
+                    double clipDy = b2.Lat - b1.Lat;
+                    double cross = edgeDx * clipDy - edgeDy * clipDx;
+                    bool entering = cross > 0; // entering if crossing left-to-right
+                    edgeIntersections.Add((t, ix.Value, entering));
+                }
+            }
+        }
+
+        edgeIntersections.Sort((a, b) => a.T.CompareTo(b.T));
+        // Deduplicate very close intersections
+        for (int k = 0; k < edgeIntersections.Count - 1; k++)
+        {
+            if (edgeIntersections[k + 1].T - edgeIntersections[k].T < 1e-8)
+            {
+                edgeIntersections.RemoveAt(k + 1);
+                k--;
+            }
+        }
+
+        // If we have intersections, alternate entry/exit based on starting state
+        bool currentlyInside = a1Inside;
+        for (int k = 0; k < edgeIntersections.Count; k++)
+        {
+            var (t, pt, _) = edgeIntersections[k];
+            bool isEntry = !currentlyInside; // if outside, this intersection enters
+            bool isExit = currentlyInside;   // if inside, this intersection exits
+            result.Add(new AugPoint
+            {
+                Point = pt,
+                IsIntersection = true,
+                IsEntry = isEntry,
+                IsExit = isExit,
+                T = t
+            });
+            currentlyInside = !currentlyInside;
+        }
+    }
+
+    return result;
+}
+
+static double ParameterOnSegment((double Lon, double Lat) a, (double Lon, double Lat) b, (double Lon, double Lat) p)
+{
+    double dx = b.Lon - a.Lon;
+    double dy = b.Lat - a.Lat;
+    if (Math.Abs(dx) > Math.Abs(dy))
+        return (p.Lon - a.Lon) / dx;
+    else if (Math.Abs(dy) > 1e-12)
+        return (p.Lat - a.Lat) / dy;
+    return 0;
+}
+
+static bool PointInPolygon((double Lon, double Lat) point, List<(double Lon, double Lat)> polygon)
+{
+    bool inside = false;
+    int n = polygon.Count;
+    for (int i = 0, j = n - 1; i < n; j = i++)
+    {
+        double yi = polygon[i].Lat, xi = polygon[i].Lon;
+        double yj = polygon[j].Lat, xj = polygon[j].Lon;
+
+        if (((yi > point.Lat) != (yj > point.Lat)) &&
+            (point.Lon < (xj - xi) * (point.Lat - yi) / (yj - yi) + xi))
+        {
+            inside = !inside;
+        }
+    }
+    return inside;
+}
+
+// Compute intersection point of segments (a1->a2) and (b1->b2), or null if they don't intersect
+static (double Lon, double Lat)? SegmentIntersection(
+    (double Lon, double Lat) a1, (double Lon, double Lat) a2,
+    (double Lon, double Lat) b1, (double Lon, double Lat) b2)
+{
+    double x1 = a1.Lon, y1 = a1.Lat;
+    double x2 = a2.Lon, y2 = a2.Lat;
+    double x3 = b1.Lon, y3 = b1.Lat;
+    double x4 = b2.Lon, y4 = b2.Lat;
+
+    double denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+    if (Math.Abs(denom) < 1e-12)
+        return null;
+
+    double t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom;
+    double u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denom;
+
+    if (t < -1e-9 || t > 1.0 + 1e-9 || u < -1e-9 || u > 1.0 + 1e-9)
+        return null;
+
+    double ix = x1 + t * (x2 - x1);
+    double iy = y1 + t * (y2 - y1);
+    return (ix, iy);
+}
+
 enum NormalizeResult { Unchanged, Modified, Error }
+
+record struct AugPoint
+{
+    public (double Lon, double Lat) Point;
+    public bool IsIntersection;
+    public bool IsEntry;
+    public bool IsExit;
+    public double T;
+}
