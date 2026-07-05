@@ -55,7 +55,7 @@ public class EarthModelTests
         var naChildren = _earth.GetChildren("North America").ToList();
         Assert.Contains(naChildren, c => c.Name == "Canada (Quebec-Ontario)");
         Assert.Contains(naChildren, c => c.Name == "United States (Northeast)");
-        Assert.Contains(naChildren, c => c.Name == "Mexico");
+        Assert.Contains(naChildren, c => c.Name == "Mexico (Central)");
     }
 
     [Fact]

@@ -13,7 +13,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Make sure that all of Europe is represented. For each European county, there should be a zone that contains it.
 - [x] Make sure that all of Africa is represented.
 - [x] Make sure that all of North America is represented. Split Canada into about 5 regions, split the US in 3-4 regions
-- [ ] Make sure that all of Central America is represented. It's Mexico (split in 3 regions), plus 3 more regions
+- [x] Make sure that all of Central America is represented. It's Mexico (split in 3 regions), plus 3 more regions
 - [ ] Make sure that all of continental Asia is represented. Split large countries like China, Mongolia, Russia, ...
 - [ ] Make sure that all of Oceania is represented.
 - [ ] Antarctica should be split into 5 zones.

@@ -98,16 +98,57 @@ internal static class CountryData
             new GeoCoord(65, -168),
         }));
 
-        // North America - Mexico
-        zones.Add(MakeCountry("Mexico", "North America", new[]
+        // Central America - Mexico (3 regions)
+        zones.Add(MakeCountry("Mexico (North)", "North America", new[]
         {
             new GeoCoord(32, -117), new GeoCoord(32, -106),
-            new GeoCoord(26, -97), new GeoCoord(21, -97),
-            new GeoCoord(18, -95), new GeoCoord(15, -92),
-            new GeoCoord(16, -90), new GeoCoord(21, -87),
-            new GeoCoord(21, -90), new GeoCoord(20, -105),
-            new GeoCoord(23, -110), new GeoCoord(28, -112),
-            new GeoCoord(31, -113), new GeoCoord(32, -115),
+            new GeoCoord(26, -97), new GeoCoord(24, -99),
+            new GeoCoord(24, -105), new GeoCoord(23, -110),
+            new GeoCoord(28, -112), new GeoCoord(31, -113),
+            new GeoCoord(32, -115),
+        }));
+
+        zones.Add(MakeCountry("Mexico (Central)", "North America", new[]
+        {
+            new GeoCoord(24, -105), new GeoCoord(24, -99),
+            new GeoCoord(21, -97), new GeoCoord(19, -99),
+            new GeoCoord(21, -105),
+        }));
+
+        zones.Add(MakeCountry("Mexico (South)", "North America", new[]
+        {
+            new GeoCoord(21, -105), new GeoCoord(19, -99),
+            new GeoCoord(16, -98), new GeoCoord(15, -92),
+            new GeoCoord(16, -90), new GeoCoord(18.5, -88),
+            new GeoCoord(18.5, -91.5), new GeoCoord(21, -90),
+            new GeoCoord(21, -105),
+        }));
+
+        // Central America - Guatemala & Belize
+        zones.Add(MakeCountry("Guatemala-Belize", "North America", new[]
+        {
+            new GeoCoord(18.5, -91.5), new GeoCoord(18.5, -88),
+            new GeoCoord(16, -88), new GeoCoord(14, -89.5),
+            new GeoCoord(14, -92), new GeoCoord(15, -92),
+            new GeoCoord(16, -91.5),
+        }));
+
+        // Central America - Honduras, El Salvador, Nicaragua
+        zones.Add(MakeCountry("Honduras-El Salvador-Nicaragua", "North America", new[]
+        {
+            new GeoCoord(16, -89.5), new GeoCoord(16, -83),
+            new GeoCoord(15, -83), new GeoCoord(12.5, -83.5),
+            new GeoCoord(11, -84), new GeoCoord(11, -87.5),
+            new GeoCoord(13, -90), new GeoCoord(14, -89.5),
+        }));
+
+        // Central America - Costa Rica & Panama
+        zones.Add(MakeCountry("Costa Rica-Panama", "North America", new[]
+        {
+            new GeoCoord(11, -84), new GeoCoord(11, -83),
+            new GeoCoord(10, -82), new GeoCoord(9.5, -79),
+            new GeoCoord(8, -77), new GeoCoord(7, -77),
+            new GeoCoord(7.5, -83), new GeoCoord(9.5, -84.5),
         }));
 
         // North America - Caribbean

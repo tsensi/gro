@@ -230,4 +230,23 @@ public class ZoneCoverageTests
         Assert.True(zone!.Contains(point),
             $"Zone '{expectedCountry}' does not contain its capital at ({lat},{lon})");
     }
+
+    [Theory]
+    [InlineData(25.67, -100.31, "Mexico (North)")]       // Monterrey
+    [InlineData(19.43, -99.13, "Mexico (Central)")]      // Mexico City
+    [InlineData(17.06, -96.72, "Mexico (South)")]        // Oaxaca
+    [InlineData(14.63, -90.51, "Guatemala-Belize")]      // Guatemala City
+    [InlineData(14.1, -87.22, "Honduras-El Salvador-Nicaragua")] // Tegucigalpa
+    [InlineData(12.15, -86.27, "Honduras-El Salvador-Nicaragua")] // Managua
+    [InlineData(9.93, -84.08, "Costa Rica-Panama")]      // San Jose
+    [InlineData(8.98, -79.52, "Costa Rica-Panama")]      // Panama City
+    public void CentralAmericanCity_IsInCorrectZone(double lat, double lon, string expectedCountry)
+    {
+        var point = new GeoCoord(lat, lon);
+        var zone = _earth.FindZone(expectedCountry);
+
+        Assert.NotNull(zone);
+        Assert.True(zone!.Contains(point),
+            $"Zone '{expectedCountry}' does not contain point at ({lat},{lon})");
+    }
 }
