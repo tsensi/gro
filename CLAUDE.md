@@ -42,6 +42,8 @@ Gro/                        # Main executable
 Gro.Tests/                  # xunit test project
   EarthModelTests.cs        # Zone hierarchy, point-in-polygon, lookup tests
   ZoneCoverageTests.cs      # Globe coverage and overlap checks (grid + capital city tests)
+Gro.ZoneCheck/              # CLI tool for sequential zone validation
+  Program.cs                # Overlap, coverage, hierarchy, and capital checks per zone
 Gro.sln                     # Solution file
 PLAN.md                     # Task list driving development
 capi.mjs                    # External automation script (gitignored, not part of the game)
@@ -66,3 +68,10 @@ Tests verify:
 - Known distances (haversine sanity check)
 
 Run `dotnet test` before committing. The coverage tests use grid sampling at 5-degree and 10-degree intervals.
+
+The `Gro.ZoneCheck` CLI runs zone validation sequentially per zone (avoiding the O(n^2) double loops in xunit):
+```sh
+dotnet run --project Gro.ZoneCheck              # all zones
+dotnet run --project Gro.ZoneCheck -- A         # only zones starting with 'A'
+dotnet run --project Gro.ZoneCheck -- --verbose # show passing checks too
+```
