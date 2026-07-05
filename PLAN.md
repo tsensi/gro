@@ -22,6 +22,8 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 
 ## Zone tests
 
+- [x] Add a --sonnet flag to capi.mjs that uses Sonnet instead of Opus (with the correct pinned model). DO NOT RUN THE SCRIPT!
+
 The tests currently are failing, but running them all overwhelms the the token limits in the code agent. We have to break this down into separate tasks
 - [x] Look at Zone.cs Is it too large or complex? Can we extract algorithms like point-inside? If yes, add tasks here to do so
   - Conclusion: No. Zone.cs is 87 lines with a single responsibility. The point-in-polygon, centroid, and antimeridian logic are tightly coupled to Boundary and not reused elsewhere. No extraction needed.
