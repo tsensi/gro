@@ -27,7 +27,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - Conclusion: No. Zone.cs is 87 lines with a single responsibility. The point-in-polygon, centroid, and antimeridian logic are tightly coupled to Boundary and not reused elsewhere. No extraction needed.
 - [x] Change the default behavior of the zone tests to run sequentially for each zone, instead of a large O(n^2) double loop. This means we have to dynamically create test cases for each zone. However, this is fine. They don't have to be harnessed unit tests, this should be a separate CLI tool.
 - [x] Define a geo-json inspired JSON format for the zone data. Add it in the Appendix further down. NOTE: The resolution should be on the order of 100m. Round to precision, making it easier to later fix correct tiling and adjacency.
-- [ ] Extract ContinentData.cs into JSON and load it at app start. Each continent ahoudl be one file.
+- [x] Extract ContinentData.cs into JSON and load it at app start. Each continent ahoudl be one file.
 - [ ] Extract CountryData.cs into JSON and load it at app start. Each country zone should be one file.
 - [ ] Extract OceanData.cs into JSON and load it at app start. Each ocean ZONE should be one file.
 - [ ] We need better tools to deal with overlaps. Add tasks here to add CLI tools to validate, normalize polygons in the JSON format.
