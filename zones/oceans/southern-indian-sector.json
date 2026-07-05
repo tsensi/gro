@@ -1,0 +1,27 @@
+{
+  "name": "Southern Indian Sector",
+  "type": "OceanZone",
+  "parent": "Southern Ocean",
+  "boundary": [
+    [
+      60.0,
+      -60.0
+    ],
+    [
+      140.0,
+      -60.0
+    ],
+    [
+      140.0,
+      -70.0
+    ],
+    [
+      60.0,
+      -70.0
+    ],
+    [
+      60.0,
+      -60.0
+    ]
+  ]
+}

@@ -29,7 +29,7 @@ The tests currently are failing, but running them all overwhelms the the token l
 - [x] Define a geo-json inspired JSON format for the zone data. Add it in the Appendix further down. NOTE: The resolution should be on the order of 100m. Round to precision, making it easier to later fix correct tiling and adjacency.
 - [x] Extract ContinentData.cs into JSON and load it at app start. Each continent ahoudl be one file.
 - [x] Extract CountryData.cs into JSON and load it at app start. Each country zone should be one file.
-- [ ] Extract OceanData.cs into JSON and load it at app start. Each ocean ZONE should be one file.
+- [x] Extract OceanData.cs into JSON and load it at app start. Each ocean ZONE should be one file.
 - [ ] We need better tools to deal with overlaps. Add tasks here to add CLI tools to validate, normalize polygons in the JSON format.
 - [ ] Create a CLI tool to fix intersections between zones. Add a mode that subtracts one polygon from another.
 - [ ] Add a "split-difference" mode to the fix-intersection tool. It intersects both polygons, then find the median line in the intersection area and adjusts both polygons to become a compromise solution.

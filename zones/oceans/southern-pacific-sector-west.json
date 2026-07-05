@@ -1,0 +1,27 @@
+{
+  "name": "Southern Pacific Sector (West)",
+  "type": "OceanZone",
+  "parent": "Southern Ocean",
+  "boundary": [
+    [
+      140.0,
+      -60.0
+    ],
+    [
+      180.0,
+      -60.0
+    ],
+    [
+      180.0,
+      -70.0
+    ],
+    [
+      140.0,
+      -70.0
+    ],
+    [
+      140.0,
+      -60.0
+    ]
+  ]
+}

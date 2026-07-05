@@ -1,0 +1,27 @@
+{
+  "name": "Southern African Sector",
+  "type": "OceanZone",
+  "parent": "Southern Ocean",
+  "boundary": [
+    [
+      -10.0,
+      -60.0
+    ],
+    [
+      60.0,
+      -60.0
+    ],
+    [
+      60.0,
+      -70.0
+    ],
+    [
+      -10.0,
+      -70.0
+    ],
+    [
+      -10.0,
+      -60.0
+    ]
+  ]
+}

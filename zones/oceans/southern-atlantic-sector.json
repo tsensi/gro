@@ -1,0 +1,27 @@
+{
+  "name": "Southern Atlantic Sector",
+  "type": "OceanZone",
+  "parent": "Southern Ocean",
+  "boundary": [
+    [
+      -70.0,
+      -60.0
+    ],
+    [
+      -10.0,
+      -60.0
+    ],
+    [
+      -10.0,
+      -70.0
+    ],
+    [
+      -70.0,
+      -70.0
+    ],
+    [
+      -70.0,
+      -60.0
+    ]
+  ]
+}
