@@ -369,39 +369,14 @@ internal static class CountryData
             new GeoCoord(54, 22), new GeoCoord(55, 21),
         }));
 
-        // Africa
-        zones.Add(MakeCountry("Egypt", "Africa", new[]
+        // Africa - North
+        zones.Add(MakeCountry("Morocco", "Africa", new[]
         {
-            new GeoCoord(31, 25), new GeoCoord(31, 34),
-            new GeoCoord(29, 35), new GeoCoord(22, 37),
-            new GeoCoord(22, 25), new GeoCoord(25, 25),
-            new GeoCoord(29, 25),
-        }));
-
-        zones.Add(MakeCountry("Nigeria", "Africa", new[]
-        {
-            new GeoCoord(14, 3), new GeoCoord(13, 14),
-            new GeoCoord(10, 14), new GeoCoord(7, 12),
-            new GeoCoord(4, 8), new GeoCoord(4, 3),
-            new GeoCoord(7, 3), new GeoCoord(10, 3),
-        }));
-
-        zones.Add(MakeCountry("South Africa", "Africa", new[]
-        {
-            new GeoCoord(-22, 17), new GeoCoord(-22, 31),
-            new GeoCoord(-27, 32), new GeoCoord(-30, 31),
-            new GeoCoord(-34, 26), new GeoCoord(-34, 18),
-            new GeoCoord(-31, 17), new GeoCoord(-28, 17),
-        }));
-
-        zones.Add(MakeCountry("DR Congo", "Africa", new[]
-        {
-            new GeoCoord(5, 18), new GeoCoord(4, 30),
-            new GeoCoord(2, 31), new GeoCoord(-1, 29),
-            new GeoCoord(-5, 27), new GeoCoord(-8, 26),
-            new GeoCoord(-11, 24), new GeoCoord(-11, 22),
-            new GeoCoord(-7, 17), new GeoCoord(-4, 12),
-            new GeoCoord(0, 16), new GeoCoord(3, 18),
+            new GeoCoord(36, -6), new GeoCoord(36, -1),
+            new GeoCoord(35, -2), new GeoCoord(32, -2),
+            new GeoCoord(27, -9), new GeoCoord(21, -17),
+            new GeoCoord(25, -17), new GeoCoord(29, -13),
+            new GeoCoord(33, -8),
         }));
 
         zones.Add(MakeCountry("Algeria", "Africa", new[]
@@ -414,21 +389,204 @@ internal static class CountryData
             new GeoCoord(35, -2),
         }));
 
+        zones.Add(MakeCountry("Tunisia", "Africa", new[]
+        {
+            new GeoCoord(37.5, 7.5), new GeoCoord(37.5, 11.5),
+            new GeoCoord(34, 11.5), new GeoCoord(30, 10),
+            new GeoCoord(30, 7.5), new GeoCoord(34, 7.5),
+        }));
+
         zones.Add(MakeCountry("Libya", "Africa", new[]
         {
-            new GeoCoord(33, 11), new GeoCoord(32, 25),
+            new GeoCoord(34, 11), new GeoCoord(33, 25),
             new GeoCoord(30, 25), new GeoCoord(22, 24),
             new GeoCoord(20, 15), new GeoCoord(23, 11),
             new GeoCoord(30, 10),
         }));
 
+        zones.Add(MakeCountry("Egypt", "Africa", new[]
+        {
+            new GeoCoord(31, 25), new GeoCoord(31, 34),
+            new GeoCoord(29, 35), new GeoCoord(22, 37),
+            new GeoCoord(22, 25), new GeoCoord(25, 25),
+            new GeoCoord(29, 25),
+        }));
+
+        // Africa - West
+        zones.Add(MakeCountry("Mauritania", "Africa", new[]
+        {
+            new GeoCoord(21, -17), new GeoCoord(21, -5),
+            new GeoCoord(14.5, -5), new GeoCoord(14.5, -12),
+            new GeoCoord(16, -16), new GeoCoord(19, -17),
+        }));
+
+        zones.Add(MakeCountry("Mali", "Africa", new[]
+        {
+            new GeoCoord(25, -12), new GeoCoord(25, 4),
+            new GeoCoord(15, 4), new GeoCoord(10, 0),
+            new GeoCoord(10, -5), new GeoCoord(12, -12),
+        }));
+
+        zones.Add(MakeCountry("Niger", "Africa", new[]
+        {
+            new GeoCoord(24, 0), new GeoCoord(24, 16),
+            new GeoCoord(13, 16), new GeoCoord(11.5, 14),
+            new GeoCoord(11.5, 0), new GeoCoord(15, 0),
+        }));
+
+        zones.Add(MakeCountry("Senegal", "Africa", new[]
+        {
+            new GeoCoord(17, -17.5), new GeoCoord(17, -11.5),
+            new GeoCoord(14, -11.5), new GeoCoord(12.3, -12),
+            new GeoCoord(12.3, -16.5), new GeoCoord(14.5, -17.5),
+        }));
+
+        zones.Add(MakeCountry("Gambia", "Africa", new[]
+        {
+            new GeoCoord(13.9, -17), new GeoCoord(13.9, -13.5),
+            new GeoCoord(13.0, -13.5), new GeoCoord(13.0, -17),
+        }));
+
+        zones.Add(MakeCountry("Guinea-Bissau", "Africa", new[]
+        {
+            new GeoCoord(12.7, -16.5), new GeoCoord(12.7, -13.5),
+            new GeoCoord(10.8, -13.5), new GeoCoord(10.8, -16.5),
+        }));
+
+        zones.Add(MakeCountry("Guinea", "Africa", new[]
+        {
+            new GeoCoord(12.5, -15), new GeoCoord(12.5, -7.5),
+            new GeoCoord(7.2, -7.5), new GeoCoord(7.2, -13),
+            new GeoCoord(9, -15),
+        }));
+
+        zones.Add(MakeCountry("Sierra Leone", "Africa", new[]
+        {
+            new GeoCoord(10, -13.5), new GeoCoord(10, -10),
+            new GeoCoord(6.8, -10), new GeoCoord(6.8, -13.5),
+        }));
+
+        zones.Add(MakeCountry("Liberia", "Africa", new[]
+        {
+            new GeoCoord(8.5, -11.5), new GeoCoord(8.5, -7.5),
+            new GeoCoord(4.3, -7.5), new GeoCoord(4.3, -11.5),
+        }));
+
+        zones.Add(MakeCountry("Ivory Coast", "Africa", new[]
+        {
+            new GeoCoord(10.7, -8.5), new GeoCoord(10.7, -2.5),
+            new GeoCoord(4.3, -2.5), new GeoCoord(4.3, -8.5),
+        }));
+
+        zones.Add(MakeCountry("Burkina Faso", "Africa", new[]
+        {
+            new GeoCoord(15, -5.5), new GeoCoord(15, 2.5),
+            new GeoCoord(9.5, 2.5), new GeoCoord(9.5, -5.5),
+        }));
+
+        zones.Add(MakeCountry("Ghana", "Africa", new[]
+        {
+            new GeoCoord(11, -3.3), new GeoCoord(11, 1.2),
+            new GeoCoord(4.7, 1.2), new GeoCoord(4.7, -3.3),
+        }));
+
+        zones.Add(MakeCountry("Togo", "Africa", new[]
+        {
+            new GeoCoord(11.2, -0.1), new GeoCoord(11.2, 1.9),
+            new GeoCoord(5.8, 1.9), new GeoCoord(5.8, -0.1),
+        }));
+
+        zones.Add(MakeCountry("Benin", "Africa", new[]
+        {
+            new GeoCoord(12.5, 1), new GeoCoord(12.5, 4),
+            new GeoCoord(6, 4), new GeoCoord(6, 1),
+        }));
+
+        zones.Add(MakeCountry("Nigeria", "Africa", new[]
+        {
+            new GeoCoord(14, 3), new GeoCoord(13, 14),
+            new GeoCoord(10, 14), new GeoCoord(7, 12),
+            new GeoCoord(4, 8), new GeoCoord(4, 3),
+            new GeoCoord(7, 3), new GeoCoord(10, 3),
+        }));
+
+        // Africa - Central
+        zones.Add(MakeCountry("Chad", "Africa", new[]
+        {
+            new GeoCoord(23.5, 14), new GeoCoord(23.5, 24),
+            new GeoCoord(8, 24), new GeoCoord(8, 14),
+            new GeoCoord(13, 14),
+        }));
+
+        zones.Add(MakeCountry("Cameroon", "Africa", new[]
+        {
+            new GeoCoord(13, 8.5), new GeoCoord(13, 16),
+            new GeoCoord(2, 16), new GeoCoord(2, 8.5),
+            new GeoCoord(4, 8.5), new GeoCoord(6, 9),
+            new GeoCoord(10, 9),
+        }));
+
+        zones.Add(MakeCountry("Central African Republic", "Africa", new[]
+        {
+            new GeoCoord(11, 14.5), new GeoCoord(11, 27.5),
+            new GeoCoord(2.2, 27.5), new GeoCoord(2.2, 14.5),
+        }));
+
+        zones.Add(MakeCountry("Equatorial Guinea", "Africa", new[]
+        {
+            new GeoCoord(4.5, 8), new GeoCoord(4.5, 12),
+            new GeoCoord(1, 12), new GeoCoord(1, 8),
+        }));
+
+        zones.Add(MakeCountry("Gabon", "Africa", new[]
+        {
+            new GeoCoord(2.5, 8.5), new GeoCoord(2.5, 14.5),
+            new GeoCoord(-4, 14.5), new GeoCoord(-4, 8.5),
+        }));
+
+        zones.Add(MakeCountry("Republic of Congo", "Africa", new[]
+        {
+            new GeoCoord(4, 11), new GeoCoord(4, 18.5),
+            new GeoCoord(-5, 18.5), new GeoCoord(-5, 11),
+        }));
+
+        zones.Add(MakeCountry("DR Congo", "Africa", new[]
+        {
+            new GeoCoord(5, 18), new GeoCoord(4, 30),
+            new GeoCoord(2, 31), new GeoCoord(-1, 29),
+            new GeoCoord(-5, 27), new GeoCoord(-8, 26),
+            new GeoCoord(-11, 24), new GeoCoord(-11, 22),
+            new GeoCoord(-7, 17), new GeoCoord(-4, 12),
+            new GeoCoord(0, 16), new GeoCoord(3, 18),
+        }));
+
+        // Africa - East
         zones.Add(MakeCountry("Sudan", "Africa", new[]
         {
             new GeoCoord(22, 24), new GeoCoord(22, 37),
             new GeoCoord(18, 38), new GeoCoord(14, 36),
-            new GeoCoord(10, 34), new GeoCoord(4, 32),
-            new GeoCoord(4, 24), new GeoCoord(10, 24),
+            new GeoCoord(10, 34), new GeoCoord(10, 24),
             new GeoCoord(15, 24),
+        }));
+
+        zones.Add(MakeCountry("South Sudan", "Africa", new[]
+        {
+            new GeoCoord(12, 24), new GeoCoord(12, 35),
+            new GeoCoord(4, 35), new GeoCoord(3.5, 30),
+            new GeoCoord(3.5, 24),
+        }));
+
+        zones.Add(MakeCountry("Eritrea", "Africa", new[]
+        {
+            new GeoCoord(18, 36), new GeoCoord(18, 43),
+            new GeoCoord(15, 43), new GeoCoord(14, 42),
+            new GeoCoord(15, 36),
+        }));
+
+        zones.Add(MakeCountry("Djibouti", "Africa", new[]
+        {
+            new GeoCoord(12.7, 42), new GeoCoord(12.7, 43.5),
+            new GeoCoord(11, 43.5), new GeoCoord(11, 42),
         }));
 
         zones.Add(MakeCountry("Ethiopia", "Africa", new[]
@@ -440,12 +598,118 @@ internal static class CountryData
             new GeoCoord(12, 36),
         }));
 
+        zones.Add(MakeCountry("Somalia", "Africa", new[]
+        {
+            new GeoCoord(12, 41), new GeoCoord(12, 51),
+            new GeoCoord(2, 51), new GeoCoord(-1.5, 42),
+            new GeoCoord(5, 41), new GeoCoord(8, 44),
+        }));
+
+        zones.Add(MakeCountry("Kenya", "Africa", new[]
+        {
+            new GeoCoord(5, 34), new GeoCoord(5, 42),
+            new GeoCoord(-1, 41), new GeoCoord(-5, 40),
+            new GeoCoord(-5, 34),
+        }));
+
+        zones.Add(MakeCountry("Uganda", "Africa", new[]
+        {
+            new GeoCoord(4, 30), new GeoCoord(4, 35),
+            new GeoCoord(-1.5, 35), new GeoCoord(-1.5, 29.5),
+            new GeoCoord(0, 29.5),
+        }));
+
+        zones.Add(MakeCountry("Rwanda", "Africa", new[]
+        {
+            new GeoCoord(-1, 28.5), new GeoCoord(-1, 30.8),
+            new GeoCoord(-3, 30.8), new GeoCoord(-3, 28.5),
+        }));
+
+        zones.Add(MakeCountry("Burundi", "Africa", new[]
+        {
+            new GeoCoord(-2.5, 28.8), new GeoCoord(-2.5, 30.8),
+            new GeoCoord(-4.5, 30.8), new GeoCoord(-4.5, 28.8),
+        }));
+
         zones.Add(MakeCountry("Tanzania", "Africa", new[]
         {
             new GeoCoord(-1, 30), new GeoCoord(-1, 37),
             new GeoCoord(-5, 40), new GeoCoord(-10, 40),
             new GeoCoord(-11, 35), new GeoCoord(-11, 30),
             new GeoCoord(-8, 29), new GeoCoord(-3, 29),
+        }));
+
+        // Africa - Southern
+        zones.Add(MakeCountry("Angola", "Africa", new[]
+        {
+            new GeoCoord(-5, 12), new GeoCoord(-5, 24),
+            new GeoCoord(-18, 24), new GeoCoord(-18, 12),
+        }));
+
+        zones.Add(MakeCountry("Zambia", "Africa", new[]
+        {
+            new GeoCoord(-8, 22), new GeoCoord(-8, 33),
+            new GeoCoord(-18, 33), new GeoCoord(-18, 22),
+        }));
+
+        zones.Add(MakeCountry("Malawi", "Africa", new[]
+        {
+            new GeoCoord(-9, 33), new GeoCoord(-9, 36),
+            new GeoCoord(-17, 36), new GeoCoord(-17, 33),
+        }));
+
+        zones.Add(MakeCountry("Mozambique", "Africa", new[]
+        {
+            new GeoCoord(-10, 34), new GeoCoord(-10, 41),
+            new GeoCoord(-17, 41), new GeoCoord(-27, 35),
+            new GeoCoord(-27, 30), new GeoCoord(-22, 31),
+            new GeoCoord(-16, 34),
+        }));
+
+        zones.Add(MakeCountry("Zimbabwe", "Africa", new[]
+        {
+            new GeoCoord(-15, 25), new GeoCoord(-15, 33),
+            new GeoCoord(-22, 33), new GeoCoord(-22, 25),
+        }));
+
+        zones.Add(MakeCountry("Namibia", "Africa", new[]
+        {
+            new GeoCoord(-17, 12), new GeoCoord(-17, 21),
+            new GeoCoord(-22, 20), new GeoCoord(-29, 20),
+            new GeoCoord(-29, 12), new GeoCoord(-22, 12),
+        }));
+
+        zones.Add(MakeCountry("Botswana", "Africa", new[]
+        {
+            new GeoCoord(-18, 20), new GeoCoord(-18, 29),
+            new GeoCoord(-27, 29), new GeoCoord(-27, 20),
+        }));
+
+        zones.Add(MakeCountry("South Africa", "Africa", new[]
+        {
+            new GeoCoord(-22, 17), new GeoCoord(-22, 31),
+            new GeoCoord(-27, 32), new GeoCoord(-30, 31),
+            new GeoCoord(-34, 26), new GeoCoord(-34, 18),
+            new GeoCoord(-31, 17), new GeoCoord(-28, 17),
+        }));
+
+        zones.Add(MakeCountry("Lesotho", "Africa", new[]
+        {
+            new GeoCoord(-28.5, 27), new GeoCoord(-28.5, 30),
+            new GeoCoord(-30.5, 30), new GeoCoord(-30.5, 27),
+        }));
+
+        zones.Add(MakeCountry("Eswatini", "Africa", new[]
+        {
+            new GeoCoord(-25.5, 30.5), new GeoCoord(-25.5, 32.5),
+            new GeoCoord(-27.5, 32.5), new GeoCoord(-27.5, 30.5),
+        }));
+
+        zones.Add(MakeCountry("Madagascar", "Africa", new[]
+        {
+            new GeoCoord(-12, 43), new GeoCoord(-12, 50),
+            new GeoCoord(-16, 50), new GeoCoord(-26, 47),
+            new GeoCoord(-26, 43), new GeoCoord(-20, 43),
         }));
 
         // Asia

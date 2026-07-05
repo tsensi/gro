@@ -170,4 +170,64 @@ public class ZoneCoverageTests
         Assert.True(zone!.Contains(point),
             $"Zone '{expectedCountry}' does not contain its capital at ({lat},{lon})");
     }
+
+    [Theory]
+    [InlineData(34.02, -6.84, "Morocco")]
+    [InlineData(36.75, 3.06, "Algeria")]
+    [InlineData(36.81, 10.17, "Tunisia")]
+    [InlineData(32.9, 13.18, "Libya")]
+    [InlineData(30.04, 31.24, "Egypt")]
+    [InlineData(18.09, -15.98, "Mauritania")]
+    [InlineData(12.65, -8.0, "Mali")]
+    [InlineData(13.51, 2.11, "Niger")]
+    [InlineData(14.69, -17.44, "Senegal")]
+    [InlineData(13.45, -16.58, "Gambia")]
+    [InlineData(11.86, -15.6, "Guinea-Bissau")]
+    [InlineData(9.64, -13.58, "Guinea")]
+    [InlineData(8.48, -13.23, "Sierra Leone")]
+    [InlineData(6.3, -10.8, "Liberia")]
+    [InlineData(6.82, -5.28, "Ivory Coast")]
+    [InlineData(12.37, -1.52, "Burkina Faso")]
+    [InlineData(5.56, -0.19, "Ghana")]
+    [InlineData(6.13, 1.22, "Togo")]
+    [InlineData(6.49, 2.6, "Benin")]
+    [InlineData(9.06, 7.49, "Nigeria")]
+    [InlineData(12.13, 15.05, "Chad")]
+    [InlineData(3.87, 11.52, "Cameroon")]
+    [InlineData(4.36, 18.56, "Central African Republic")]
+    [InlineData(3.75, 8.78, "Equatorial Guinea")]
+    [InlineData(0.39, 9.45, "Gabon")]
+    [InlineData(-4.27, 15.28, "Republic of Congo")]
+    [InlineData(-4.32, 15.31, "DR Congo")]
+    [InlineData(15.59, 32.53, "Sudan")]
+    [InlineData(4.85, 31.6, "South Sudan")]
+    [InlineData(15.34, 38.93, "Eritrea")]
+    [InlineData(11.59, 43.15, "Djibouti")]
+    [InlineData(9.02, 38.75, "Ethiopia")]
+    [InlineData(2.05, 45.32, "Somalia")]
+    [InlineData(-1.29, 36.82, "Kenya")]
+    [InlineData(0.31, 32.58, "Uganda")]
+    [InlineData(-1.94, 29.87, "Rwanda")]
+    [InlineData(-3.38, 29.36, "Burundi")]
+    [InlineData(-6.79, 39.28, "Tanzania")]
+    [InlineData(-8.84, 13.23, "Angola")]
+    [InlineData(-15.39, 28.32, "Zambia")]
+    [InlineData(-13.96, 33.79, "Malawi")]
+    [InlineData(-25.97, 32.57, "Mozambique")]
+    [InlineData(-17.83, 31.05, "Zimbabwe")]
+    [InlineData(-22.56, 17.08, "Namibia")]
+    [InlineData(-24.65, 25.91, "Botswana")]
+    [InlineData(-33.93, 18.42, "South Africa")]
+    [InlineData(-29.31, 27.48, "Lesotho")]
+    [InlineData(-26.31, 31.13, "Eswatini")]
+    [InlineData(-18.91, 47.52, "Madagascar")]
+    public void AfricanCapital_IsInCorrectCountryZone(double lat, double lon, string expectedCountry)
+    {
+        var point = new GeoCoord(lat, lon);
+        var zone = _earth.FindZone(expectedCountry);
+
+        Assert.NotNull(zone);
+        Assert.True(zone!.Contains(point),
+            $"Zone '{expectedCountry}' does not contain its capital at ({lat},{lon})");
+    }
 }
