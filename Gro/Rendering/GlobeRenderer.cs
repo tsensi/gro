@@ -14,6 +14,13 @@ public sealed class GlobeRenderer
     private int _centerY;
     private int _radius;
 
+    private bool _isDragging;
+    private int _dragStartX;
+    private int _dragStartY;
+    private int _lastMouseX;
+    private int _lastMouseY;
+    private const int DragThreshold = 5;
+
     public GlobeRenderer(Earth earth)
     {
         _earth = earth;
@@ -43,14 +50,44 @@ public sealed class GlobeRenderer
 
         if (e.type == SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN && e.button.button == SDL.SDL_BUTTON_LEFT)
         {
-            var geo = Unproject(e.button.x, e.button.y);
-            if (geo.HasValue)
+            _isDragging = true;
+            _dragStartX = e.button.x;
+            _dragStartY = e.button.y;
+            _lastMouseX = e.button.x;
+            _lastMouseY = e.button.y;
+        }
+
+        if (e.type == SDL.SDL_EventType.SDL_MOUSEMOTION && _isDragging)
+        {
+            int dx = e.motion.x - _lastMouseX;
+            int dy = e.motion.y - _lastMouseY;
+            _lastMouseX = e.motion.x;
+            _lastMouseY = e.motion.y;
+
+            if (_radius > 0)
             {
-                var zone = _earth.ZoneAt(geo.Value);
-                if (zone != null)
-                    Console.WriteLine($"Selected zone: {zone.Name} ({zone.Type})");
-                else
-                    Console.WriteLine($"Clicked at ({geo.Value.Lat:F1}, {geo.Value.Lon:F1}) - no zone found");
+                _rotLon -= dx * 180.0 / (_radius * Math.PI);
+                _rotLat = Math.Clamp(_rotLat + dy * 180.0 / (_radius * Math.PI), -90, 90);
+            }
+        }
+
+        if (e.type == SDL.SDL_EventType.SDL_MOUSEBUTTONUP && e.button.button == SDL.SDL_BUTTON_LEFT)
+        {
+            bool wasDrag = Math.Abs(e.button.x - _dragStartX) > DragThreshold ||
+                           Math.Abs(e.button.y - _dragStartY) > DragThreshold;
+            _isDragging = false;
+
+            if (!wasDrag)
+            {
+                var geo = Unproject(e.button.x, e.button.y);
+                if (geo.HasValue)
+                {
+                    var zone = _earth.ZoneAt(geo.Value);
+                    if (zone != null)
+                        Console.WriteLine($"Selected zone: {zone.Name} ({zone.Type})");
+                    else
+                        Console.WriteLine($"Clicked at ({geo.Value.Lat:F1}, {geo.Value.Lon:F1}) - no zone found");
+                }
             }
         }
     }
