@@ -1278,6 +1278,37 @@ internal static class CountryData
             new GeoCoord(-8, -155), new GeoCoord(-8, -134),
             new GeoCoord(-28, -134), new GeoCoord(-28, -155),
         }));
+
+        // Antarctica (5 zones split by longitude)
+        zones.Add(MakeCountry("Antarctica (Marie Byrd Land)", "Antarctica", new[]
+        {
+            new GeoCoord(-70, -180), new GeoCoord(-70, -108),
+            new GeoCoord(-90, -108), new GeoCoord(-90, -180),
+        }));
+
+        zones.Add(MakeCountry("Antarctica (Peninsula)", "Antarctica", new[]
+        {
+            new GeoCoord(-70, -108), new GeoCoord(-70, -36),
+            new GeoCoord(-90, -36), new GeoCoord(-90, -108),
+        }));
+
+        zones.Add(MakeCountry("Antarctica (Queen Maud Land)", "Antarctica", new[]
+        {
+            new GeoCoord(-70, -36), new GeoCoord(-70, 36),
+            new GeoCoord(-90, 36), new GeoCoord(-90, -36),
+        }));
+
+        zones.Add(MakeCountry("Antarctica (Enderby Land)", "Antarctica", new[]
+        {
+            new GeoCoord(-70, 36), new GeoCoord(-70, 108),
+            new GeoCoord(-90, 108), new GeoCoord(-90, 36),
+        }));
+
+        zones.Add(MakeCountry("Antarctica (Victoria Land)", "Antarctica", new[]
+        {
+            new GeoCoord(-70, 108), new GeoCoord(-70, 180),
+            new GeoCoord(-90, 180), new GeoCoord(-90, 108),
+        }));
     }
 
     private static Zone MakeCountry(string name, string parent, GeoCoord[] boundary) => new()
