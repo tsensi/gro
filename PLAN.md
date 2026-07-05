@@ -20,9 +20,16 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] The ocean zones are too large, break them into smaller segments.
 - [x] Document the current state of the project with naming and decisions in CLAUDE.md
 
-- [x] Make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
-- [x] Fix zone coverage test failures: OceanData overlaps with continents (Atlantic/South America, Atlantic/Africa, Atlantic/North America, Arctic/Asia) and uncovered gaps
- 
+## Zone tests
+
+The tests currently are failing, but running them all overwhelms the the token limits in the code agent. We have to break this down into separate tasks
+- [ ] Look at Zone.cs Is it too large or complex? Can we extract algorithms like point-inside? If yes, add tasks here to do so
+- [ ] Change the default behavior of the zone tests to run sequentially for each zone, instead of a large O(n^2) double loop. This means we have to dynamically create test cases for each zone. However, this is fine. They don't have to be harnessed unit tests, this should be a separate CLI tool.
+- [ ] Now, create tasks for each letter of the alphabet. Run the zone overlap tests only for zones that start with that letter and fix the overlap errors that come up. For each country that comes up, add a task here to research its goegraphic outline (coarse polygon, 100km resolution) and fix it.
+- [ ] Now, after fixing, create tasks again for each letter of the alphabet and run the tests only for zones with that letter. Fix any remaining issues.
+- [ ] Use the improved tooling to make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
+- [ ] Fix any remaining zone coverage test failures
+
 - [x] Create a simple immediate-mode UI toolkit inspired by React.
 
 - [x] Allow selecting a zone. Animate a UI panel in showing the zone's name and stats. There is a close button on the panel to dismiss it, animating it out
