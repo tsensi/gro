@@ -21,10 +21,12 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Document the current state of the project with naming and decisions in CLAUDE.md
 
 - [x] Make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
+- [x] Fix zone coverage test failures: OceanData overlaps with continents (Atlantic/South America, Atlantic/Africa, Atlantic/North America, Arctic/Asia) and uncovered gaps
  
 - [x] Create a simple immediate-mode UI toolkit inspired by React.
-- [ ] Fix zone coverage test failures: OceanData overlaps with continents (Atlantic/South America, Atlantic/Africa, Atlantic/North America, Arctic/Asia) and uncovered gaps
-- [ ] Allow selecting a zone. Animate a UI panel in showing the zone's name and stats. There is a close button on the panel to dismiss it, animating it out
+
+- [x] Allow selecting a zone. Animate a UI panel in showing the zone's name and stats. There is a close button on the panel to dismiss it, animating it out
+- [ ] Fix zone coverage test failures: OceanData overlaps (Atlantic/South America, Atlantic/Africa, Atlantic/North America, Arctic/Asia) and uncovered Pacific gaps
 - [ ] Add a simple ECS framework that can attach entities to zones.
 - [ ] Add a ticker system. Use it to tick all parts of the simulation. Prepare a document SIMULATION.md and update it as the game grows
 - [ ] Add the "infection" mechanic. In the beginning of the game, the player selects a starting region. They have to confirm the region selection. Add tasks for a modal dialog system here

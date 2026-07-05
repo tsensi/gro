@@ -56,10 +56,21 @@ public static class Program
         var state = new StateStore();
         uint lastTick = SDL.SDL_GetTicks();
 
+        globe.ZoneSelected += zone =>
+        {
+            if (zone != null)
+            {
+                state.Set("selectedZone", zone);
+                state.Set("panelDismissing", false);
+                animator.Animate(0f, 1f, 250f, EaseFunction.EaseOut,
+                    v => state.Set("panelAnim", v));
+            }
+        };
+
         if (headless)
         {
             SDL.SDL_GetWindowSize(window, out int w, out int h);
-            ui.Update(() => UIElement.Label("Headless"));
+            ui.Update(() => BuildUI(state, animator));
             ui.Layout(w, h);
             globe.Render(renderer, w, h, present: false);
             ui.Render(renderer);
@@ -110,6 +121,75 @@ public static class Program
 
     private static UIElement BuildUI(StateStore state, Animator animator)
     {
-        return UIElement.Panel();
+        var zone = state.Get<Zone?>("selectedZone", null);
+        float anim = state.Get("panelAnim", 0f);
+        bool dismissing = state.Get("panelDismissing", false);
+
+        if (zone == null || anim <= 0f)
+            return UIElement.Panel();
+
+        int panelWidth = 260;
+        int xOffset = (int)((1f - anim) * panelWidth);
+
+        return UIElement.Panel(
+            style: new UIStyle
+            {
+                Width = panelWidth,
+                Padding = 12,
+                Gap = 8,
+                Anchor = Anchor.TopRight,
+                OffsetX = xOffset,
+                OffsetY = 20,
+                BackgroundColor = Color.FromRgba(20, 25, 40, 220),
+                BorderColor = Color.FromRgba(80, 120, 180, 180),
+                BorderWidth = 1,
+            },
+            key: "zone-panel",
+            UIElement.Row(
+                style: new UIStyle { Direction = LayoutDirection.Horizontal, Gap = 8 },
+                key: "zone-header",
+                UIElement.Label(zone.Name, style: new UIStyle
+                {
+                    FontSize = 16,
+                    TextColor = Color.FromRgb(240, 240, 255),
+                }),
+                UIElement.Button("X", () =>
+                {
+                    if (!dismissing)
+                    {
+                        state.Set("panelDismissing", true);
+                        animator.Animate(anim, 0f, 200f, EaseFunction.EaseIn,
+                            v => state.Set("panelAnim", v),
+                            () =>
+                            {
+                                state.Set<Zone?>("selectedZone", null);
+                                state.Set("panelDismissing", false);
+                            });
+                    }
+                }, style: new UIStyle
+                {
+                    Padding = 4,
+                    BackgroundColor = Color.FromRgba(120, 40, 40, 200),
+                    TextColor = Color.FromRgb(255, 200, 200),
+                    BorderColor = Color.FromRgba(180, 80, 80, 180),
+                    BorderWidth = 1,
+                })
+            ),
+            UIElement.Label($"Type: {zone.Type}", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(180, 190, 210),
+            }),
+            UIElement.Label($"Parent: {zone.ParentName ?? "none"}", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(180, 190, 210),
+            }),
+            UIElement.Label($"Lat: {zone.Centroid.Lat:F1}  Lon: {zone.Centroid.Lon:F1}", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(160, 170, 190),
+            })
+        );
     }
 }

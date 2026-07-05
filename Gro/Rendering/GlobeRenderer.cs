@@ -21,6 +21,8 @@ public sealed class GlobeRenderer
     private int _lastMouseY;
     private const int DragThreshold = 5;
 
+    public event Action<Zone?>? ZoneSelected;
+
     public GlobeRenderer(Earth earth)
     {
         _earth = earth;
@@ -83,10 +85,7 @@ public sealed class GlobeRenderer
                 if (geo.HasValue)
                 {
                     var zone = _earth.ZoneAt(geo.Value);
-                    if (zone != null)
-                        Console.WriteLine($"Selected zone: {zone.Name} ({zone.Type})");
-                    else
-                        Console.WriteLine($"Clicked at ({geo.Value.Lat:F1}, {geo.Value.Lon:F1}) - no zone found");
+                    ZoneSelected?.Invoke(zone);
                 }
             }
         }

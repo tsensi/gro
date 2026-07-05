@@ -58,6 +58,7 @@ public sealed class UIContext
     {
         if (_root == null) return;
         LayoutNode(_root, 0, 0, windowWidth, windowHeight);
+        ApplyAnchors(_root, windowWidth, windowHeight);
     }
 
     public void Render(IntPtr renderer)
@@ -129,6 +130,31 @@ public sealed class UIContext
                 offset += child.Bounds.W + style.Gap;
             }
         }
+    }
+
+    private void ApplyAnchors(UINode node, int windowWidth, int windowHeight)
+    {
+        var style = node.Element.Style;
+        if (style.Anchor == Anchor.TopRight)
+        {
+            int x = windowWidth - node.Bounds.W + style.OffsetX;
+            int y = style.OffsetY;
+            ShiftNode(node, x - node.Bounds.X, y - node.Bounds.Y);
+        }
+        else if (style.OffsetX != 0 || style.OffsetY != 0)
+        {
+            ShiftNode(node, style.OffsetX, style.OffsetY);
+        }
+
+        foreach (var child in node.Children)
+            ApplyAnchors(child, windowWidth, windowHeight);
+    }
+
+    private void ShiftNode(UINode node, int dx, int dy)
+    {
+        node.Bounds = new Rect(node.Bounds.X + dx, node.Bounds.Y + dy, node.Bounds.W, node.Bounds.H);
+        foreach (var child in node.Children)
+            ShiftNode(child, dx, dy);
     }
 
     private int MeasureHeight(UINode node, int availW, int availH)

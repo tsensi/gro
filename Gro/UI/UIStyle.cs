@@ -2,6 +2,8 @@ using Gro.Rendering;
 
 namespace Gro.UI;
 
+public enum Anchor { TopLeft, TopRight }
+
 public sealed class UIStyle
 {
     public LayoutDirection Direction { get; init; } = LayoutDirection.Vertical;
@@ -10,6 +12,9 @@ public sealed class UIStyle
     public int Gap { get; init; }
     public int? Width { get; init; }
     public int? Height { get; init; }
+    public Anchor Anchor { get; init; } = Anchor.TopLeft;
+    public int OffsetX { get; init; }
+    public int OffsetY { get; init; }
     public Color BackgroundColor { get; init; } = Color.FromRgba(0, 0, 0, 0);
     public Color TextColor { get; init; } = Color.FromRgb(220, 220, 220);
     public Color BorderColor { get; init; } = Color.FromRgba(0, 0, 0, 0);
