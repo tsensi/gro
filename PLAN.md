@@ -9,6 +9,17 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Document how to run the project here.
 - [x] Add a way render each zone in a different style, varying outline color, width, and fill color and width
 - [x] Add mouse input, allowing to select any zone on the globe. Log the selected zone to the console.
+- [ ] Allow rotating the globe with the mouse like in Google Earth. Add tasks here to break this down into simpler sub-tasks.
+- [ ] Make sure that all of Europe is represented. For each European county, there should be a zone that contains it.
+- [ ] Make sure that all of Africa is represented.
+- [ ] Make sure that all of North America is represented. Split Canada into about 5 regions, split the US in 3-4 regions
+- [ ] Make sure that all of Central America is represented. It's Mexico (split in 3 regions), plus 3 more regions
+- [ ] Make sure that all of continental Asia is represented. Split large countries like China, Mongolia, Russia, ...
+- [ ] Make sure that all of Oceania is represented.
+- [ ] Antarctica should be split into 5 zones.
+- [ ] The ocean zones are too large, break them into smaller segments.
+- [ ] Document the current state of the project with naming and decisions in CLAUDE.md
+- [ ] Make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
 
 ## How to run
 
