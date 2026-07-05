@@ -26,7 +26,14 @@ The tests currently are failing, but running them all overwhelms the the token l
 - [x] Look at Zone.cs Is it too large or complex? Can we extract algorithms like point-inside? If yes, add tasks here to do so
   - Conclusion: No. Zone.cs is 87 lines with a single responsibility. The point-in-polygon, centroid, and antimeridian logic are tightly coupled to Boundary and not reused elsewhere. No extraction needed.
 - [x] Change the default behavior of the zone tests to run sequentially for each zone, instead of a large O(n^2) double loop. This means we have to dynamically create test cases for each zone. However, this is fine. They don't have to be harnessed unit tests, this should be a separate CLI tool.
-- [x] Now, create tasks for each letter of the alphabet. Run the zone overlap tests only for zones that start with that letter and fix the overlap errors that come up. For each country that comes up, add a task here to research its goegraphic outline (coarse polygon, 100km resolution) and fix it. Again, do NOT run a single for loop for all letters. Create individual tasks here, in PLAN.md
+- [x] Define a geo-json inspired JSON format for the zone data. Add it in the Appendix further down. NOTE: The resolution should be on the order of 100m. Round to precision, making it easier to later fix correct tiling and adjacency.
+- [ ] Extract ContinentData.cs into JSON and load it at app start. Each continent ahoudl be one file.
+- [ ] Extract CountryData.cs into JSON and load it at app start. Each country zone should be one file.
+- [ ] Extract OceanData.cs into JSON and load it at app start. Each ocean ZONE should be one file.
+- [ ] We need better tools to deal with overlaps. Add tasks here to add CLI tools to validate, normalize polygons in the JSON format.
+- [ ] Create a CLI tool to fix intersections between zones. Add a mode that subtracts one polygon from another.
+- [ ] Add a "split-difference" mode to the fix-intersection tool. It intersects both polygons, then find the median line in the intersection area and adjusts both polygons to become a compromise solution.
+- [x] Now, create tasks for each letter of the alphabet. Run the zone overlap tests only for zones that start with that letter and fix the overlap errors that come up. For each country that comes up, add a task here to run the split-difference mode between two countries. If one intersection partner is an ocean, subtract it from the country zone.
   - [ ] Zone overlap fixes: letter A (Africa, Asia, Antarctica, Albania, Algeria, Angola, Afghanistan, Argentina, Australia, Austria, Arabia zones, Arctic/Atlantic/Andaman ocean zones)
   - [ ] Zone overlap fixes: letter B (Belgium, Belarus, Bangladesh, Benin, Bhutan, Bosnia, Botswana, Brazil, Bulgaria, Burkina Faso, Burundi, Baltic/Barents/Bay/Beaufort/Bering/Black ocean zones)
   - [ ] Zone overlap fixes: letter C (Canada regions, Cameroon, Cambodia, Chad, China regions, Colombia, Costa Rica-Panama, Croatia, Cuba, Czech Republic, Caribbean/Central/Coral ocean zones)
@@ -93,3 +100,90 @@ If `dotnet` reports "No .NET SDKs were found", ensure `~/.dotnet` is on your PAT
 export DOTNET_ROOT="$HOME/.dotnet"
 export PATH="$DOTNET_ROOT:$PATH"
 ```
+
+---
+
+## Appendix A: Zone Data JSON Format
+
+Zone data is stored as one JSON file per zone. The format is inspired by GeoJSON but simplified to match the game's two-level zone hierarchy.
+
+### Coordinate Convention
+
+- Order: **[longitude, latitude]** (GeoJSON standard)
+- Precision: **3 decimal places** (0.001° ≈ 111m at equator, ≈79m at 45°N)
+- Rings are **closed**: first coordinate must equal last coordinate
+- Coordinates are WGS 84 degrees, longitude in [-180, 180], latitude in [-90, 90]
+- Antimeridian-crossing polygons use continuous longitude (e.g. 170 → 185 is allowed as 170 → -175)
+
+### Schema
+
+```json
+{
+  "name": "Canada (Prairies)",
+  "type": "Country",
+  "parent": "North America",
+  "boundary": [
+    [-120.000, 60.000],
+    [-90.000, 60.000],
+    [-80.000, 55.000],
+    [-80.000, 51.000],
+    [-90.000, 49.000],
+    [-120.000, 49.000],
+    [-120.000, 54.000],
+    [-120.000, 60.000]
+  ]
+}
+```
+
+### Field Reference
+
+| Field      | Type       | Required | Description                                                       |
+|------------|------------|----------|-------------------------------------------------------------------|
+| `name`     | string     | yes      | Unique zone name, matches in-game display name                    |
+| `type`     | string     | yes      | One of: `"Continent"`, `"Country"`, `"OceanBasin"`, `"OceanZone"` |
+| `parent`   | string\|null | yes    | Name of parent zone (null for top-level: Continent, OceanBasin)   |
+| `boundary` | number[][] | yes      | Array of [lon, lat] pairs forming a closed polygon ring           |
+
+### File Organization
+
+```
+zones/
+  continents/
+    north-america.json
+    south-america.json
+    europe.json
+    africa.json
+    asia.json
+    oceania.json
+    antarctica.json
+  countries/
+    canada-prairies.json
+    canada-british-columbia.json
+    france.json
+    ...
+  ocean-basins/
+    atlantic-ocean.json
+    pacific-ocean.json
+    indian-ocean.json
+    southern-ocean.json
+    arctic-ocean.json
+  ocean-zones/
+    eastern-mediterranean.json
+    north-sea.json
+    ...
+```
+
+File names are the zone name lowercased, with spaces and parentheses replaced by hyphens, e.g. `"Canada (Prairies)"` → `canada-prairies.json`.
+
+### Rounding Rule
+
+All coordinates are rounded to exactly 3 decimal places. When two zones share a border, the shared vertices must have **identical** coordinate values after rounding — this is what enables adjacency detection and ensures no gaps or overlaps at shared edges.
+
+### Validation Rules
+
+1. `boundary` must have at least 4 points (3 unique vertices + closing point)
+2. First point must equal last point (closed ring)
+3. All coordinates rounded to exactly 3 decimal places
+4. `type` must be one of the four valid enum values
+5. `parent` must be null for top-level zones (Continent, OceanBasin) and non-null for child zones (Country, OceanZone)
+6. No duplicate consecutive points (other than the closing point)
