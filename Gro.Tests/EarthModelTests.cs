@@ -53,8 +53,8 @@ public class EarthModelTests
     public void GetChildren_ReturnsCountriesForContinent()
     {
         var naChildren = _earth.GetChildren("North America").ToList();
-        Assert.Contains(naChildren, c => c.Name == "Canada");
-        Assert.Contains(naChildren, c => c.Name == "United States");
+        Assert.Contains(naChildren, c => c.Name == "Canada (Quebec-Ontario)");
+        Assert.Contains(naChildren, c => c.Name == "United States (Northeast)");
         Assert.Contains(naChildren, c => c.Name == "Mexico");
     }
 
@@ -84,7 +84,7 @@ public class EarthModelTests
 
     [Theory]
     [InlineData(48.86, 2.35, "France")]       // Paris
-    [InlineData(40.71, -74.01, "United States")] // NYC
+    [InlineData(40.71, -74.01, "United States (Northeast)")] // NYC
     [InlineData(-33.87, 151.21, "Australia")]  // Sydney
     [InlineData(35.68, 139.69, "Japan")]       // Tokyo
     [InlineData(-15.79, -47.88, "Brazil")]     // Brasilia
@@ -144,7 +144,7 @@ public class EarthModelTests
     [Fact]
     public void Zone_Contains_PointInsideIsTrue()
     {
-        var us = _earth.FindZone("United States")!;
+        var us = _earth.FindZone("United States (Central)")!;
         // Kansas City
         Assert.True(us.Contains(new GeoCoord(39.1, -94.6)));
     }
@@ -152,7 +152,7 @@ public class EarthModelTests
     [Fact]
     public void Zone_Contains_PointOutsideIsFalse()
     {
-        var us = _earth.FindZone("United States")!;
+        var us = _earth.FindZone("United States (Central)")!;
         // London
         Assert.False(us.Contains(new GeoCoord(51.5, -0.12)));
     }

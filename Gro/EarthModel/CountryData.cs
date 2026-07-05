@@ -4,28 +4,101 @@ internal static class CountryData
 {
     public static void Add(List<Zone> zones)
     {
-        // North America
-        zones.Add(MakeCountry("Canada", "North America", new[]
+        // North America - Canada (5 regions)
+        zones.Add(MakeCountry("Canada (Atlantic)", "North America", new[]
         {
-            new GeoCoord(83, -141), new GeoCoord(83, -60),
-            new GeoCoord(72, -55), new GeoCoord(60, -52),
-            new GeoCoord(47, -53), new GeoCoord(45, -67),
-            new GeoCoord(42, -83), new GeoCoord(49, -95),
+            new GeoCoord(53, -67), new GeoCoord(53, -52),
+            new GeoCoord(47, -52), new GeoCoord(44, -60),
+            new GeoCoord(44, -67), new GeoCoord(45, -67),
+            new GeoCoord(48, -67),
+        }));
+
+        zones.Add(MakeCountry("Canada (Quebec-Ontario)", "North America", new[]
+        {
+            new GeoCoord(55, -80), new GeoCoord(55, -67),
+            new GeoCoord(53, -67), new GeoCoord(48, -67),
+            new GeoCoord(45, -67), new GeoCoord(44, -76),
+            new GeoCoord(42, -83), new GeoCoord(46, -83),
+            new GeoCoord(49, -90), new GeoCoord(51, -80),
+        }));
+
+        zones.Add(MakeCountry("Canada (Prairies)", "North America", new[]
+        {
+            new GeoCoord(60, -120), new GeoCoord(60, -90),
+            new GeoCoord(55, -80), new GeoCoord(51, -80),
+            new GeoCoord(49, -90), new GeoCoord(49, -120),
+            new GeoCoord(54, -120),
+        }));
+
+        zones.Add(MakeCountry("Canada (British Columbia)", "North America", new[]
+        {
+            new GeoCoord(60, -139), new GeoCoord(60, -120),
+            new GeoCoord(54, -120), new GeoCoord(49, -120),
             new GeoCoord(49, -123), new GeoCoord(54, -130),
+            new GeoCoord(57, -135),
+        }));
+
+        zones.Add(MakeCountry("Canada (North)", "North America", new[]
+        {
+            new GeoCoord(83, -141), new GeoCoord(83, -52),
+            new GeoCoord(72, -52), new GeoCoord(60, -52),
+            new GeoCoord(53, -52), new GeoCoord(53, -67),
+            new GeoCoord(55, -67), new GeoCoord(55, -80),
+            new GeoCoord(60, -90), new GeoCoord(60, -120),
             new GeoCoord(60, -139), new GeoCoord(69, -141),
         }));
 
-        zones.Add(MakeCountry("United States", "North America", new[]
+        // North America - United States (4 regions)
+        zones.Add(MakeCountry("United States (Northeast)", "North America", new[]
         {
-            new GeoCoord(49, -123), new GeoCoord(49, -95),
-            new GeoCoord(42, -83), new GeoCoord(41, -72),
-            new GeoCoord(35, -75), new GeoCoord(30, -81),
-            new GeoCoord(25, -80), new GeoCoord(29, -90),
-            new GeoCoord(29, -95), new GeoCoord(26, -97),
-            new GeoCoord(32, -106), new GeoCoord(32, -117),
-            new GeoCoord(38, -122), new GeoCoord(46, -124),
+            new GeoCoord(49, -90), new GeoCoord(46, -83),
+            new GeoCoord(42, -83), new GeoCoord(44, -76),
+            new GeoCoord(41, -72), new GeoCoord(35, -75),
+            new GeoCoord(35, -80), new GeoCoord(35, -90),
+            new GeoCoord(37, -90), new GeoCoord(42, -90),
+            new GeoCoord(46, -90),
         }));
 
+        zones.Add(MakeCountry("United States (Southeast)", "North America", new[]
+        {
+            new GeoCoord(35, -90), new GeoCoord(35, -80),
+            new GeoCoord(35, -75), new GeoCoord(30, -81),
+            new GeoCoord(25, -80), new GeoCoord(25, -82),
+            new GeoCoord(29, -90), new GeoCoord(29, -95),
+            new GeoCoord(30, -95), new GeoCoord(33, -95),
+            new GeoCoord(37, -90),
+        }));
+
+        zones.Add(MakeCountry("United States (Central)", "North America", new[]
+        {
+            new GeoCoord(49, -104), new GeoCoord(49, -90),
+            new GeoCoord(46, -90), new GeoCoord(42, -90),
+            new GeoCoord(37, -90), new GeoCoord(33, -95),
+            new GeoCoord(30, -95), new GeoCoord(26, -97),
+            new GeoCoord(32, -106), new GeoCoord(37, -104),
+            new GeoCoord(42, -104),
+        }));
+
+        zones.Add(MakeCountry("United States (West)", "North America", new[]
+        {
+            new GeoCoord(49, -123), new GeoCoord(49, -120),
+            new GeoCoord(49, -104), new GeoCoord(42, -104),
+            new GeoCoord(37, -104), new GeoCoord(32, -106),
+            new GeoCoord(32, -117), new GeoCoord(38, -122),
+            new GeoCoord(46, -124),
+        }));
+
+        // North America - Alaska
+        zones.Add(MakeCountry("United States (Alaska)", "North America", new[]
+        {
+            new GeoCoord(72, -170), new GeoCoord(72, -141),
+            new GeoCoord(69, -141), new GeoCoord(60, -139),
+            new GeoCoord(57, -135), new GeoCoord(54, -130),
+            new GeoCoord(55, -162), new GeoCoord(58, -168),
+            new GeoCoord(65, -168),
+        }));
+
+        // North America - Mexico
         zones.Add(MakeCountry("Mexico", "North America", new[]
         {
             new GeoCoord(32, -117), new GeoCoord(32, -106),
@@ -35,6 +108,33 @@ internal static class CountryData
             new GeoCoord(21, -90), new GeoCoord(20, -105),
             new GeoCoord(23, -110), new GeoCoord(28, -112),
             new GeoCoord(31, -113), new GeoCoord(32, -115),
+        }));
+
+        // North America - Caribbean
+        zones.Add(MakeCountry("Cuba", "North America", new[]
+        {
+            new GeoCoord(23.5, -84.5), new GeoCoord(23.5, -74),
+            new GeoCoord(20, -74), new GeoCoord(20, -84.5),
+        }));
+
+        zones.Add(MakeCountry("Haiti-Dominican Republic", "North America", new[]
+        {
+            new GeoCoord(20, -74.5), new GeoCoord(20, -68),
+            new GeoCoord(18, -68), new GeoCoord(18, -74.5),
+        }));
+
+        zones.Add(MakeCountry("Jamaica", "North America", new[]
+        {
+            new GeoCoord(18.5, -78.5), new GeoCoord(18.5, -76),
+            new GeoCoord(17.5, -76), new GeoCoord(17.5, -78.5),
+        }));
+
+        zones.Add(MakeCountry("Greenland", "North America", new[]
+        {
+            new GeoCoord(83, -52), new GeoCoord(83, -12),
+            new GeoCoord(76, -18), new GeoCoord(70, -22),
+            new GeoCoord(65, -54), new GeoCoord(60, -45),
+            new GeoCoord(60, -52), new GeoCoord(72, -52),
         }));
 
         // South America

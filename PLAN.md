@@ -12,7 +12,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Allow rotating the globe with the mouse like in Google Earth. Add tasks here to break this down into simpler sub-tasks.
 - [x] Make sure that all of Europe is represented. For each European county, there should be a zone that contains it.
 - [x] Make sure that all of Africa is represented.
-- [ ] Make sure that all of North America is represented. Split Canada into about 5 regions, split the US in 3-4 regions
+- [x] Make sure that all of North America is represented. Split Canada into about 5 regions, split the US in 3-4 regions
 - [ ] Make sure that all of Central America is represented. It's Mexico (split in 3 regions), plus 3 more regions
 - [ ] Make sure that all of continental Asia is represented. Split large countries like China, Mongolia, Russia, ...
 - [ ] Make sure that all of Oceania is represented.
