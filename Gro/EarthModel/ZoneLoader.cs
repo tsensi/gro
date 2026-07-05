@@ -2,7 +2,7 @@ using System.Text.Json;
 
 namespace Gro.EarthModel;
 
-internal static class ZoneLoader
+public static class ZoneLoader
 {
     public static List<Zone> LoadFromDirectory(string directoryPath)
     {
