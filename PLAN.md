@@ -20,6 +20,21 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [ ] The ocean zones are too large, break them into smaller segments.
 - [ ] Document the current state of the project with naming and decisions in CLAUDE.md
 - [ ] Make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
+- [ ] Create a simple immediate-mode UI toolkit inspired by React.
+- [ ] Allow selecting a zone. Animate a UI panel in showing the zone's name and stats. There is a close button on the panel to dismiss it, animating it out
+- [ ] Add a simple ECS framework that can attach entities to zones.
+- [ ] Add a ticker system. Use it to tick all parts of the simulation. Prepare a document SIMULATION.md and update it as the game grows
+- [ ] Add the "infection" mechanic. In the beginning of the game, the player selects a starting region. They have to confirm the region selection. Add tasks for a modal dialog system here
+- [ ] Once a starting region is selected, add a Xeno entity there. It begins with a fixed starting value (let's start at 10). Every day of simulated time, the Xeno entity creates a fraction of its current value as new Xeno value (k-factor of exponential growth). This is designed to start slow. The initial value has doubling-times of ten years.
+- [ ] When the player selects an adjacent region to an infected region (one with Xeno entity), they can infect the new region. This creates a new Xeno entity on the adjacent field. The value from the old field is split between the old and new field paying a fix "tax" of 40% that gets deducted beforehand (to make it meaningful and costly to spread)
+- [ ] The player farms a "biomass" resource. Add a global resource counter service / system. Use a ServiceLocator pattern
+- [ ] On every turn, the biomass increases by the number of infected zones. This will later be refined.
+- [ ] For a fixed amount of biomass, the player can upgrade an infected zone and increase the growth factor there.
+
+This is an idle game. Research classics of the genre like Cookie Clicker
+- [ ] Research competitor idle games and add a new file IDLE_IDEAS_PLAN.md in this `- [ ]` task format for all the things to add to make this game better
+- [ ] Research competitor world domination/grand strategy games and add a new file DOMINATION_IDEAS_PLAN.md in this `- [ ]` task format for all the things to add to make this game better
+
 
 ## How to run
 
