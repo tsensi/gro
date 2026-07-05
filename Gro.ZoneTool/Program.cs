@@ -15,6 +15,7 @@ return command switch
     "validate" => RunValidate(remainingArgs),
     "normalize" => RunNormalize(remainingArgs),
     "subtract" => RunSubtract(remainingArgs),
+    "split-difference" => RunSplitDifference(remainingArgs),
     _ => PrintUsage()
 };
 
@@ -26,11 +27,13 @@ static int PrintUsage()
     Console.WriteLine("  dotnet run --project Gro.ZoneTool -- validate [path|--all]");
     Console.WriteLine("  dotnet run --project Gro.ZoneTool -- normalize [path|--all] [--dry-run]");
     Console.WriteLine("  dotnet run --project Gro.ZoneTool -- subtract <subject.json> <clip.json> [--dry-run]");
+    Console.WriteLine("  dotnet run --project Gro.ZoneTool -- split-difference <zone1.json> <zone2.json> [--dry-run]");
     Console.WriteLine();
     Console.WriteLine("Commands:");
     Console.WriteLine("  validate    Check zone files against the schema and validation rules");
     Console.WriteLine("  normalize   Rewrite zone files with correct rounding, closure, and formatting");
     Console.WriteLine("  subtract    Subtract clip polygon from subject polygon, writing result to subject");
+    Console.WriteLine("  split-difference  Split the intersection of two polygons along the median line");
     Console.WriteLine();
     Console.WriteLine("Options:");
     Console.WriteLine("  path        Path to a specific .json file or directory");
@@ -472,6 +475,256 @@ static int RunSubtract(string[] args)
     Console.WriteLine($"  Subtracted [{clip.Value.Name}] from [{name}]");
     Console.WriteLine($"  Before: {subject.Value.Points.Count} vertices, After: {result.Count} vertices");
     return 0;
+}
+
+static int RunSplitDifference(string[] args)
+{
+    var paths = args.Where(a => !a.StartsWith("--")).ToArray();
+    bool dryRun = args.Contains("--dry-run");
+
+    if (paths.Length < 2)
+    {
+        Console.WriteLine("ERROR: split-difference requires two arguments: <zone1.json> <zone2.json>");
+        Console.WriteLine("  Finds the intersection of both polygons, computes the median line,");
+        Console.WriteLine("  and adjusts both polygons so each gets half of the overlapping area.");
+        return 1;
+    }
+
+    var path1 = paths[0];
+    var path2 = paths[1];
+
+    if (!File.Exists(path1))
+    {
+        Console.WriteLine($"ERROR: File not found: {path1}");
+        return 1;
+    }
+    if (!File.Exists(path2))
+    {
+        Console.WriteLine($"ERROR: File not found: {path2}");
+        return 1;
+    }
+
+    var zone1 = LoadZonePoints(path1);
+    var zone2 = LoadZonePoints(path2);
+    if (zone1 == null || zone2 == null)
+        return 1;
+
+    var intersection = PolygonIntersect(zone1.Value.Points, zone2.Value.Points);
+    if (intersection == null || intersection.Count < 3)
+    {
+        Console.WriteLine("No intersection found between the two polygons. Nothing to split.");
+        return 0;
+    }
+
+    var centroid1 = PolygonCentroid(zone1.Value.Points);
+    var centroid2 = PolygonCentroid(zone2.Value.Points);
+
+    // The median line is the perpendicular bisector of the segment connecting the two centroids.
+    // We create a large clipping polygon on each side of this line.
+    var midpoint = ((centroid1.Lon + centroid2.Lon) / 2, (centroid1.Lat + centroid2.Lat) / 2);
+    double dx = centroid2.Lon - centroid1.Lon;
+    double dy = centroid2.Lat - centroid1.Lat;
+
+    // Perpendicular direction (rotated 90 degrees)
+    double perpDx = -dy;
+    double perpDy = dx;
+    double perpLen = Math.Sqrt(perpDx * perpDx + perpDy * perpDy);
+    if (perpLen < 1e-12)
+    {
+        Console.WriteLine("ERROR: The two zone centroids are at the same location. Cannot determine median line.");
+        return 1;
+    }
+    perpDx /= perpLen;
+    perpDy /= perpLen;
+
+    // Normal direction (from centroid1 toward centroid2)
+    double normDx = dx / perpLen;
+    double normDy = dy / perpLen;
+
+    // Build large half-plane polygons (CCW winding for Sutherland-Hodgman).
+    double extent = 200.0; // degrees — more than enough to cover any polygon
+
+    // halfPlane1: zone1's side (toward -norm direction from midpoint), CCW
+    var halfPlane1 = new List<(double Lon, double Lat)>
+    {
+        (midpoint.Item1 + perpDx * extent - normDx * extent, midpoint.Item2 + perpDy * extent - normDy * extent),
+        (midpoint.Item1 - perpDx * extent - normDx * extent, midpoint.Item2 - perpDy * extent - normDy * extent),
+        (midpoint.Item1 - perpDx * extent, midpoint.Item2 - perpDy * extent),
+        (midpoint.Item1 + perpDx * extent, midpoint.Item2 + perpDy * extent),
+    };
+
+    // halfPlane2: zone2's side (toward +norm direction from midpoint), CCW
+    var halfPlane2 = new List<(double Lon, double Lat)>
+    {
+        (midpoint.Item1 - perpDx * extent + normDx * extent, midpoint.Item2 - perpDy * extent + normDy * extent),
+        (midpoint.Item1 + perpDx * extent + normDx * extent, midpoint.Item2 + perpDy * extent + normDy * extent),
+        (midpoint.Item1 + perpDx * extent, midpoint.Item2 + perpDy * extent),
+        (midpoint.Item1 - perpDx * extent, midpoint.Item2 - perpDy * extent),
+    };
+
+    // Clip the intersection to each side of the median line.
+    // halfPlane2 is on zone2's side, so its intersection portion belongs to zone2 — subtract from zone1.
+    // halfPlane1 is on zone1's side, so its intersection portion belongs to zone1 — subtract from zone2.
+    var partForZone1 = PolygonIntersect(intersection, halfPlane1);
+    var partForZone2 = PolygonIntersect(intersection, halfPlane2);
+
+    // Subtract from each zone the part given to the other zone.
+    var result1 = zone1.Value.Points;
+    var result2 = zone2.Value.Points;
+
+    if (partForZone2 != null && partForZone2.Count >= 3)
+        result1 = PolygonSubtract(result1, partForZone2) ?? result1;
+
+    if (partForZone1 != null && partForZone1.Count >= 3)
+        result2 = PolygonSubtract(result2, partForZone1) ?? result2;
+
+    // Round and close
+    result1 = RoundAndClose(result1);
+    result2 = RoundAndClose(result2);
+
+    if (result1.Count < 4 || result2.Count < 4)
+    {
+        Console.WriteLine("WARNING: Split resulted in a degenerate polygon. No changes written.");
+        return 1;
+    }
+
+    var json1 = BuildJson(zone1.Value.Name, zone1.Value.Type, zone1.Value.Parent, result1);
+    var json2 = BuildJson(zone2.Value.Name, zone2.Value.Type, zone2.Value.Parent, result2);
+
+    if (dryRun)
+    {
+        Console.WriteLine($"WOULD MODIFY: {RelativePath(path1)}");
+        Console.WriteLine($"  Before: {zone1.Value.Points.Count} vertices, After: {result1.Count} vertices");
+        Console.WriteLine($"WOULD MODIFY: {RelativePath(path2)}");
+        Console.WriteLine($"  Before: {zone2.Value.Points.Count} vertices, After: {result2.Count} vertices");
+        return 0;
+    }
+
+    File.WriteAllText(path1, json1);
+    File.WriteAllText(path2, json2);
+    Console.WriteLine($"MODIFIED: {RelativePath(path1)}");
+    Console.WriteLine($"  Split intersection with [{zone2.Value.Name}]");
+    Console.WriteLine($"  Before: {zone1.Value.Points.Count} vertices, After: {result1.Count} vertices");
+    Console.WriteLine($"MODIFIED: {RelativePath(path2)}");
+    Console.WriteLine($"  Split intersection with [{zone1.Value.Name}]");
+    Console.WriteLine($"  Before: {zone2.Value.Points.Count} vertices, After: {result2.Count} vertices");
+    return 0;
+}
+
+static List<(double Lon, double Lat)> RoundAndClose(List<(double Lon, double Lat)> points)
+{
+    var result = new List<(double Lon, double Lat)>();
+    for (int i = 0; i < points.Count; i++)
+        result.Add((Math.Round(points[i].Lon, 3), Math.Round(points[i].Lat, 3)));
+
+    // Remove the closing point if present (we'll re-add it)
+    if (result.Count > 1 && result[0] == result[^1])
+        result.RemoveAt(result.Count - 1);
+
+    // Close the ring
+    if (result.Count >= 3)
+        result.Add(result[0]);
+
+    return result;
+}
+
+static (double Lon, double Lat) PolygonCentroid(List<(double Lon, double Lat)> polygon)
+{
+    double cx = 0, cy = 0, area = 0;
+    int n = polygon.Count;
+    for (int i = 0; i < n; i++)
+    {
+        int j = (i + 1) % n;
+        double cross = polygon[i].Lon * polygon[j].Lat - polygon[j].Lon * polygon[i].Lat;
+        area += cross;
+        cx += (polygon[i].Lon + polygon[j].Lon) * cross;
+        cy += (polygon[i].Lat + polygon[j].Lat) * cross;
+    }
+    area /= 2;
+    if (Math.Abs(area) < 1e-12)
+    {
+        // Degenerate — fall back to simple average
+        double avgLon = polygon.Average(p => p.Lon);
+        double avgLat = polygon.Average(p => p.Lat);
+        return (avgLon, avgLat);
+    }
+    cx /= (6 * area);
+    cy /= (6 * area);
+    return (cx, cy);
+}
+
+// Polygon intersection using Sutherland-Hodgman clipping.
+// Returns the polygon that is the intersection of subject and clip, or null if empty.
+static List<(double Lon, double Lat)>? PolygonIntersect(
+    List<(double Lon, double Lat)> subject,
+    List<(double Lon, double Lat)> clip)
+{
+    var output = new List<(double Lon, double Lat)>(subject);
+
+    for (int i = 0; i < clip.Count; i++)
+    {
+        if (output.Count == 0)
+            return null;
+
+        var input = new List<(double Lon, double Lat)>(output);
+        output.Clear();
+
+        var edgeStart = clip[i];
+        var edgeEnd = clip[(i + 1) % clip.Count];
+
+        for (int j = 0; j < input.Count; j++)
+        {
+            var current = input[j];
+            var previous = input[(j + input.Count - 1) % input.Count];
+
+            bool currentInside = IsLeftOf(edgeStart, edgeEnd, current);
+            bool previousInside = IsLeftOf(edgeStart, edgeEnd, previous);
+
+            if (currentInside)
+            {
+                if (!previousInside)
+                {
+                    var ix = LineIntersection(edgeStart, edgeEnd, previous, current);
+                    if (ix != null)
+                        output.Add(ix.Value);
+                }
+                output.Add(current);
+            }
+            else if (previousInside)
+            {
+                var ix = LineIntersection(edgeStart, edgeEnd, previous, current);
+                if (ix != null)
+                    output.Add(ix.Value);
+            }
+        }
+    }
+
+    return output.Count >= 3 ? output : null;
+}
+
+static bool IsLeftOf((double Lon, double Lat) edgeStart, (double Lon, double Lat) edgeEnd, (double Lon, double Lat) point)
+{
+    return (edgeEnd.Lon - edgeStart.Lon) * (point.Lat - edgeStart.Lat)
+         - (edgeEnd.Lat - edgeStart.Lat) * (point.Lon - edgeStart.Lon) >= 0;
+}
+
+static (double Lon, double Lat)? LineIntersection(
+    (double Lon, double Lat) a1, (double Lon, double Lat) a2,
+    (double Lon, double Lat) b1, (double Lon, double Lat) b2)
+{
+    double x1 = a1.Lon, y1 = a1.Lat;
+    double x2 = a2.Lon, y2 = a2.Lat;
+    double x3 = b1.Lon, y3 = b1.Lat;
+    double x4 = b2.Lon, y4 = b2.Lat;
+
+    double denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+    if (Math.Abs(denom) < 1e-12)
+        return null;
+
+    double t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom;
+    double ix = x1 + t * (x2 - x1);
+    double iy = y1 + t * (y2 - y1);
+    return (ix, iy);
 }
 
 static (string Name, string Type, string? Parent, List<(double Lon, double Lat)> Points)? LoadZonePoints(string path)
