@@ -155,11 +155,218 @@ internal static class CountryData
         zones.Add(MakeCountry("Norway", "Europe", new[]
         {
             new GeoCoord(71, 25), new GeoCoord(70, 30),
-            new GeoCoord(68, 16), new GeoCoord(64, 11),
-            new GeoCoord(62, 5), new GeoCoord(58, 6),
-            new GeoCoord(58, 8), new GeoCoord(60, 5),
-            new GeoCoord(63, 5), new GeoCoord(67, 14),
+            new GeoCoord(68, 16), new GeoCoord(64, 14),
+            new GeoCoord(62, 12), new GeoCoord(60, 12),
+            new GeoCoord(58, 8), new GeoCoord(58, 5),
+            new GeoCoord(60, 4), new GeoCoord(62, 4),
+            new GeoCoord(64, 8), new GeoCoord(67, 14),
             new GeoCoord(69, 18),
+        }));
+
+        zones.Add(MakeCountry("Iceland", "Europe", new[]
+        {
+            new GeoCoord(66.5, -24), new GeoCoord(66.5, -13),
+            new GeoCoord(65, -13), new GeoCoord(63.5, -14),
+            new GeoCoord(63.5, -20), new GeoCoord(64, -24),
+        }));
+
+        zones.Add(MakeCountry("Ireland", "Europe", new[]
+        {
+            new GeoCoord(55.5, -10.5), new GeoCoord(55.5, -5.5),
+            new GeoCoord(53.5, -6), new GeoCoord(51.5, -6),
+            new GeoCoord(51.5, -10), new GeoCoord(53, -10.5),
+        }));
+
+        zones.Add(MakeCountry("Portugal", "Europe", new[]
+        {
+            new GeoCoord(42, -9.5), new GeoCoord(42, -6.5),
+            new GeoCoord(40, -7), new GeoCoord(38.5, -7),
+            new GeoCoord(37, -7.5), new GeoCoord(37, -9),
+            new GeoCoord(38.5, -9.5), new GeoCoord(40, -9),
+        }));
+
+        zones.Add(MakeCountry("Finland", "Europe", new[]
+        {
+            new GeoCoord(70, 25), new GeoCoord(70, 30),
+            new GeoCoord(65, 30), new GeoCoord(61, 30),
+            new GeoCoord(60, 24), new GeoCoord(60, 21),
+            new GeoCoord(63, 21), new GeoCoord(66, 24),
+            new GeoCoord(68, 22),
+        }));
+
+        zones.Add(MakeCountry("Denmark", "Europe", new[]
+        {
+            new GeoCoord(57.8, 8), new GeoCoord(57.8, 13),
+            new GeoCoord(55, 13), new GeoCoord(54.5, 12),
+            new GeoCoord(54.5, 8.5), new GeoCoord(55, 8),
+            new GeoCoord(56, 8),
+        }));
+
+        zones.Add(MakeCountry("Netherlands", "Europe", new[]
+        {
+            new GeoCoord(53.5, 4), new GeoCoord(53.5, 7),
+            new GeoCoord(52, 7), new GeoCoord(51.5, 6),
+            new GeoCoord(51.5, 3.5), new GeoCoord(52, 4),
+        }));
+
+        zones.Add(MakeCountry("Belgium", "Europe", new[]
+        {
+            new GeoCoord(51.5, 2.5), new GeoCoord(51.5, 6),
+            new GeoCoord(50, 6.5), new GeoCoord(49.5, 6),
+            new GeoCoord(49.5, 3), new GeoCoord(50.5, 2.5),
+        }));
+
+        zones.Add(MakeCountry("Switzerland", "Europe", new[]
+        {
+            new GeoCoord(47.8, 6), new GeoCoord(47.8, 10.5),
+            new GeoCoord(47, 10.5), new GeoCoord(46, 10),
+            new GeoCoord(46, 6), new GeoCoord(47, 6),
+        }));
+
+        zones.Add(MakeCountry("Austria", "Europe", new[]
+        {
+            new GeoCoord(49, 10), new GeoCoord(49, 17),
+            new GeoCoord(48, 17), new GeoCoord(47, 16),
+            new GeoCoord(46.5, 13), new GeoCoord(47, 10),
+            new GeoCoord(47.5, 10),
+        }));
+
+        zones.Add(MakeCountry("Czech Republic", "Europe", new[]
+        {
+            new GeoCoord(51, 12), new GeoCoord(51, 18.5),
+            new GeoCoord(50, 18.5), new GeoCoord(49, 18),
+            new GeoCoord(48.5, 14), new GeoCoord(49, 12),
+            new GeoCoord(50, 12),
+        }));
+
+        zones.Add(MakeCountry("Slovakia", "Europe", new[]
+        {
+            new GeoCoord(49.5, 17), new GeoCoord(49.5, 22.5),
+            new GeoCoord(48.5, 22), new GeoCoord(48, 20),
+            new GeoCoord(47.5, 17), new GeoCoord(48.5, 17),
+        }));
+
+        zones.Add(MakeCountry("Hungary", "Europe", new[]
+        {
+            new GeoCoord(48.5, 16), new GeoCoord(48.5, 23),
+            new GeoCoord(47, 23), new GeoCoord(46, 21),
+            new GeoCoord(45.5, 18), new GeoCoord(46, 16),
+            new GeoCoord(47, 16),
+        }));
+
+        zones.Add(MakeCountry("Romania", "Europe", new[]
+        {
+            new GeoCoord(48, 22), new GeoCoord(48, 28),
+            new GeoCoord(46, 30), new GeoCoord(44, 29),
+            new GeoCoord(44, 23), new GeoCoord(44.5, 22),
+            new GeoCoord(46, 21), new GeoCoord(47.5, 22),
+        }));
+
+        zones.Add(MakeCountry("Bulgaria", "Europe", new[]
+        {
+            new GeoCoord(44, 22.5), new GeoCoord(44, 29),
+            new GeoCoord(43, 28.5), new GeoCoord(42, 28),
+            new GeoCoord(41.5, 24), new GeoCoord(42, 22.5),
+            new GeoCoord(43, 22.5),
+        }));
+
+        zones.Add(MakeCountry("Greece", "Europe", new[]
+        {
+            new GeoCoord(41.5, 20), new GeoCoord(41.5, 26.5),
+            new GeoCoord(39, 26), new GeoCoord(37.5, 24),
+            new GeoCoord(35, 24), new GeoCoord(35, 22),
+            new GeoCoord(37, 21), new GeoCoord(38.5, 20),
+            new GeoCoord(39.5, 20),
+        }));
+
+        zones.Add(MakeCountry("Serbia", "Europe", new[]
+        {
+            new GeoCoord(46, 19), new GeoCoord(46, 23),
+            new GeoCoord(44.5, 22.5), new GeoCoord(43, 23),
+            new GeoCoord(42, 22), new GeoCoord(42.5, 20),
+            new GeoCoord(44, 19), new GeoCoord(45, 19),
+        }));
+
+        zones.Add(MakeCountry("Croatia", "Europe", new[]
+        {
+            new GeoCoord(46.5, 13.5), new GeoCoord(46.5, 19),
+            new GeoCoord(45, 19), new GeoCoord(44.5, 17),
+            new GeoCoord(43, 16), new GeoCoord(42.5, 16),
+            new GeoCoord(43, 14), new GeoCoord(45, 13.5),
+        }));
+
+        zones.Add(MakeCountry("Bosnia and Herzegovina", "Europe", new[]
+        {
+            new GeoCoord(45, 15.5), new GeoCoord(45, 19.5),
+            new GeoCoord(44, 19.5), new GeoCoord(43, 19),
+            new GeoCoord(42.5, 17.5), new GeoCoord(43, 16),
+            new GeoCoord(44, 15.5),
+        }));
+
+        zones.Add(MakeCountry("Montenegro", "Europe", new[]
+        {
+            new GeoCoord(43.5, 18.5), new GeoCoord(43.5, 20.5),
+            new GeoCoord(42.5, 20), new GeoCoord(42, 19),
+            new GeoCoord(42, 18.5), new GeoCoord(42.5, 18.5),
+        }));
+
+        zones.Add(MakeCountry("North Macedonia", "Europe", new[]
+        {
+            new GeoCoord(42, 20), new GeoCoord(42, 23),
+            new GeoCoord(41, 23), new GeoCoord(40.5, 21),
+            new GeoCoord(41, 20), new GeoCoord(41.5, 20),
+        }));
+
+        zones.Add(MakeCountry("Albania", "Europe", new[]
+        {
+            new GeoCoord(42.5, 19), new GeoCoord(42.5, 21),
+            new GeoCoord(41, 21), new GeoCoord(40, 20.5),
+            new GeoCoord(39.5, 20), new GeoCoord(40.5, 19),
+            new GeoCoord(41.5, 19),
+        }));
+
+        zones.Add(MakeCountry("Slovenia", "Europe", new[]
+        {
+            new GeoCoord(46.8, 13.5), new GeoCoord(46.8, 16.5),
+            new GeoCoord(46, 16.5), new GeoCoord(45.5, 15),
+            new GeoCoord(45.5, 13.5), new GeoCoord(46, 13.5),
+        }));
+
+        zones.Add(MakeCountry("Belarus", "Europe", new[]
+        {
+            new GeoCoord(56.5, 23.5), new GeoCoord(56.5, 32.5),
+            new GeoCoord(54, 32), new GeoCoord(52, 31),
+            new GeoCoord(51.5, 24), new GeoCoord(53, 23.5),
+            new GeoCoord(55, 24),
+        }));
+
+        zones.Add(MakeCountry("Moldova", "Europe", new[]
+        {
+            new GeoCoord(48.5, 27), new GeoCoord(48.5, 30),
+            new GeoCoord(47, 30), new GeoCoord(46, 30),
+            new GeoCoord(46, 28), new GeoCoord(47, 27),
+        }));
+
+        zones.Add(MakeCountry("Estonia", "Europe", new[]
+        {
+            new GeoCoord(59.5, 22), new GeoCoord(59.5, 28),
+            new GeoCoord(58, 28), new GeoCoord(57.5, 24),
+            new GeoCoord(57.5, 22), new GeoCoord(58.5, 22),
+        }));
+
+        zones.Add(MakeCountry("Latvia", "Europe", new[]
+        {
+            new GeoCoord(58, 21), new GeoCoord(58, 28.5),
+            new GeoCoord(57, 28), new GeoCoord(56, 28),
+            new GeoCoord(55.5, 24), new GeoCoord(56, 21),
+            new GeoCoord(57, 21),
+        }));
+
+        zones.Add(MakeCountry("Lithuania", "Europe", new[]
+        {
+            new GeoCoord(56.5, 21), new GeoCoord(56.5, 26.5),
+            new GeoCoord(55, 26.5), new GeoCoord(54, 26),
+            new GeoCoord(54, 22), new GeoCoord(55, 21),
         }));
 
         // Africa

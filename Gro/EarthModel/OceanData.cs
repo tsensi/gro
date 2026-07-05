@@ -56,8 +56,8 @@ internal static class OceanData
         {
             new GeoCoord(-60, -180), new GeoCoord(-60, -90),
             new GeoCoord(-60, 0), new GeoCoord(-60, 90),
-            new GeoCoord(-60, 180), new GeoCoord(-90, 180),
-            new GeoCoord(-90, 0), new GeoCoord(-90, -180),
+            new GeoCoord(-60, 180), new GeoCoord(-70, 180),
+            new GeoCoord(-70, 0), new GeoCoord(-70, -180),
         }));
 
         // Atlantic Ocean zones

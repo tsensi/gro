@@ -10,7 +10,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Add a way render each zone in a different style, varying outline color, width, and fill color and width
 - [x] Add mouse input, allowing to select any zone on the globe. Log the selected zone to the console.
 - [x] Allow rotating the globe with the mouse like in Google Earth. Add tasks here to break this down into simpler sub-tasks.
-- [ ] Make sure that all of Europe is represented. For each European county, there should be a zone that contains it.
+- [x] Make sure that all of Europe is represented. For each European county, there should be a zone that contains it.
 - [ ] Make sure that all of Africa is represented.
 - [ ] Make sure that all of North America is represented. Split Canada into about 5 regions, split the US in 3-4 regions
 - [ ] Make sure that all of Central America is represented. It's Mexico (split in 3 regions), plus 3 more regions

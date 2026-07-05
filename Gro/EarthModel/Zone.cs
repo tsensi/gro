@@ -36,22 +36,52 @@ public sealed class Zone
         }
     }
 
+    private bool _crossesAntimeridian = false;
+    private bool _crossesChecked = false;
+
+    private bool CrossesAntimeridian
+    {
+        get
+        {
+            if (!_crossesChecked)
+            {
+                for (int i = 0, j = Boundary.Length - 1; i < Boundary.Length; j = i++)
+                {
+                    if (Math.Abs(Boundary[i].Lon - Boundary[j].Lon) > 180)
+                    {
+                        _crossesAntimeridian = true;
+                        break;
+                    }
+                }
+                _crossesChecked = true;
+            }
+            return _crossesAntimeridian;
+        }
+    }
+
     public bool Contains(GeoCoord point)
     {
-        // Ray-casting algorithm for point-in-polygon on lat/lon
         int n = Boundary.Length;
         bool inside = false;
+        bool shift = CrossesAntimeridian;
+
+        double px = shift ? NormalizeLon(point.Lon) : point.Lon;
+
         for (int i = 0, j = n - 1; i < n; j = i++)
         {
-            double yi = Boundary[i].Lat, xi = Boundary[i].Lon;
-            double yj = Boundary[j].Lat, xj = Boundary[j].Lon;
+            double yi = Boundary[i].Lat;
+            double xi = shift ? NormalizeLon(Boundary[i].Lon) : Boundary[i].Lon;
+            double yj = Boundary[j].Lat;
+            double xj = shift ? NormalizeLon(Boundary[j].Lon) : Boundary[j].Lon;
 
             if (((yi > point.Lat) != (yj > point.Lat)) &&
-                (point.Lon < (xj - xi) * (point.Lat - yi) / (yj - yi) + xi))
+                (px < (xj - xi) * (point.Lat - yi) / (yj - yi) + xi))
             {
                 inside = !inside;
             }
         }
         return inside;
     }
+
+    private static double NormalizeLon(double lon) => lon < 0 ? lon + 360 : lon;
 }
