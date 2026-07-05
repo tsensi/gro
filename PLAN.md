@@ -17,7 +17,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Make sure that all of continental Asia is represented. Split large countries like China, Mongolia, Russia, ...
 - [x] Make sure that all of Oceania is represented.
 - [x] Antarctica should be split into 5 zones.
-- [ ] The ocean zones are too large, break them into smaller segments.
+- [x] The ocean zones are too large, break them into smaller segments.
 - [ ] Document the current state of the project with naming and decisions in CLAUDE.md
 - [ ] Make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
 - [ ] Create a simple immediate-mode UI toolkit inspired by React.

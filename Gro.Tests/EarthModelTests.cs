@@ -64,7 +64,7 @@ public class EarthModelTests
         var atlanticZones = _earth.GetChildren("Atlantic Ocean").ToList();
         Assert.Contains(atlanticZones, z => z.Name == "Caribbean Sea");
         Assert.Contains(atlanticZones, z => z.Name == "Mediterranean Sea");
-        Assert.Contains(atlanticZones, z => z.Name == "North Atlantic");
+        Assert.Contains(atlanticZones, z => z.Name == "Northwest Atlantic");
     }
 
     [Fact]
