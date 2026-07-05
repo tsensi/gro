@@ -302,4 +302,24 @@ public class ZoneCoverageTests
         Assert.True(zone!.Contains(point),
             $"Zone '{expectedCountry}' does not contain its capital at ({lat},{lon})");
     }
+
+    [Theory]
+    [InlineData(-33.87, 151.21, "Australia")]               // Sydney
+    [InlineData(-41.29, 174.78, "New Zealand")]             // Wellington
+    [InlineData(-6.21, 155.96, "Solomon Islands")]          // Honiara
+    [InlineData(-6.31, 147.15, "Papua New Guinea")]         // Port Moresby
+    [InlineData(-17.73, 168.32, "Vanuatu-New Caledonia")]   // Port Vila
+    [InlineData(-17.77, 177.97, "Fiji")]                    // Suva
+    [InlineData(-13.83, -171.76, "Samoa-Tonga")]            // Apia
+    [InlineData(7.09, 171.38, "Micronesia")]                // Majuro (Marshall Islands)
+    [InlineData(-17.53, -149.57, "French Polynesia")]       // Papeete
+    public void OceanianCity_IsInCorrectCountryZone(double lat, double lon, string expectedCountry)
+    {
+        var point = new GeoCoord(lat, lon);
+        var zone = _earth.FindZone(expectedCountry);
+
+        Assert.NotNull(zone);
+        Assert.True(zone!.Contains(point),
+            $"Zone '{expectedCountry}' does not contain its city at ({lat},{lon})");
+    }
 }

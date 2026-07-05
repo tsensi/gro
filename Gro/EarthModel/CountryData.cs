@@ -1232,6 +1232,52 @@ internal static class CountryData
             new GeoCoord(-44, 166), new GeoCoord(-41, 172),
             new GeoCoord(-38, 175), new GeoCoord(-35, 174),
         }));
+
+        zones.Add(MakeCountry("Papua New Guinea", "Oceania", new[]
+        {
+            new GeoCoord(-2.5, 141), new GeoCoord(-2, 147),
+            new GeoCoord(-4, 152), new GeoCoord(-5.5, 155),
+            new GeoCoord(-7, 156), new GeoCoord(-10.5, 152),
+            new GeoCoord(-10.5, 147), new GeoCoord(-8, 143),
+            new GeoCoord(-5, 141),
+        }));
+
+        zones.Add(MakeCountry("Solomon Islands", "Oceania", new[]
+        {
+            new GeoCoord(-5, 155), new GeoCoord(-5, 162),
+            new GeoCoord(-7, 167), new GeoCoord(-12, 168),
+            new GeoCoord(-12, 155), new GeoCoord(-8, 155),
+        }));
+
+        zones.Add(MakeCountry("Vanuatu-New Caledonia", "Oceania", new[]
+        {
+            new GeoCoord(-13, 163), new GeoCoord(-13, 170),
+            new GeoCoord(-23, 170), new GeoCoord(-23, 163),
+        }));
+
+        zones.Add(MakeCountry("Fiji", "Oceania", new[]
+        {
+            new GeoCoord(-12, 176), new GeoCoord(-12, -178),
+            new GeoCoord(-22, -178), new GeoCoord(-22, 176),
+        }));
+
+        zones.Add(MakeCountry("Samoa-Tonga", "Oceania", new[]
+        {
+            new GeoCoord(-13, -178), new GeoCoord(-13, -168),
+            new GeoCoord(-23, -168), new GeoCoord(-23, -178),
+        }));
+
+        zones.Add(MakeCountry("Micronesia", "Oceania", new[]
+        {
+            new GeoCoord(-1, 131), new GeoCoord(-1, 172),
+            new GeoCoord(20, 172), new GeoCoord(20, 131),
+        }));
+
+        zones.Add(MakeCountry("French Polynesia", "Oceania", new[]
+        {
+            new GeoCoord(-8, -155), new GeoCoord(-8, -134),
+            new GeoCoord(-28, -134), new GeoCoord(-28, -155),
+        }));
     }
 
     private static Zone MakeCountry(string name, string parent, GeoCoord[] boundary) => new()
