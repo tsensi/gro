@@ -1,0 +1,27 @@
+{
+  "name": "Haiti-Dominican Republic",
+  "type": "Country",
+  "parent": "North America",
+  "boundary": [
+    [
+      -74.5,
+      20.0
+    ],
+    [
+      -68.0,
+      20.0
+    ],
+    [
+      -68.0,
+      18.0
+    ],
+    [
+      -74.5,
+      18.0
+    ],
+    [
+      -74.5,
+      20.0
+    ]
+  ]
+}

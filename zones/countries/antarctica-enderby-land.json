@@ -1,0 +1,27 @@
+{
+  "name": "Antarctica (Enderby Land)",
+  "type": "Country",
+  "parent": "Antarctica",
+  "boundary": [
+    [
+      36.0,
+      -70.0
+    ],
+    [
+      108.0,
+      -70.0
+    ],
+    [
+      108.0,
+      -90.0
+    ],
+    [
+      36.0,
+      -90.0
+    ],
+    [
+      36.0,
+      -70.0
+    ]
+  ]
+}

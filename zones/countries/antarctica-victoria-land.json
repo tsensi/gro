@@ -1,0 +1,27 @@
+{
+  "name": "Antarctica (Victoria Land)",
+  "type": "Country",
+  "parent": "Antarctica",
+  "boundary": [
+    [
+      108.0,
+      -70.0
+    ],
+    [
+      180.0,
+      -70.0
+    ],
+    [
+      180.0,
+      -90.0
+    ],
+    [
+      108.0,
+      -90.0
+    ],
+    [
+      108.0,
+      -70.0
+    ]
+  ]
+}

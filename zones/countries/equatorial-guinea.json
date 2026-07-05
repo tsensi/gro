@@ -1,0 +1,27 @@
+{
+  "name": "Equatorial Guinea",
+  "type": "Country",
+  "parent": "Africa",
+  "boundary": [
+    [
+      8.0,
+      4.5
+    ],
+    [
+      12.0,
+      4.5
+    ],
+    [
+      12.0,
+      1.0
+    ],
+    [
+      8.0,
+      1.0
+    ],
+    [
+      8.0,
+      4.5
+    ]
+  ]
+}
