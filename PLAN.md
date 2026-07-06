@@ -40,7 +40,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Zone overlap fixes: letter B (Belgium, Belarus, Bangladesh, Benin, Bhutan, Bosnia, Botswana, Brazil, Bulgaria, Burkina Faso, Burundi, Baltic/Barents/Bay/Beaufort/Bering/Black ocean zones)
   - [x] Zone overlap fixes: letter C (Canada regions, Cameroon, Cambodia, Chad, China regions, Colombia, Costa Rica-Panama, Croatia, Cuba, Czech Republic, Caribbean/Central/Coral ocean zones)
   - [x] Zone overlap fixes: letter D (Denmark, Djibouti, DR Congo)
-  - [ ] Zone overlap fixes: letter E (Egypt, Equatorial Guinea, Eritrea, Estonia, Eswatini, Ethiopia, Europe, East China Sea, Eastern Mediterranean, East Siberian Sea, Equatorial Pacific)
+  - [x] Zone overlap fixes: letter E (Egypt, Equatorial Guinea, Eritrea, Estonia, Eswatini, Ethiopia, Europe, East China Sea, Eastern Mediterranean, East Siberian Sea, Equatorial Pacific)
   - [ ] Zone overlap fixes: letter F (Fiji, Finland, France, French Polynesia)
   - [ ] Zone overlap fixes: letter G (Gabon, Gambia, Georgia-Armenia-Azerbaijan, Germany, Ghana, Greece, Greenland, Guatemala-Belize, Guinea, Guinea-Bissau, Gulf/Greenland ocean zones)
   - [ ] Zone overlap fixes: letter H (Haiti-Dominican Republic, Honduras-El Salvador-Nicaragua, Hungary)
