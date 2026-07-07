@@ -45,7 +45,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Zone overlap fixes: letter G (Gabon, Gambia, Georgia-Armenia-Azerbaijan, Germany, Ghana, Greece, Greenland, Guatemala-Belize, Guinea, Guinea-Bissau, Gulf/Greenland ocean zones)
   - [x] Zone overlap fixes: letter H (Haiti-Dominican Republic, Honduras-El Salvador-Nicaragua, Hungary)
   - [x] Zone overlap fixes: letter I (Iceland, India, Indonesia, Iran, Iraq, Ireland, Italy, Ivory Coast, Indian Ocean)
-  - [ ] Zone overlap fixes: letter J (Jamaica, Japan, Jordan)
+  - [x] Zone overlap fixes: letter J (Jamaica, Japan, Jordan)
   - [ ] Zone overlap fixes: letter K (Kazakhstan, Kenya, Kyrgyzstan, Kara Sea)
   - [ ] Zone overlap fixes: letter L (Laos, Latvia, Lebanon-Israel, Lesotho, Liberia, Libya, Lithuania, Laptev Sea)
   - [ ] Zone overlap fixes: letter M (Madagascar, Malawi, Malaysia, Mali, Mauritania, Mexico regions, Micronesia, Moldova, Mongolia, Montenegro, Morocco, Mozambique, Myanmar, Mediterranean/Mozambique Channel ocean zones)
