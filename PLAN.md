@@ -50,7 +50,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Zone overlap fixes: letter L (Laos, Latvia, Lebanon-Israel, Lesotho, Liberia, Libya, Lithuania, Laptev Sea)
   - [x] Zone overlap fixes: letter M (Madagascar, Malawi, Malaysia, Mali, Mauritania, Mexico regions, Micronesia, Moldova, Mongolia, Montenegro, Morocco, Mozambique, Myanmar, Mediterranean/Mozambique Channel ocean zones)
   - [x] Zone overlap fixes: letter N (Namibia, Nepal, Netherlands, New Zealand, Niger, Nigeria, North Korea, North Macedonia, Norway, North America, North Sea, Northeast/Northwest/Norwegian ocean zones)
-  - [ ] Zone overlap fixes: letter O (Oceania, Oman)
+  - [x] Zone overlap fixes: letter O (Oceania, Oman)
   - [ ] Zone overlap fixes: letter P (Pakistan, Papua New Guinea, Philippines, Poland, Portugal, Pacific Ocean, Persian Gulf, Philippine Sea)
   - [ ] Zone overlap fixes: letter R (Republic of Congo, Romania, Russia regions, Rwanda, Red Sea)
   - [ ] Zone overlap fixes: letter S (Samoa-Tonga, Saudi Arabia, Senegal, Serbia, Sierra Leone, Slovakia, Slovenia, Solomon Islands, Somalia, South Africa, South Korea, South Sudan, Spain, Sri Lanka, Sudan, Sweden, Switzerland, Syria, South America, Southern Ocean, Sargasso/South China/Southeast/Southwest ocean zones)
