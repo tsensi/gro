@@ -58,7 +58,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Zone overlap fixes: letter U (UAE-Qatar-Kuwait-Bahrain, Uganda, Ukraine, United Kingdom, United States regions, Uzbekistan)
   - [x] Zone overlap fixes: letter V (Vanuatu-New Caledonia, Vietnam)
   - [x] Zone overlap fixes: letter W (Western Mediterranean)
-  - [ ] Zone overlap fixes: letter Y (Yemen)
+  - [x] Zone overlap fixes: letter Y (Yemen)
   - [ ] Zone overlap fixes: letter Z (Zambia, Zimbabwe)
 - [ ] Now, after fixing, create tasks again for each letter of the alphabet and run the tests only for zones with that letter. Fix any remaining issues.
 - [ ] Use the improved tooling to make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
