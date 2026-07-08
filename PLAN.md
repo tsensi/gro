@@ -57,7 +57,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Zone overlap fixes: letter T (Taiwan, Tajikistan, Tanzania, Thailand, Togo, Tunisia, Turkey, Turkmenistan, Tasman Sea)
   - [x] Zone overlap fixes: letter U (UAE-Qatar-Kuwait-Bahrain, Uganda, Ukraine, United Kingdom, United States regions, Uzbekistan)
   - [x] Zone overlap fixes: letter V (Vanuatu-New Caledonia, Vietnam)
-  - [ ] Zone overlap fixes: letter W (Western Mediterranean)
+  - [x] Zone overlap fixes: letter W (Western Mediterranean)
   - [ ] Zone overlap fixes: letter Y (Yemen)
   - [ ] Zone overlap fixes: letter Z (Zambia, Zimbabwe)
 - [ ] Now, after fixing, create tasks again for each letter of the alphabet and run the tests only for zones with that letter. Fix any remaining issues.
