@@ -60,7 +60,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Zone overlap fixes: letter W (Western Mediterranean)
   - [x] Zone overlap fixes: letter Y (Yemen)
   - [x] Zone overlap fixes: letter Z (Zambia, Zimbabwe)
-- [ ] Now, after fixing, create tasks again for each letter of the alphabet and run the tests only for zones with that letter. Fix any remaining issues.
+- [x] Now, after fixing, create tasks again for each letter of the alphabet and run the tests only for zones with that letter. Fix any remaining issues.
 - [ ] Use the improved tooling to make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
 - [ ] Fix any remaining zone coverage test failures
 
