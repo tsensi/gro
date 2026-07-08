@@ -55,7 +55,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Zone overlap fixes: letter R (Republic of Congo, Romania, Russia regions, Rwanda, Red Sea)
   - [x] Zone overlap fixes: letter S (Samoa-Tonga, Saudi Arabia, Senegal, Serbia, Sierra Leone, Slovakia, Slovenia, Solomon Islands, Somalia, South Africa, South Korea, South Sudan, Spain, Sri Lanka, Sudan, Sweden, Switzerland, Syria, South America, Southern Ocean, Sargasso/South China/Southeast/Southwest ocean zones)
   - [x] Zone overlap fixes: letter T (Taiwan, Tajikistan, Tanzania, Thailand, Togo, Tunisia, Turkey, Turkmenistan, Tasman Sea)
-  - [ ] Zone overlap fixes: letter U (UAE-Qatar-Kuwait-Bahrain, Uganda, Ukraine, United Kingdom, United States regions, Uzbekistan)
+  - [x] Zone overlap fixes: letter U (UAE-Qatar-Kuwait-Bahrain, Uganda, Ukraine, United Kingdom, United States regions, Uzbekistan)
   - [ ] Zone overlap fixes: letter V (Vanuatu-New Caledonia, Vietnam)
   - [ ] Zone overlap fixes: letter W (Western Mediterranean)
   - [ ] Zone overlap fixes: letter Y (Yemen)
