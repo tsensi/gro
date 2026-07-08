@@ -61,7 +61,30 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Zone overlap fixes: letter Y (Yemen)
   - [x] Zone overlap fixes: letter Z (Zambia, Zimbabwe)
 - [x] Now, after fixing, create tasks again for each letter of the alphabet and run the tests only for zones with that letter. Fix any remaining issues.
-- [ ] Use the improved tooling to make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
+- [~] Use the improved tooling to make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
+
+  **Analysis (2026-07-08):** Ran `Gro.ZoneCheck` — 0 top-level overlaps at its grid, but xunit fine-mesh (5°) catches 4 overlap points at lat 36 (Europe/Africa). Also 121 uncovered sample points at 5° resolution. The gaps cluster into 8 geographic regions where top-level zone boundaries don't fully tile the globe:
+
+  1. Southern Ocean/Oceania gap (lat -59 to -39, lon 141–176): Southern Ocean doesn't extend far enough north, or Oceania/Indian Ocean don't extend far enough south
+  2. South America Pacific coast (lat -34 to -9, lon -74 to -79): South America's west boundary doesn't meet Pacific Ocean
+  3. Southeast Asian seas (lat -14 to 16, lon 106–136): Pacific/Indian Ocean boundaries don't cover the waters near Indonesia/Philippines
+  4. Central American Pacific coast (lat 1–11, lon -84 to -89): North America's southern boundary doesn't meet Pacific Ocean
+  5. Eastern Mediterranean / Middle East (lat 21–41, lon 31–51): Asia boundary doesn't cover the Arabian Peninsula / eastern Mediterranean region
+  6. North Atlantic near Europe (lat 56–61, lon -9): Europe's western boundary doesn't meet Atlantic Ocean
+  7. Greenland / Canadian Arctic (lat 66–86, lon -179 to -19): North America and Arctic Ocean don't fully cover the high-latitude North Atlantic/Greenland area
+  8. Northern Russia / Ural region (lat 61–71, lon 46–56): Asia's northern boundary doesn't meet Arctic Ocean
+
+  Sub-tasks (fix each gap region by expanding the relevant top-level zone boundaries):
+  - [ ] Fix overlap: Europe/Africa boundary at lat 36 (lon -4 to 11) — 4 points claimed by both
+  - [ ] Fix coverage gap: Southern Ocean / Oceania (lat -59 to -39, lon 141–176)
+  - [ ] Fix coverage gap: South America Pacific coast (lat -34 to -9, lon -74 to -79)
+  - [ ] Fix coverage gap: Southeast Asian seas (lat -14 to 16, lon 106–136)
+  - [ ] Fix coverage gap: Central American Pacific coast (lat 1–11, lon -84 to -89)
+  - [ ] Fix coverage gap: Eastern Mediterranean / Middle East (lat 21–41, lon 31–51)
+  - [ ] Fix coverage gap: North Atlantic near Europe (lat 56–61, lon -9)
+  - [ ] Fix coverage gap: Greenland / Canadian Arctic (lat 66–86, lon -179 to -19)
+  - [ ] Fix coverage gap: Northern Russia / Ural region (lat 61–71, lon 46–56)
+  - [ ] Final validation: run `Gro.ZoneCheck` and `dotnet test` to confirm 0 overlaps and 0 uncovered points
 - [ ] Fix any remaining zone coverage test failures
 
 - [x] Create a simple immediate-mode UI toolkit inspired by React.
