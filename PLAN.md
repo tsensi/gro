@@ -96,7 +96,7 @@ The tests currently are failing, but running them all overwhelms the the token l
 - [x] Add the "infection" mechanic. In the beginning of the game, the player selects a starting region. They have to confirm the region selection. Add tasks for a modal dialog system here
 - [x] Once a starting region is selected, add a Xeno entity there. It begins with a fixed starting value (let's start at 10). Every day of simulated time, the Xeno entity creates a fraction of its current value as new Xeno value (k-factor of exponential growth). This is designed to start slow. The initial value has doubling-times of ten years.
 - [x] When the player selects an adjacent region to an infected region (one with Xeno entity), they can infect the new region. This creates a new Xeno entity on the adjacent field. The value from the old field is split between the old and new field paying a fix "tax" of 40% that gets deducted beforehand (to make it meaningful and costly to spread)
-- [ ] The player farms a "biomass" resource. Add a global resource counter service / system. Use a ServiceLocator pattern
+- [x] The player farms a "biomass" resource. Add a global resource counter service / system. Use a ServiceLocator pattern
 - [ ] On every turn, the biomass increases by the number of infected zones. This will later be refined.
 - [ ] For a fixed amount of biomass, the player can upgrade an infected zone and increase the growth factor there.
 

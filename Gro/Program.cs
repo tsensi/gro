@@ -4,6 +4,7 @@ using Gro.EarthModel;
 using Gro.ECS;
 using Gro.Infection;
 using Gro.Rendering;
+using Gro.Services;
 using Gro.Simulation;
 using Gro.UI;
 
@@ -61,6 +62,9 @@ public static class Program
         var sim = new SimLoop();
         sim.AddSystem(new XenoGrowthSystem());
         var game = new GameState();
+
+        var resources = new ResourceService();
+        ServiceLocator.Register(resources);
         uint lastTick = SDL.SDL_GetTicks();
 
         globe.ZoneSelected += zone =>
