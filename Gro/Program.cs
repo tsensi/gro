@@ -2,6 +2,7 @@ using System;
 using SDL2;
 using Gro.EarthModel;
 using Gro.Rendering;
+using Gro.Simulation;
 using Gro.UI;
 
 namespace Gro;
@@ -54,6 +55,7 @@ public static class Program
         var ui = new UIContext();
         var animator = new Animator();
         var state = new StateStore();
+        var sim = new SimLoop();
         uint lastTick = SDL.SDL_GetTicks();
 
         globe.ZoneSelected += zone =>
@@ -89,6 +91,9 @@ public static class Program
             float deltaMs = now - lastTick;
             lastTick = now;
             animator.Tick(deltaMs);
+
+            double deltaDays = deltaMs / 1000.0 / 86400.0;
+            sim.Tick(deltaDays);
 
             while (SDL.SDL_PollEvent(out SDL.SDL_Event e) != 0)
             {
