@@ -75,7 +75,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   8. Northern Russia / Ural region (lat 61–71, lon 46–56): Asia's northern boundary doesn't meet Arctic Ocean
 
   Sub-tasks (fix each gap region by expanding the relevant top-level zone boundaries):
-  - [ ] Fix overlap: Europe/Africa boundary at lat 36 (lon -4 to 11) — 4 points claimed by both
+  - [x] Fix overlap: Europe/Africa boundary at lat 36 (lon -4 to 11) — 4 points claimed by both
   - [ ] Fix coverage gap: Southern Ocean / Oceania (lat -59 to -39, lon 141–176)
   - [ ] Fix coverage gap: South America Pacific coast (lat -34 to -9, lon -74 to -79)
   - [ ] Fix coverage gap: Southeast Asian seas (lat -14 to 16, lon 106–136)
