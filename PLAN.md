@@ -81,7 +81,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Fix coverage gap: Southeast Asian seas (lat -14 to 16, lon 106–136)
   - [x] Fix coverage gap: Central American Pacific coast (lat 1–11, lon -84 to -89)
   - [x] Fix coverage gap: Eastern Mediterranean / Middle East (lat 21–41, lon 31–51)
-  - [ ] Fix coverage gap: North Atlantic near Europe (lat 56–61, lon -9)
+  - [x] Fix coverage gap: North Atlantic near Europe (lat 56–61, lon -9)
   - [ ] Fix coverage gap: Greenland / Canadian Arctic (lat 66–86, lon -179 to -19)
   - [ ] Fix coverage gap: Northern Russia / Ural region (lat 61–71, lon 46–56)
   - [ ] Final validation: run `Gro.ZoneCheck` and `dotnet test` to confirm 0 overlaps and 0 uncovered points
