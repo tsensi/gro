@@ -61,6 +61,7 @@ public static class Program
         var state = new StateStore();
         var sim = new SimLoop();
         sim.AddSystem(new XenoGrowthSystem());
+        sim.AddSystem(new BiomassHarvestSystem());
         var game = new GameState();
 
         var resources = new ResourceService();

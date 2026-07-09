@@ -1,5 +1,6 @@
 using Gro.ECS;
 using Gro.Infection;
+using Gro.Services;
 using Gro.Simulation;
 using Xunit;
 
@@ -200,5 +201,79 @@ public class SimulationTests
         Assert.True(b1 > 10.0);
         Assert.True(b2 > 100.0);
         Assert.InRange(b2 / b1, 9.5, 10.5);
+    }
+
+    [Fact]
+    public void BiomassHarvest_AddsPerInfectedZonePerDay()
+    {
+        ServiceLocator.Clear();
+        var resources = new ResourceService();
+        ServiceLocator.Register(resources);
+
+        var sim = new SimLoop();
+        sim.AddSystem(new BiomassHarvestSystem());
+        sim.World.SpawnInZone("Zone1");
+        sim.World.Set(sim.World.EntitiesInZone("Zone1").First(), new InfectionComponent());
+        sim.World.SpawnInZone("Zone2");
+        sim.World.Set(sim.World.EntitiesInZone("Zone2").First(), new InfectionComponent());
+
+        sim.Tick(1.0);
+
+        Assert.Equal(2.0, resources.Biomass, precision: 10);
+        ServiceLocator.Clear();
+    }
+
+    [Fact]
+    public void BiomassHarvest_ScalesWithDeltaDays()
+    {
+        ServiceLocator.Clear();
+        var resources = new ResourceService();
+        ServiceLocator.Register(resources);
+
+        var sim = new SimLoop();
+        sim.AddSystem(new BiomassHarvestSystem());
+        sim.World.SpawnInZone("Zone1");
+        sim.World.Set(sim.World.EntitiesInZone("Zone1").First(), new InfectionComponent());
+
+        sim.Tick(0.5);
+
+        Assert.Equal(0.5, resources.Biomass, precision: 10);
+        ServiceLocator.Clear();
+    }
+
+    [Fact]
+    public void BiomassHarvest_NoInfectedZones_NoBiomass()
+    {
+        ServiceLocator.Clear();
+        var resources = new ResourceService();
+        ServiceLocator.Register(resources);
+
+        var sim = new SimLoop();
+        sim.AddSystem(new BiomassHarvestSystem());
+
+        sim.Tick(1.0);
+
+        Assert.Equal(0.0, resources.Biomass);
+        ServiceLocator.Clear();
+    }
+
+    [Fact]
+    public void BiomassHarvest_Accumulates()
+    {
+        ServiceLocator.Clear();
+        var resources = new ResourceService();
+        ServiceLocator.Register(resources);
+
+        var sim = new SimLoop();
+        sim.AddSystem(new BiomassHarvestSystem());
+        var e1 = sim.World.SpawnInZone("Zone1");
+        sim.World.Set(e1, new InfectionComponent());
+
+        sim.Tick(1.0);
+        sim.Tick(1.0);
+        sim.Tick(1.0);
+
+        Assert.Equal(3.0, resources.Biomass, precision: 10);
+        ServiceLocator.Clear();
     }
 }
