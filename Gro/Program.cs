@@ -58,6 +58,7 @@ public static class Program
         var animator = new Animator();
         var state = new StateStore();
         var sim = new SimLoop();
+        sim.AddSystem(new XenoGrowthSystem());
         var game = new GameState();
         uint lastTick = SDL.SDL_GetTicks();
 

@@ -1,4 +1,5 @@
 using Gro.ECS;
+using Gro.Infection;
 using Gro.Simulation;
 using Xunit;
 
@@ -148,5 +149,56 @@ public class SimulationTests
             var entity = state.World.Spawn();
             state.World.Set(entity, new ZoneLink { ZoneName = "Spawned" });
         }
+    }
+
+    [Fact]
+    public void XenoGrowth_IncreasesOverTime()
+    {
+        var sim = new SimLoop();
+        sim.AddSystem(new XenoGrowthSystem());
+        var entity = sim.World.SpawnInZone("TestZone");
+        sim.World.Set(entity, new InfectionComponent { Biomass = 10.0 });
+
+        sim.Tick(1.0);
+
+        var infection = sim.World.Get<InfectionComponent>(entity)!;
+        Assert.True(infection.Biomass > 10.0);
+    }
+
+    [Fact]
+    public void XenoGrowth_DoublesInTenYears()
+    {
+        var sim = new SimLoop();
+        sim.AddSystem(new XenoGrowthSystem());
+        var entity = sim.World.SpawnInZone("TestZone");
+        sim.World.Set(entity, new InfectionComponent { Biomass = 10.0 });
+
+        double tenYears = 3652.5;
+        int steps = 3652;
+        double stepSize = tenYears / steps;
+        for (int i = 0; i < steps; i++)
+            sim.Tick(stepSize);
+
+        var infection = sim.World.Get<InfectionComponent>(entity)!;
+        Assert.InRange(infection.Biomass, 19.5, 20.5);
+    }
+
+    [Fact]
+    public void XenoGrowth_MultipleEntities()
+    {
+        var sim = new SimLoop();
+        sim.AddSystem(new XenoGrowthSystem());
+        var e1 = sim.World.SpawnInZone("Zone1");
+        sim.World.Set(e1, new InfectionComponent { Biomass = 10.0 });
+        var e2 = sim.World.SpawnInZone("Zone2");
+        sim.World.Set(e2, new InfectionComponent { Biomass = 100.0 });
+
+        sim.Tick(365.25);
+
+        var b1 = sim.World.Get<InfectionComponent>(e1)!.Biomass;
+        var b2 = sim.World.Get<InfectionComponent>(e2)!.Biomass;
+        Assert.True(b1 > 10.0);
+        Assert.True(b2 > 100.0);
+        Assert.InRange(b2 / b1, 9.5, 10.5);
     }
 }

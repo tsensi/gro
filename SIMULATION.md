@@ -25,7 +25,9 @@ Register systems via `SimLoop.AddSystem(system)`. Order matters — earlier syst
 
 ## Current systems
 
-_(None yet — systems will be added as game mechanics are implemented.)_
+### XenoGrowthSystem
+
+Applies exponential growth to every entity that has an `InfectionComponent`. Each tick, biomass increases by `biomass * k * deltaDays` where `k = ln(2) / 3652.5` — giving a doubling time of 10 years. Starting value is 10.
 
 ## Planned mechanics
 
