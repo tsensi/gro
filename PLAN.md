@@ -79,7 +79,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Fix coverage gap: Southern Ocean / Oceania (lat -59 to -39, lon 141–176)
   - [x] Fix coverage gap: South America Pacific coast (lat -34 to -9, lon -74 to -79)
   - [x] Fix coverage gap: Southeast Asian seas (lat -14 to 16, lon 106–136)
-  - [ ] Fix coverage gap: Central American Pacific coast (lat 1–11, lon -84 to -89)
+  - [x] Fix coverage gap: Central American Pacific coast (lat 1–11, lon -84 to -89)
   - [ ] Fix coverage gap: Eastern Mediterranean / Middle East (lat 21–41, lon 31–51)
   - [ ] Fix coverage gap: North Atlantic near Europe (lat 56–61, lon -9)
   - [ ] Fix coverage gap: Greenland / Canadian Arctic (lat 66–86, lon -179 to -19)
