@@ -141,6 +141,12 @@ public sealed class UIContext
             int y = style.OffsetY;
             ShiftNode(node, x - node.Bounds.X, y - node.Bounds.Y);
         }
+        else if (style.Anchor == Anchor.Center)
+        {
+            int x = (windowWidth - node.Bounds.W) / 2 + style.OffsetX;
+            int y = (windowHeight - node.Bounds.H) / 2 + style.OffsetY;
+            ShiftNode(node, x - node.Bounds.X, y - node.Bounds.Y);
+        }
         else if (style.OffsetX != 0 || style.OffsetY != 0)
         {
             ShiftNode(node, style.OffsetX, style.OffsetY);

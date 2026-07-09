@@ -1,6 +1,8 @@
 using System;
 using SDL2;
 using Gro.EarthModel;
+using Gro.ECS;
+using Gro.Infection;
 using Gro.Rendering;
 using Gro.Simulation;
 using Gro.UI;
@@ -56,11 +58,22 @@ public static class Program
         var animator = new Animator();
         var state = new StateStore();
         var sim = new SimLoop();
+        var game = new GameState();
         uint lastTick = SDL.SDL_GetTicks();
 
         globe.ZoneSelected += zone =>
         {
-            if (zone != null)
+            if (zone == null) return;
+
+            if (game.Phase == GamePhase.SelectingRegion)
+            {
+                if (zone.Type == ZoneType.Country)
+                {
+                    state.Set("confirmZone", zone);
+                    state.Set("modalAnim", 1f);
+                }
+            }
+            else
             {
                 state.Set("selectedZone", zone);
                 state.Set("panelDismissing", false);
@@ -72,7 +85,7 @@ public static class Program
         if (headless)
         {
             SDL.SDL_GetWindowSize(window, out int w, out int h);
-            ui.Update(() => BuildUI(state, animator));
+            ui.Update(() => BuildUI(state, animator, game, sim));
             ui.Layout(w, h);
             globe.Render(renderer, w, h, present: false);
             ui.Render(renderer);
@@ -110,7 +123,7 @@ public static class Program
 
             SDL.SDL_GetWindowSize(window, out int width, out int height);
 
-            ui.Update(() => BuildUI(state, animator));
+            ui.Update(() => BuildUI(state, animator, game, sim));
             ui.Layout(width, height);
 
             globe.Render(renderer, width, height, present: false);
@@ -124,7 +137,112 @@ public static class Program
         return 0;
     }
 
-    private static UIElement BuildUI(StateStore state, Animator animator)
+    private static UIElement BuildUI(StateStore state, Animator animator, GameState game, SimLoop sim)
+    {
+        var children = new List<UIElement>();
+
+        if (game.Phase == GamePhase.SelectingRegion)
+        {
+            children.Add(BuildSelectionPrompt());
+            var confirmZone = state.Get<Zone?>("confirmZone", null);
+            if (confirmZone != null)
+            {
+                children.Add(BuildConfirmModal(state, animator, game, sim, confirmZone));
+            }
+        }
+        else
+        {
+            children.Add(BuildZonePanel(state, animator));
+        }
+
+        return UIElement.Panel(
+            style: new UIStyle { Width = 0, Height = 0 },
+            key: "root",
+            children.ToArray()
+        );
+    }
+
+    private static UIElement BuildSelectionPrompt()
+    {
+        return UIElement.Panel(
+            style: new UIStyle
+            {
+                Padding = 12,
+                Anchor = Anchor.TopLeft,
+                OffsetX = 20,
+                OffsetY = 20,
+                BackgroundColor = Color.FromRgba(20, 25, 40, 220),
+                BorderColor = Color.FromRgba(80, 180, 80, 180),
+                BorderWidth = 1,
+            },
+            key: "selection-prompt",
+            UIElement.Label("Select a starting region", style: new UIStyle
+            {
+                FontSize = 16,
+                TextColor = Color.FromRgb(180, 255, 180),
+            })
+        );
+    }
+
+    private static UIElement BuildConfirmModal(StateStore state, Animator animator, GameState game, SimLoop sim, Zone zone)
+    {
+        return UIElement.Panel(
+            style: new UIStyle
+            {
+                Width = 320,
+                Padding = 16,
+                Gap = 12,
+                Anchor = Anchor.Center,
+                BackgroundColor = Color.FromRgba(15, 20, 35, 240),
+                BorderColor = Color.FromRgba(80, 180, 80, 200),
+                BorderWidth = 2,
+            },
+            key: "confirm-modal",
+            UIElement.Label($"Infect {zone.Name}?", style: new UIStyle
+            {
+                FontSize = 16,
+                TextColor = Color.FromRgb(220, 255, 220),
+            }),
+            UIElement.Label("Your organism will begin growing here.", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(160, 180, 170),
+            }),
+            UIElement.Row(
+                style: new UIStyle { Direction = LayoutDirection.Horizontal, Gap = 12 },
+                key: "modal-buttons",
+                UIElement.Button("Confirm", () =>
+                {
+                    game.Phase = GamePhase.Playing;
+                    game.StartingZone = zone;
+                    var entity = sim.World.SpawnInZone(zone.Name);
+                    sim.World.Set(entity, new InfectionComponent { Biomass = 10.0 });
+                    state.Set<Zone?>("confirmZone", null);
+                    Console.WriteLine($"Infection started in: {zone.Name}");
+                }, style: new UIStyle
+                {
+                    Padding = 8,
+                    BackgroundColor = Color.FromRgba(40, 120, 40, 220),
+                    TextColor = Color.FromRgb(220, 255, 220),
+                    BorderColor = Color.FromRgba(80, 180, 80, 200),
+                    BorderWidth = 1,
+                }),
+                UIElement.Button("Cancel", () =>
+                {
+                    state.Set<Zone?>("confirmZone", null);
+                }, style: new UIStyle
+                {
+                    Padding = 8,
+                    BackgroundColor = Color.FromRgba(100, 40, 40, 220),
+                    TextColor = Color.FromRgb(255, 200, 200),
+                    BorderColor = Color.FromRgba(180, 80, 80, 200),
+                    BorderWidth = 1,
+                })
+            )
+        );
+    }
+
+    private static UIElement BuildZonePanel(StateStore state, Animator animator)
     {
         var zone = state.Get<Zone?>("selectedZone", null);
         float anim = state.Get("panelAnim", 0f);
