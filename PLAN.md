@@ -102,7 +102,7 @@ The tests currently are failing, but running them all overwhelms the the token l
 
 This is an idle game. Research classics of the genre like Cookie Clicker
 - [x] Research competitor idle games and add a new file IDLE_IDEAS_PLAN.md in this `- [ ]` task format for all the things to add to make this game better
-- [ ] Research competitor world domination/grand strategy games and add a new file DOMINATION_IDEAS_PLAN.md in this `- [ ]` task format for all the things to add to make this game better
+- [x] Research competitor world domination/grand strategy games and add a new file DOMINATION_IDEAS_PLAN.md in this `- [ ]` task format for all the things to add to make this game better
 
 
 ## How to run
