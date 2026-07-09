@@ -12,7 +12,7 @@ public sealed class XenoGrowthSystem : ISystem
         foreach (var entity in state.World.Query<InfectionComponent>())
         {
             var infection = state.World.Get<InfectionComponent>(entity)!;
-            infection.Biomass += infection.Biomass * GrowthRate * state.DeltaDays;
+            infection.Biomass += infection.Biomass * GrowthRate * infection.GrowthMultiplier * state.DeltaDays;
         }
     }
 }

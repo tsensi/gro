@@ -98,7 +98,7 @@ The tests currently are failing, but running them all overwhelms the the token l
 - [x] When the player selects an adjacent region to an infected region (one with Xeno entity), they can infect the new region. This creates a new Xeno entity on the adjacent field. The value from the old field is split between the old and new field paying a fix "tax" of 40% that gets deducted beforehand (to make it meaningful and costly to spread)
 - [x] The player farms a "biomass" resource. Add a global resource counter service / system. Use a ServiceLocator pattern
 - [x] On every turn, the biomass increases by the number of infected zones. This will later be refined.
-- [ ] For a fixed amount of biomass, the player can upgrade an infected zone and increase the growth factor there.
+- [x] For a fixed amount of biomass, the player can upgrade an infected zone and increase the growth factor there.
 
 This is an idle game. Research classics of the genre like Cookie Clicker
 - [ ] Research competitor idle games and add a new file IDLE_IDEAS_PLAN.md in this `- [ ]` task format for all the things to add to make this game better

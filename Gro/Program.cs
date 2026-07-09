@@ -82,8 +82,18 @@ public static class Program
             }
             else
             {
-                bool isInfected = sim.World.EntitiesInZone(zone.Name).Any(e => sim.World.Has<InfectionComponent>(e));
-                if (!isInfected && zone.Type == ZoneType.Country)
+                var infectedEntity = sim.World.EntitiesInZone(zone.Name)
+                    .FirstOrDefault(e => sim.World.Has<InfectionComponent>(e), Entity.None);
+                bool isInfected = infectedEntity != Entity.None;
+
+                if (isInfected)
+                {
+                    state.Set("upgradeZone", zone);
+                    state.Set("upgradeEntity", infectedEntity);
+                    return;
+                }
+
+                if (zone.Type == ZoneType.Country)
                 {
                     var neighbors = adjacency.GetNeighbors(zone.Name);
                     Entity? sourceEntity = null;
@@ -190,6 +200,12 @@ public static class Program
             {
                 var sourceEntity = state.Get("spreadSource", Entity.None);
                 children.Add(BuildSpreadModal(state, sim, spreadTarget, sourceEntity));
+            }
+            var upgradeZone = state.Get<Zone?>("upgradeZone", null);
+            if (upgradeZone != null)
+            {
+                var upgradeEntity = state.Get("upgradeEntity", Entity.None);
+                children.Add(BuildUpgradeModal(state, sim, upgradeZone, upgradeEntity));
             }
             children.Add(BuildZonePanel(state, animator));
         }
@@ -345,6 +361,101 @@ public static class Program
                 UIElement.Button("Cancel", () =>
                 {
                     state.Set<Zone?>("spreadTarget", null);
+                }, style: new UIStyle
+                {
+                    Padding = 8,
+                    BackgroundColor = Color.FromRgba(100, 40, 40, 220),
+                    TextColor = Color.FromRgb(255, 200, 200),
+                    BorderColor = Color.FromRgba(180, 80, 80, 200),
+                    BorderWidth = 1,
+                })
+            )
+        );
+    }
+
+    private static UIElement BuildUpgradeModal(StateStore state, SimLoop sim, Zone zone, Entity entity)
+    {
+        var infection = sim.World.Get<InfectionComponent>(entity);
+        if (infection == null)
+        {
+            state.Set<Zone?>("upgradeZone", null);
+            return UIElement.Panel();
+        }
+
+        int cost = InfectionComponent.UpgradeCost(infection.GrowthLevel);
+        var resources = ServiceLocator.Get<ResourceService>();
+        bool canAfford = resources.Biomass >= cost;
+        int nextLevel = infection.GrowthLevel + 1;
+        double nextMultiplier = 1.0 + (nextLevel - 1) * 0.5;
+
+        return UIElement.Panel(
+            style: new UIStyle
+            {
+                Width = 340,
+                Padding = 16,
+                Gap = 12,
+                Anchor = Anchor.Center,
+                BackgroundColor = Color.FromRgba(15, 20, 35, 240),
+                BorderColor = Color.FromRgba(180, 140, 40, 200),
+                BorderWidth = 2,
+            },
+            key: "upgrade-modal",
+            UIElement.Label($"Upgrade {zone.Name}", style: new UIStyle
+            {
+                FontSize = 16,
+                TextColor = Color.FromRgb(255, 220, 140),
+            }),
+            UIElement.Label($"Growth Level: {infection.GrowthLevel} -> {nextLevel}", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(160, 180, 170),
+            }),
+            UIElement.Label($"Growth Multiplier: x{infection.GrowthMultiplier:F1} -> x{nextMultiplier:F1}", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(160, 180, 170),
+            }),
+            UIElement.Label($"Cost: {cost} biomass (you have {resources.Biomass:F0})", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = canAfford ? Color.FromRgb(140, 220, 140) : Color.FromRgb(220, 100, 100),
+            }),
+            UIElement.Row(
+                style: new UIStyle { Direction = LayoutDirection.Horizontal, Gap = 12 },
+                key: "upgrade-buttons",
+                UIElement.Button(canAfford ? "Upgrade" : "Can't Afford", () =>
+                {
+                    if (canAfford)
+                    {
+                        var inf = sim.World.Get<InfectionComponent>(entity);
+                        if (inf != null)
+                        {
+                            int c = InfectionComponent.UpgradeCost(inf.GrowthLevel);
+                            if (resources.TrySpend(c))
+                            {
+                                inf.GrowthLevel++;
+                                Console.WriteLine($"Upgraded {zone.Name} to growth level {inf.GrowthLevel} (x{inf.GrowthMultiplier:F1})");
+                            }
+                        }
+                    }
+                    state.Set<Zone?>("upgradeZone", null);
+                }, style: new UIStyle
+                {
+                    Padding = 8,
+                    BackgroundColor = canAfford
+                        ? Color.FromRgba(120, 100, 20, 220)
+                        : Color.FromRgba(60, 60, 60, 220),
+                    TextColor = canAfford
+                        ? Color.FromRgb(255, 230, 150)
+                        : Color.FromRgb(140, 140, 140),
+                    BorderColor = canAfford
+                        ? Color.FromRgba(180, 140, 40, 200)
+                        : Color.FromRgba(80, 80, 80, 200),
+                    BorderWidth = 1,
+                }),
+                UIElement.Button("Cancel", () =>
+                {
+                    state.Set<Zone?>("upgradeZone", null);
                 }, style: new UIStyle
                 {
                     Padding = 8,

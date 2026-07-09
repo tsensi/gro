@@ -27,7 +27,13 @@ Register systems via `SimLoop.AddSystem(system)`. Order matters — earlier syst
 
 ### XenoGrowthSystem
 
-Applies exponential growth to every entity that has an `InfectionComponent`. Each tick, biomass increases by `biomass * k * deltaDays` where `k = ln(2) / 3652.5` — giving a doubling time of 10 years. Starting value is 10.
+Applies exponential growth to every entity that has an `InfectionComponent`. Each tick, biomass increases by `biomass * k * growthMultiplier * deltaDays` where `k = ln(2) / 3652.5` — giving a base doubling time of 10 years. Starting value is 10.
+
+The `growthMultiplier` is derived from the zone's `GrowthLevel`: `1.0 + (level - 1) * 0.5`. At level 1 (default) the multiplier is x1.0; at level 2 it's x1.5; at level 3 it's x2.0, etc.
+
+### Zone Upgrades
+
+Players spend global biomass to increase a zone's `GrowthLevel`. The cost is `10 * currentLevel` biomass — linear scaling keeps early upgrades accessible while later ones require meaningful investment. Upgrading is triggered by clicking an infected zone.
 
 ## Planned mechanics
 
