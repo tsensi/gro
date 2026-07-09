@@ -85,7 +85,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Fix coverage gap: Greenland / Canadian Arctic (lat 66–86, lon -179 to -19)
   - [x] Fix coverage gap: Northern Russia / Ural region (lat 61–71, lon 46–56)
   - [x] Final validation: run `Gro.ZoneCheck` and `dotnet test` to confirm 0 overlaps and 0 uncovered points
-- [ ] Fix any remaining zone coverage test failures
+- [x] Fix any remaining zone coverage test failures
 
 - [x] Create a simple immediate-mode UI toolkit inspired by React.
 
