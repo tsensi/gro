@@ -61,7 +61,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Zone overlap fixes: letter Y (Yemen)
   - [x] Zone overlap fixes: letter Z (Zambia, Zimbabwe)
 - [x] Now, after fixing, create tasks again for each letter of the alphabet and run the tests only for zones with that letter. Fix any remaining issues.
-- [~] Use the improved tooling to make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
+- [x] Use the improved tooling to make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
 
   **Analysis (2026-07-08):** Ran `Gro.ZoneCheck` — 0 top-level overlaps at its grid, but xunit fine-mesh (5°) catches 4 overlap points at lat 36 (Europe/Africa). Also 121 uncovered sample points at 5° resolution. The gaps cluster into 8 geographic regions where top-level zone boundaries don't fully tile the globe:
 
@@ -84,7 +84,7 @@ The tests currently are failing, but running them all overwhelms the the token l
   - [x] Fix coverage gap: North Atlantic near Europe (lat 56–61, lon -9)
   - [x] Fix coverage gap: Greenland / Canadian Arctic (lat 66–86, lon -179 to -19)
   - [x] Fix coverage gap: Northern Russia / Ural region (lat 61–71, lon 46–56)
-  - [ ] Final validation: run `Gro.ZoneCheck` and `dotnet test` to confirm 0 overlaps and 0 uncovered points
+  - [x] Final validation: run `Gro.ZoneCheck` and `dotnet test` to confirm 0 overlaps and 0 uncovered points
 - [ ] Fix any remaining zone coverage test failures
 
 - [x] Create a simple immediate-mode UI toolkit inspired by React.
