@@ -53,6 +53,7 @@ public static class Program
         }
 
         var earth = Earth.Create();
+        var adjacency = new AdjacencyMap(earth.Zones);
         var globe = new GlobeRenderer(earth);
         var ui = new UIContext();
         var animator = new Animator();
@@ -76,6 +77,32 @@ public static class Program
             }
             else
             {
+                bool isInfected = sim.World.EntitiesInZone(zone.Name).Any(e => sim.World.Has<InfectionComponent>(e));
+                if (!isInfected && zone.Type == ZoneType.Country)
+                {
+                    var neighbors = adjacency.GetNeighbors(zone.Name);
+                    Entity? sourceEntity = null;
+                    foreach (var neighborName in neighbors)
+                    {
+                        foreach (var e in sim.World.EntitiesInZone(neighborName))
+                        {
+                            if (sim.World.Has<InfectionComponent>(e))
+                            {
+                                sourceEntity = e;
+                                break;
+                            }
+                        }
+                        if (sourceEntity != null) break;
+                    }
+
+                    if (sourceEntity != null)
+                    {
+                        state.Set("spreadTarget", zone);
+                        state.Set("spreadSource", sourceEntity.Value);
+                        return;
+                    }
+                }
+
                 state.Set("selectedZone", zone);
                 state.Set("panelDismissing", false);
                 animator.Animate(0f, 1f, 250f, EaseFunction.EaseOut,
@@ -86,7 +113,7 @@ public static class Program
         if (headless)
         {
             SDL.SDL_GetWindowSize(window, out int w, out int h);
-            ui.Update(() => BuildUI(state, animator, game, sim));
+            ui.Update(() => BuildUI(state, animator, game, sim, adjacency));
             ui.Layout(w, h);
             globe.Render(renderer, w, h, present: false);
             ui.Render(renderer);
@@ -124,7 +151,7 @@ public static class Program
 
             SDL.SDL_GetWindowSize(window, out int width, out int height);
 
-            ui.Update(() => BuildUI(state, animator, game, sim));
+            ui.Update(() => BuildUI(state, animator, game, sim, adjacency));
             ui.Layout(width, height);
 
             globe.Render(renderer, width, height, present: false);
@@ -138,7 +165,7 @@ public static class Program
         return 0;
     }
 
-    private static UIElement BuildUI(StateStore state, Animator animator, GameState game, SimLoop sim)
+    private static UIElement BuildUI(StateStore state, Animator animator, GameState game, SimLoop sim, AdjacencyMap adjacency)
     {
         var children = new List<UIElement>();
 
@@ -153,6 +180,12 @@ public static class Program
         }
         else
         {
+            var spreadTarget = state.Get<Zone?>("spreadTarget", null);
+            if (spreadTarget != null)
+            {
+                var sourceEntity = state.Get("spreadSource", Entity.None);
+                children.Add(BuildSpreadModal(state, sim, spreadTarget, sourceEntity));
+            }
             children.Add(BuildZonePanel(state, animator));
         }
 
@@ -231,6 +264,82 @@ public static class Program
                 UIElement.Button("Cancel", () =>
                 {
                     state.Set<Zone?>("confirmZone", null);
+                }, style: new UIStyle
+                {
+                    Padding = 8,
+                    BackgroundColor = Color.FromRgba(100, 40, 40, 220),
+                    TextColor = Color.FromRgb(255, 200, 200),
+                    BorderColor = Color.FromRgba(180, 80, 80, 200),
+                    BorderWidth = 1,
+                })
+            )
+        );
+    }
+
+    private static UIElement BuildSpreadModal(StateStore state, SimLoop sim, Zone target, Entity sourceEntity)
+    {
+        var sourceInfection = sim.World.Get<InfectionComponent>(sourceEntity);
+        var sourceLink = sim.World.Get<ZoneLink>(sourceEntity);
+        string sourceName = sourceLink?.ZoneName ?? "???";
+        double sourceBiomass = sourceInfection?.Biomass ?? 0;
+        double afterTax = sourceBiomass * 0.6;
+        double each = afterTax / 2.0;
+
+        return UIElement.Panel(
+            style: new UIStyle
+            {
+                Width = 340,
+                Padding = 16,
+                Gap = 12,
+                Anchor = Anchor.Center,
+                BackgroundColor = Color.FromRgba(15, 20, 35, 240),
+                BorderColor = Color.FromRgba(80, 180, 80, 200),
+                BorderWidth = 2,
+            },
+            key: "spread-modal",
+            UIElement.Label($"Spread to {target.Name}?", style: new UIStyle
+            {
+                FontSize = 16,
+                TextColor = Color.FromRgb(220, 255, 220),
+            }),
+            UIElement.Label($"From: {sourceName} ({sourceBiomass:F1} biomass)", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(160, 180, 170),
+            }),
+            UIElement.Label($"40% tax. Each zone gets {each:F1} biomass.", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(160, 180, 170),
+            }),
+            UIElement.Row(
+                style: new UIStyle { Direction = LayoutDirection.Horizontal, Gap = 12 },
+                key: "spread-buttons",
+                UIElement.Button("Spread", () =>
+                {
+                    var infection = sim.World.Get<InfectionComponent>(sourceEntity);
+                    if (infection != null)
+                    {
+                        double remaining = infection.Biomass * 0.6;
+                        double half = remaining / 2.0;
+                        infection.Biomass = half;
+
+                        var newEntity = sim.World.SpawnInZone(target.Name);
+                        sim.World.Set(newEntity, new InfectionComponent { Biomass = half });
+                        Console.WriteLine($"Spread to {target.Name}: {half:F1} biomass each (taxed 40%)");
+                    }
+                    state.Set<Zone?>("spreadTarget", null);
+                }, style: new UIStyle
+                {
+                    Padding = 8,
+                    BackgroundColor = Color.FromRgba(40, 120, 40, 220),
+                    TextColor = Color.FromRgb(220, 255, 220),
+                    BorderColor = Color.FromRgba(80, 180, 80, 200),
+                    BorderWidth = 1,
+                }),
+                UIElement.Button("Cancel", () =>
+                {
+                    state.Set<Zone?>("spreadTarget", null);
                 }, style: new UIStyle
                 {
                     Padding = 8,
