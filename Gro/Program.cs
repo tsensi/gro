@@ -213,6 +213,7 @@ public static class Program
         else
         {
             children.Add(BuildTopBar(sim, earth));
+            children.Add(BuildTimeControls(sim));
 
             var spreadTarget = state.Get<Zone?>("spreadTarget", null);
             if (spreadTarget != null)
@@ -300,6 +301,66 @@ public static class Program
                 FontSize = 14,
                 TextColor = Color.FromRgb(180, 200, 220),
             })
+        );
+    }
+
+    private static UIElement BuildTimeControls(SimLoop sim)
+    {
+        var speeds = new (string label, double scale)[]
+        {
+            ("x0", 0), ("x1", 1), ("x3", 3), ("x10", 10), ("x30", 30)
+        };
+
+        bool isPaused = sim.Paused;
+        double currentScale = sim.TimeScale;
+
+        var buttons = new UIElement[speeds.Length];
+        for (int i = 0; i < speeds.Length; i++)
+        {
+            var (label, scale) = speeds[i];
+            bool active = (scale == 0 && isPaused) || (scale > 0 && !isPaused && Math.Abs(currentScale - scale) < 0.01);
+            double capturedScale = scale;
+
+            buttons[i] = UIElement.Button(label, () =>
+            {
+                if (capturedScale == 0)
+                {
+                    sim.Paused = true;
+                }
+                else
+                {
+                    sim.Paused = false;
+                    sim.TimeScale = capturedScale;
+                }
+            }, style: new UIStyle
+            {
+                Padding = 4,
+                FontSize = 12,
+                BackgroundColor = active
+                    ? Color.FromRgba(60, 140, 80, 240)
+                    : Color.FromRgba(40, 50, 70, 220),
+                TextColor = active
+                    ? Color.FromRgb(220, 255, 220)
+                    : Color.FromRgb(160, 170, 190),
+                BorderColor = active
+                    ? Color.FromRgba(100, 200, 120, 220)
+                    : Color.FromRgba(70, 90, 110, 180),
+                BorderWidth = 1,
+            });
+        }
+
+        return UIElement.Row(
+            style: new UIStyle
+            {
+                Direction = LayoutDirection.Horizontal,
+                Gap = 4,
+                Padding = 6,
+                Anchor = Anchor.TopRight,
+                OffsetX = -6,
+                OffsetY = 3,
+            },
+            key: "time-controls",
+            buttons
         );
     }
 
