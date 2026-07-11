@@ -1,0 +1,324 @@
+country_a,country_b,length_km,type
+Afghanistan,China,106,land
+Afghanistan,India,106,land
+Afghanistan,Iran,935,land
+Afghanistan,Pakistan,2670,land
+Afghanistan,Tajikistan,1206,land
+Afghanistan,Turkmenistan,744,land
+Afghanistan,Uzbekistan,144,land
+Albania,Greece,282,land
+Albania,Montenegro,172,land
+Albania,North Macedonia,151,land
+Algeria,Libya,982,land
+Algeria,Mali,1376,land
+Algeria,Mauritania,463,land
+Algeria,Morocco,1559,land
+Algeria,Niger,956,land
+Algeria,Tunisia,1010,land
+Angola,DR Congo,2511,land
+Angola,Namibia,1376,land
+Angola,Republic of Congo,201,land
+Angola,Zambia,1110,land
+Argentina,Bolivia,832,land
+Argentina,Brazil,1224,land
+Argentina,Chile,5300,land
+Argentina,Paraguay,1880,land
+Argentina,Uruguay,579,land
+Armenia,Azerbaijan,787,land
+Armenia,Georgia,164,land
+Armenia,Georgia (country),219,land
+Armenia,Iran,35,land
+Armenia,Turkey,268,land
+Australia,New Zealand,0,water
+Australia,Papua New Guinea,0,water
+Austria,Czech Republic,362,land
+Austria,Germany,784,land
+Austria,Hungary,366,land
+Austria,Italy,430,land
+Austria,Slovakia,96,land
+Austria,Slovenia,330,land
+Austria,Switzerland,164,land
+Azerbaijan,Georgia,322,land
+Azerbaijan,Georgia (country),428,land
+Azerbaijan,Russia,284,land
+Bahrain,Saudi Arabia,0,land
+Bangladesh,India,4053,land
+Bangladesh,Myanmar,193,land
+Belarus,Latvia,141,land
+Belarus,Lithuania,502,land
+Belarus,Poland,407,land
+Belarus,Ukraine,891,land
+Belgium,France,620,land
+Belgium,Luxembourg,148,land
+Belize,Guatemala,266,land
+Belize,Mexico,250,land
+Benin,Burkina Faso,306,land
+Benin,Niger,266,land
+Benin,Nigeria,773,land
+Benin,Togo,644,land
+Bhutan,China,470,land
+Bhutan,India,605,land
+Bolivia,Brazil,3400,land
+Bolivia,Chile,861,land
+Bolivia,Paraguay,750,land
+Bolivia,Peru,900,land
+Bosnia and Herzegovina,Croatia,932,land
+Bosnia and Herzegovina,Montenegro,225,land
+Botswana,Namibia,1360,land
+Botswana,South Africa,1840,land
+Botswana,Zambia,0,land
+Botswana,Zimbabwe,813,land
+Brazil,Colombia,1643,land
+Brazil,Guyana,1119,land
+Brazil,Paraguay,1290,land
+Brazil,Peru,2995,land
+Brazil,Suriname,597,land
+Brazil,Uruguay,985,land
+Brazil,Venezuela,2200,land
+Brunei,Malaysia,381,land
+Bulgaria,Greece,494,land
+Bulgaria,North Macedonia,148,land
+Bulgaria,Romania,608,land
+Bulgaria,Serbia,318,land
+Bulgaria,Turkey,240,land
+Burkina Faso,Ghana,549,land
+Burkina Faso,Ivoire,584,land
+Burkina Faso,Ivory Coast,584,land
+Burkina Faso,Mali,1000,land
+Burkina Faso,Niger,628,land
+Burkina Faso,Togo,126,land
+Burundi,DR Congo,233,land
+Burundi,Rwanda,290,land
+Burundi,Tanzania,451,land
+Cambodia,Laos,541,land
+Cambodia,Thailand,803,land
+Cambodia,Vietnam,1228,land
+Cameroon,Central African Republic,797,land
+Cameroon,Chad,1094,land
+Cameroon,Equatorial Guinea,189,land
+Cameroon,Gabon,298,land
+Cameroon,Nigeria,1690,land
+Cameroon,Republic of Congo,523,land
+Canada,Kingdom of Denmark,1,land
+Canada,United States,8893,land
+Central African Republic,Chad,1197,land
+Central African Republic,DR Congo,1577,land
+Central African Republic,Republic of Congo,467,land
+Central African Republic,South Sudan,682,land
+Central African Republic,Sudan,483,land
+Chad,Libya,1055,land
+Chad,Niger,1175,land
+Chad,Nigeria,87,land
+Chad,Sudan,1360,land
+Chile,Peru,160,land
+China,India,3488,land
+China,Japan,0,water
+China,Kazakhstan,1533,land
+China,Kyrgyzstan,858,land
+China,Laos,423,land
+China,Mongolia,4677,land
+China,Myanmar,2185,land
+China,Nepal,1236,land
+China,North Korea,1416,land
+China,Pakistan,596,land
+China,Russia,3645,land
+China,Taiwan,0,water
+China,Tajikistan,414,land
+China,Vietnam,1281,land
+Colombia,Ecuador,590,land
+Colombia,Panama,225,land
+Colombia,Peru,1496,land
+Colombia,Venezuela,2050,land
+Costa Rica,Nicaragua,309,land
+Costa Rica,Panama,330,land
+Croatia,Hungary,329,land
+Croatia,Montenegro,25,land
+Croatia,Serbia,241,land
+Croatia,Slovenia,670,land
+Cuba,Jamaica,0,water
+Cuba,Mexico,0,water
+Cuba,United States,29,land
+Czech Republic,Germany,815,land
+Czech Republic,Poland,658,land
+Czech Republic,Slovakia,215,land
+DR Congo,Republic of Congo,2410,land
+DR Congo,Rwanda,217,land
+DR Congo,South Sudan,628,land
+DR Congo,Tanzania,459,land
+DR Congo,Uganda,765,land
+DR Congo,Zambia,1930,land
+Denmark,Germany,68,land
+Denmark,Sweden,0,water
+Djibouti,Eritrea,125,land
+Djibouti,Ethiopia,342,land
+Djibouti,Somalia,61,land
+Dominican Republic,Haiti,360,land
+East Timor,Indonesia,228,land
+Ecuador,Peru,1420,land
+Egypt,Israel,266,land
+Egypt,Libya,1115,land
+Egypt,Palestine,11,land
+Egypt,Sudan,1273,land
+El Salvador,Guatemala,203,land
+El Salvador,Honduras,342,land
+Equatorial Guinea,Gabon,350,land
+Eritrea,Ethiopia,912,land
+Eritrea,Sudan,605,land
+Estonia,Latvia,339,land
+Estonia,Russia,294,land
+Eswatini,Mozambique,105,land
+Eswatini,South Africa,430,land
+Ethiopia,Kenya,861,land
+Ethiopia,Somalia,1600,land
+Ethiopia,South Sudan,883,land
+Ethiopia,Sudan,723,land
+Fiji,Tonga,0,water
+Finland,Norway,736,land
+Finland,Russia,1340,land
+Finland,Sweden,614,land
+France,Germany,451,land
+France,Italy,488,land
+France,Luxembourg,73,land
+France,Switzerland,573,land
+France,United Kingdom,0,water
+Gabon,Republic of Congo,1903,land
+Gambia,Senegal,740,land
+Georgia,Russia,723,land
+Georgia,Turkey,252,land
+Georgia (country),Russia,894,land
+Georgia (country),Turkey,273,land
+Germany,Kingdom of Denmark,68,land
+Germany,Kingdom of the Netherlands,577,land
+Germany,Luxembourg,138,land
+Germany,Netherlands,577,land
+Germany,Poland,456,land
+Ghana,Ivoire,668,land
+Ghana,Ivory Coast,668,land
+Ghana,Togo,877,land
+Greece,North Macedonia,246,land
+Greece,Turkey,206,land
+Guatemala,Honduras,256,land
+Guatemala,Mexico,962,land
+Guinea,Guinea-Bissau,386,land
+Guinea,Ivoire,610,land
+Guinea,Ivory Coast,610,land
+Guinea,Liberia,563,land
+Guinea,Mali,858,land
+Guinea,Senegal,330,land
+Guinea,Sierra Leone,652,land
+Guinea-Bissau,Senegal,338,land
+Guyana,Suriname,600,land
+Guyana,Venezuela,743,land
+Honduras,Nicaragua,922,land
+Hungary,Romania,443,land
+Hungary,Serbia,151,land
+Hungary,Slovakia,677,land
+Hungary,Slovenia,102,land
+Hungary,Ukraine,103,land
+India,Myanmar,1463,land
+India,Nepal,1690,land
+India,Pakistan,3320,land
+India,Sri Lanka,0,water
+Indonesia,Malaysia,1782,land
+Indonesia,Papua New Guinea,820,land
+Indonesia,Philippines,0,water
+Indonesia,Timor-Leste,228,land
+Iran,Iraq,1458,land
+Iran,Pakistan,959,land
+Iran,Turkey,499,land
+Iran,Turkmenistan,992,land
+Iraq,Jordan,181,land
+Iraq,Kuwait,240,land
+Iraq,Saudi Arabia,814,land
+Iraq,Syria,605,land
+Iraq,Turkey,352,land
+Ireland,United Kingdom,499,land
+Israel,Jordan,238,land
+Israel,Lebanon,79,land
+Israel,Palestine,358,land
+Israel,Syria,76,land
+Italy,Slovenia,232,land
+Italy,Tunisia,0,water
+Ivoire,Liberia,716,land
+Ivoire,Mali,532,land
+Ivory Coast,Liberia,716,land
+Ivory Coast,Mali,532,land
+Japan,North Korea,0,water
+Japan,South Korea,0,water
+Jordan,Palestine,97,land
+Jordan,Saudi Arabia,744,land
+Jordan,Syria,375,land
+Kazakhstan,Kyrgyzstan,1051,land
+Kazakhstan,Russia,6846,land
+Kazakhstan,Turkmenistan,379,land
+Kazakhstan,Uzbekistan,2203,land
+Kenya,Somalia,682,land
+Kenya,South Sudan,232,land
+Kenya,Tanzania,769,land
+Kenya,Uganda,933,land
+Kuwait,Saudi Arabia,222,land
+Laos,Myanmar,235,land
+Laos,Thailand,1754,land
+Laos,Vietnam,2130,land
+Latvia,Lithuania,453,land
+Latvia,Russia,217,land
+Lebanon,Syria,375,land
+Lesotho,South Africa,909,land
+Liberia,Sierra Leone,306,land
+Libya,Niger,354,land
+Libya,Sudan,383,land
+Libya,Tunisia,459,land
+Lithuania,Poland,91,land
+Madagascar,Mozambique,0,water
+Malawi,Mozambique,1569,land
+Malawi,Tanzania,475,land
+Malawi,Zambia,837,land
+Malaysia,Philippines,0,water
+Malaysia,Thailand,506,land
+Mali,Mauritania,2237,land
+Mali,Niger,821,land
+Mali,Senegal,419,land
+Mauritania,Senegal,813,land
+Mexico,United States,3141,land
+Moldova,Romania,450,land
+Moldova,Ukraine,939,land
+Mongolia,Russia,3485,land
+Montenegro,Serbia,124,land
+Morocco,Spain,17,land
+Mozambique,South Africa,491,land
+Mozambique,Tanzania,756,land
+Mozambique,Zambia,419,land
+Mozambique,Zimbabwe,1231,land
+Myanmar,Thailand,2416,land
+Namibia,South Africa,967,land
+Namibia,Zambia,233,land
+Niger,Nigeria,1497,land
+North Korea,Russia,19,land
+North Korea,South Korea,238,land
+North Macedonia,Serbia,62,land
+Norway,Russia,196,land
+Norway,Sweden,1619,land
+Oman,Saudi Arabia,676,land
+Oman,United Arab Emirates,410,land
+Oman,Yemen,288,land
+Philippines,Taiwan,0,water
+Poland,Slovakia,444,land
+Poland,Ukraine,526,land
+Portugal,Spain,1214,land
+Qatar,Saudi Arabia,60,land
+Romania,Serbia,476,land
+Romania,Ukraine,531,land
+Russia,Ukraine,1576,land
+Rwanda,Tanzania,217,land
+Rwanda,Uganda,169,land
+Samoa,Tonga,0,water
+Saudi Arabia,United Arab Emirates,457,land
+Saudi Arabia,Yemen,1458,land
+Slovakia,Ukraine,91,land
+South Africa,Zimbabwe,225,land
+South Sudan,Sudan,1937,land
+South Sudan,Uganda,435,land
+Tanzania,Uganda,396,land
+Tanzania,Zambia,338,land
+Turkmenistan,Uzbekistan,1621,land
+Zambia,Zimbabwe,797,land

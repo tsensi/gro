@@ -16,6 +16,7 @@ return command switch
     "normalize" => RunNormalize(remainingArgs),
     "subtract" => RunSubtract(remainingArgs),
     "split-difference" => RunSplitDifference(remainingArgs),
+    "adjacency" => RunAdjacency(remainingArgs),
     _ => PrintUsage()
 };
 
@@ -28,18 +29,171 @@ static int PrintUsage()
     Console.WriteLine("  dotnet run --project Gro.ZoneTool -- normalize [path|--all] [--dry-run]");
     Console.WriteLine("  dotnet run --project Gro.ZoneTool -- subtract <subject.json> <clip.json> [--dry-run]");
     Console.WriteLine("  dotnet run --project Gro.ZoneTool -- split-difference <zone1.json> <zone2.json> [--dry-run]");
+    Console.WriteLine("  dotnet run --project Gro.ZoneTool -- adjacency [--csv] [--compare <reference.csv>]");
     Console.WriteLine();
     Console.WriteLine("Commands:");
     Console.WriteLine("  validate    Check zone files against the schema and validation rules");
     Console.WriteLine("  normalize   Rewrite zone files with correct rounding, closure, and formatting");
     Console.WriteLine("  subtract    Subtract clip polygon from subject polygon, writing result to subject");
     Console.WriteLine("  split-difference  Split the intersection of two polygons along the median line");
+    Console.WriteLine("  adjacency   Export computed zone adjacency as CSV (same format as borders/reference.csv)");
     Console.WriteLine();
     Console.WriteLine("Options:");
     Console.WriteLine("  path        Path to a specific .json file or directory");
     Console.WriteLine("  --all       Process all zone files (default if no path given)");
     Console.WriteLine("  --dry-run   Show what would change without writing");
+    Console.WriteLine("  --csv       Output adjacency as CSV to stdout");
+    Console.WriteLine("  --compare   Compare game adjacency against a reference CSV file");
     return 1;
+}
+
+static int RunAdjacency(string[] args)
+{
+    bool csvMode = args.Contains("--csv");
+    string? comparePath = null;
+    for (int i = 0; i < args.Length - 1; i++)
+    {
+        if (args[i] == "--compare")
+        {
+            comparePath = args[i + 1];
+            break;
+        }
+    }
+
+    var earth = Earth.Create();
+    var adjacency = new AdjacencyMap(earth.Zones);
+    var countryZones = earth.Zones
+        .Where(z => z.Type == ZoneType.Country)
+        .OrderBy(z => z.Name)
+        .ToList();
+
+    var pairs = new List<(string A, string B)>();
+    for (int i = 0; i < countryZones.Count; i++)
+    {
+        var neighbors = adjacency.GetNeighbors(countryZones[i].Name);
+        foreach (var neighbor in neighbors.OrderBy(n => n))
+        {
+            var neighborZone = earth.FindZone(neighbor);
+            if (neighborZone == null || neighborZone.Type != ZoneType.Country)
+                continue;
+            var pair = string.Compare(countryZones[i].Name, neighbor, StringComparison.Ordinal) < 0
+                ? (countryZones[i].Name, neighbor)
+                : (neighbor, countryZones[i].Name);
+            pairs.Add(pair);
+        }
+    }
+
+    pairs = pairs.Distinct().OrderBy(p => p.A).ThenBy(p => p.B).ToList();
+
+    if (comparePath != null)
+        return RunCompare(pairs, comparePath);
+
+    if (csvMode)
+    {
+        Console.WriteLine("country_a,country_b,length_km,type");
+        foreach (var (a, b) in pairs)
+            Console.WriteLine($"{CsvEscape(a)},{CsvEscape(b)},0,geometric");
+    }
+    else
+    {
+        Console.WriteLine($"Game adjacency: {pairs.Count} country pairs");
+        Console.WriteLine();
+        foreach (var (a, b) in pairs)
+            Console.WriteLine($"  {a} <-> {b}");
+    }
+
+    return 0;
+}
+
+static string CsvEscape(string value)
+{
+    if (value.Contains(',') || value.Contains('"'))
+        return $"\"{value.Replace("\"", "\"\"")}\"";
+    return value;
+}
+
+static int RunCompare(List<(string A, string B)> gamePairs, string referencePath)
+{
+    if (!File.Exists(referencePath))
+    {
+        Console.WriteLine($"ERROR: Reference file not found: {referencePath}");
+        return 1;
+    }
+
+    var refPairs = new Dictionary<(string, string), (int Length, string Type)>();
+    var lines = File.ReadAllLines(referencePath);
+    foreach (var line in lines.Skip(1))
+    {
+        if (string.IsNullOrWhiteSpace(line))
+            continue;
+        var parts = ParseCsvLine(line);
+        if (parts.Length < 4)
+            continue;
+        var a = parts[0].Trim();
+        var b = parts[1].Trim();
+        int.TryParse(parts[2].Trim(), out int length);
+        var type = parts[3].Trim();
+        var pair = string.Compare(a, b, StringComparison.Ordinal) < 0 ? (a, b) : (b, a);
+        refPairs[pair] = (length, type);
+    }
+
+    var gameSet = new HashSet<(string, string)>(gamePairs);
+    var refSet = new HashSet<(string, string)>(refPairs.Keys);
+
+    var onlyInGame = gameSet.Except(refSet).OrderBy(p => p.Item1).ThenBy(p => p.Item2).ToList();
+    var onlyInRef = refSet.Except(gameSet).OrderBy(p => p.Item1).ThenBy(p => p.Item2).ToList();
+    var inBoth = gameSet.Intersect(refSet).OrderBy(p => p.Item1).ThenBy(p => p.Item2).ToList();
+
+    Console.WriteLine($"=== Adjacency Comparison ===");
+    Console.WriteLine($"Game pairs:      {gamePairs.Count}");
+    Console.WriteLine($"Reference pairs: {refPairs.Count}");
+    Console.WriteLine($"In both:         {inBoth.Count}");
+    Console.WriteLine();
+
+    if (onlyInGame.Count > 0)
+    {
+        Console.WriteLine($"Only in game ({onlyInGame.Count}):");
+        foreach (var (a, b) in onlyInGame)
+            Console.WriteLine($"  + {a} <-> {b}");
+        Console.WriteLine();
+    }
+
+    if (onlyInRef.Count > 0)
+    {
+        Console.WriteLine($"Only in reference ({onlyInRef.Count}):");
+        foreach (var (a, b) in onlyInRef)
+        {
+            var info = refPairs[(a, b)];
+            Console.WriteLine($"  - {a} <-> {b} ({info.Length} km, {info.Type})");
+        }
+    }
+
+    return 0;
+}
+
+static string[] ParseCsvLine(string line)
+{
+    var result = new List<string>();
+    bool inQuotes = false;
+    var current = new System.Text.StringBuilder();
+    foreach (char c in line)
+    {
+        if (c == '"')
+        {
+            inQuotes = !inQuotes;
+        }
+        else if (c == ',' && !inQuotes)
+        {
+            result.Add(current.ToString());
+            current.Clear();
+        }
+        else
+        {
+            current.Append(c);
+        }
+    }
+    result.Add(current.ToString());
+    return result.ToArray();
 }
 
 static List<string> ResolveFiles(string[] args)

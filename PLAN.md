@@ -27,6 +27,11 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] The visual numbers should always show a 3x3 grid, rounding down by omitting the least-significant element. Update the code and the md file
 - [x] The country biomass indicators don't update right now. They should. Fix it.
 - [x] Allow zooming in and out using the mouse wheel. The closest distance is still 200km above the surface of the planet, the furthest zoom factor is the current one. Make sure to update all raycasting logic.
+- [~] Update the country adjacency table. 
+  - [x] Find a list of borders using internet search. It must include border length and border types. Reduce it into a minimal format. Then write a CLI tool to extract the country adjacency in our game into the same.
+  - [ ] Next to `zones` create a folder `borders` that makes border adjacency explicit. Update the game code to use that.
+  - [ ] Update the zones and borders infos to contain country adjacency information, including border length.
+  - [ ] In the game, use the adjacency to decide spreadability. When a new country borders more than one infected zone, the player is allowed to decide from which zone to infect. The modal should thus have space for multiple source zones.
 
 This is an idle game. Research classics of the genre like Cookie Clicker
 - [x] Research competitor idle games and add a new file IDLE_IDEAS_PLAN.md in this `- [ ]` task format for all the things to add to make this game better
