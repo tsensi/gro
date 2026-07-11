@@ -1,1434 +1,1792 @@
 [
   [
     "Afghanistan",
-    "Iran"
+    "Iran",
+    935
   ],
   [
     "Afghanistan",
-    "Pakistan"
+    "Pakistan",
+    2670
   ],
   [
     "Afghanistan",
-    "Tajikistan"
+    "Tajikistan",
+    1206
   ],
   [
     "Afghanistan",
-    "Turkmenistan"
+    "Turkmenistan",
+    744
   ],
   [
     "Afghanistan",
-    "Uzbekistan"
+    "Uzbekistan",
+    144
   ],
   [
     "Albania",
-    "Bosnia and Herzegovina"
+    "Bosnia and Herzegovina",
+    0
   ],
   [
     "Albania",
-    "Bulgaria"
+    "Bulgaria",
+    0
   ],
   [
     "Albania",
-    "Greece"
+    "Greece",
+    282
   ],
   [
     "Albania",
-    "Montenegro"
+    "Montenegro",
+    172
   ],
   [
     "Albania",
-    "North Macedonia"
+    "North Macedonia",
+    151
   ],
   [
     "Albania",
-    "Serbia"
+    "Serbia",
+    115
   ],
   [
     "Algeria",
-    "Mali"
+    "Mali",
+    1376
   ],
   [
     "Algeria",
-    "Morocco"
+    "Morocco",
+    1559
   ],
   [
     "Algeria",
-    "Niger"
+    "Niger",
+    956
   ],
   [
     "Algeria",
-    "Spain"
+    "Spain",
+    0
   ],
   [
     "Algeria",
-    "Tunisia"
+    "Tunisia",
+    1010
   ],
   [
     "Angola",
-    "Botswana"
+    "Botswana",
+    0
   ],
   [
     "Angola",
-    "DR Congo"
+    "DR Congo",
+    2511
   ],
   [
     "Angola",
-    "Gabon"
+    "Gabon",
+    0
   ],
   [
     "Angola",
-    "Namibia"
+    "Namibia",
+    1376
   ],
   [
     "Angola",
-    "Republic of Congo"
+    "Republic of Congo",
+    201
   ],
   [
     "Angola",
-    "Zambia"
+    "Zambia",
+    1110
   ],
   [
     "Angola",
-    "Zimbabwe"
+    "Zimbabwe",
+    0
   ],
   [
     "Antarctica (Enderby Land)",
-    "Antarctica (Queen Maud Land)"
+    "Antarctica (Queen Maud Land)",
+    500
   ],
   [
     "Antarctica (Enderby Land)",
-    "Antarctica (Victoria Land)"
+    "Antarctica (Victoria Land)",
+    500
   ],
   [
     "Antarctica (Marie Byrd Land)",
-    "Antarctica (Peninsula)"
+    "Antarctica (Peninsula)",
+    500
   ],
   [
     "Antarctica (Peninsula)",
-    "Antarctica (Queen Maud Land)"
+    "Antarctica (Queen Maud Land)",
+    500
   ],
   [
     "Argentina",
-    "Brazil"
+    "Brazil",
+    1224
   ],
   [
     "Argentina",
-    "Fiji"
+    "Fiji",
+    0
   ],
   [
     "Australia",
-    "Fiji"
+    "Fiji",
+    0
   ],
   [
     "Austria",
-    "Croatia"
+    "Croatia",
+    0
   ],
   [
     "Austria",
-    "Czech Republic"
+    "Czech Republic",
+    362
   ],
   [
     "Austria",
-    "Germany"
+    "Germany",
+    784
   ],
   [
     "Austria",
-    "Hungary"
+    "Hungary",
+    366
   ],
   [
     "Austria",
-    "Italy"
+    "Italy",
+    430
   ],
   [
     "Austria",
-    "Poland"
+    "Poland",
+    0
   ],
   [
     "Austria",
-    "Slovakia"
+    "Slovakia",
+    96
   ],
   [
     "Austria",
-    "Slovenia"
+    "Slovenia",
+    330
   ],
   [
     "Austria",
-    "Switzerland"
+    "Switzerland",
+    164
   ],
   [
     "Bangladesh",
-    "Bhutan"
+    "Bhutan",
+    0
   ],
   [
     "Bangladesh",
-    "India"
+    "India",
+    4053
   ],
   [
     "Bangladesh",
-    "Myanmar"
+    "Myanmar",
+    193
   ],
   [
     "Belarus",
-    "Estonia"
+    "Estonia",
+    0
   ],
   [
     "Belarus",
-    "Latvia"
+    "Latvia",
+    141
   ],
   [
     "Belarus",
-    "Lithuania"
+    "Lithuania",
+    502
   ],
   [
     "Belarus",
-    "Poland"
+    "Poland",
+    407
   ],
   [
     "Belarus",
-    "Russia (European)"
+    "Russia (European)",
+    959
   ],
   [
     "Belarus",
-    "Ukraine"
+    "Ukraine",
+    891
   ],
   [
     "Belgium",
-    "France"
+    "France",
+    620
   ],
   [
     "Belgium",
-    "Germany"
+    "Germany",
+    167
   ],
   [
     "Belgium",
-    "Netherlands"
+    "Netherlands",
+    450
   ],
   [
     "Belgium",
-    "United Kingdom"
+    "United Kingdom",
+    0
   ],
   [
     "Benin",
-    "Burkina Faso"
+    "Burkina Faso",
+    306
   ],
   [
     "Benin",
-    "Ghana"
+    "Ghana",
+    0
   ],
   [
     "Benin",
-    "Niger"
+    "Niger",
+    266
   ],
   [
     "Benin",
-    "Nigeria"
+    "Nigeria",
+    773
   ],
   [
     "Benin",
-    "Togo"
+    "Togo",
+    644
   ],
   [
     "Bhutan",
-    "China (South)"
+    "China (South)",
+    470
   ],
   [
     "Bhutan",
-    "India"
+    "India",
+    605
   ],
   [
     "Bhutan",
-    "Myanmar"
+    "Myanmar",
+    0
   ],
   [
     "Bhutan",
-    "Nepal"
+    "Nepal",
+    0
   ],
   [
     "Bosnia and Herzegovina",
-    "Croatia"
+    "Croatia",
+    932
   ],
   [
     "Bosnia and Herzegovina",
-    "Hungary"
+    "Hungary",
+    0
   ],
   [
     "Bosnia and Herzegovina",
-    "Italy"
+    "Italy",
+    0
   ],
   [
     "Bosnia and Herzegovina",
-    "Montenegro"
+    "Montenegro",
+    225
   ],
   [
     "Bosnia and Herzegovina",
-    "North Macedonia"
+    "North Macedonia",
+    0
   ],
   [
     "Bosnia and Herzegovina",
-    "Serbia"
+    "Serbia",
+    357
   ],
   [
     "Bosnia and Herzegovina",
-    "Slovenia"
+    "Slovenia",
+    0
   ],
   [
     "Botswana",
-    "Fiji"
+    "Fiji",
+    0
   ],
   [
     "Botswana",
-    "Namibia"
+    "Namibia",
+    1360
   ],
   [
     "Botswana",
-    "South Africa"
+    "South Africa",
+    1840
   ],
   [
     "Botswana",
-    "Zimbabwe"
+    "Zimbabwe",
+    813
   ],
   [
     "Brazil",
-    "Colombia"
+    "Colombia",
+    1643
   ],
   [
     "Brazil",
-    "Fiji"
+    "Fiji",
+    0
   ],
   [
     "Bulgaria",
-    "Greece"
+    "Greece",
+    494
   ],
   [
     "Bulgaria",
-    "North Macedonia"
+    "North Macedonia",
+    148
   ],
   [
     "Bulgaria",
-    "Romania"
+    "Romania",
+    608
   ],
   [
     "Bulgaria",
-    "Serbia"
+    "Serbia",
+    318
   ],
   [
     "Bulgaria",
-    "Turkey"
+    "Turkey",
+    240
   ],
   [
     "Burkina Faso",
-    "Ghana"
+    "Ghana",
+    549
   ],
   [
     "Burkina Faso",
-    "Ivory Coast"
+    "Ivory Coast",
+    584
   ],
   [
     "Burkina Faso",
-    "Mali"
+    "Mali",
+    1000
   ],
   [
     "Burkina Faso",
-    "Mauritania"
+    "Mauritania",
+    0
   ],
   [
     "Burkina Faso",
-    "Niger"
+    "Niger",
+    628
   ],
   [
     "Burkina Faso",
-    "Nigeria"
+    "Nigeria",
+    0
   ],
   [
     "Burkina Faso",
-    "Togo"
+    "Togo",
+    126
   ],
   [
     "Burundi",
-    "DR Congo"
+    "DR Congo",
+    233
   ],
   [
     "Burundi",
-    "Rwanda"
+    "Rwanda",
+    290
   ],
   [
     "Burundi",
-    "Tanzania"
+    "Tanzania",
+    451
   ],
   [
     "Burundi",
-    "Uganda"
+    "Uganda",
+    0
   ],
   [
     "Cambodia",
-    "Laos"
+    "Laos",
+    541
   ],
   [
     "Cambodia",
-    "Thailand"
+    "Thailand",
+    803
   ],
   [
     "Cambodia",
-    "Vietnam"
+    "Vietnam",
+    1228
   ],
   [
     "Cameroon",
-    "Central African Republic"
+    "Central African Republic",
+    797
   ],
   [
     "Cameroon",
-    "Chad"
+    "Chad",
+    1094
   ],
   [
     "Cameroon",
-    "Equatorial Guinea"
+    "Equatorial Guinea",
+    189
   ],
   [
     "Cameroon",
-    "Gabon"
+    "Gabon",
+    298
   ],
   [
     "Cameroon",
-    "Niger"
+    "Niger",
+    0
   ],
   [
     "Cameroon",
-    "Nigeria"
+    "Nigeria",
+    1690
   ],
   [
     "Cameroon",
-    "Republic of Congo"
+    "Republic of Congo",
+    523
   ],
   [
     "Canada (Atlantic)",
-    "Canada (North)"
+    "Canada (North)",
+    800
   ],
   [
     "Canada (Atlantic)",
-    "Canada (Quebec-Ontario)"
+    "Canada (Quebec-Ontario)",
+    1000
   ],
   [
     "Canada (British Columbia)",
-    "Canada (North)"
+    "Canada (North)",
+    1200
   ],
   [
     "Canada (British Columbia)",
-    "Canada (Prairies)"
+    "Canada (Prairies)",
+    1000
   ],
   [
     "Canada (British Columbia)",
-    "United States (Alaska)"
+    "United States (Alaska)",
+    2475
   ],
   [
     "Canada (British Columbia)",
-    "United States (West)"
+    "United States (West)",
+    600
   ],
   [
     "Canada (North)",
-    "Canada (Prairies)"
+    "Canada (Prairies)",
+    1500
   ],
   [
     "Canada (North)",
-    "Canada (Quebec-Ontario)"
+    "Canada (Quebec-Ontario)",
+    2000
   ],
   [
     "Canada (North)",
-    "Greenland"
+    "Greenland",
+    0
   ],
   [
     "Canada (North)",
-    "United States (Alaska)"
+    "United States (Alaska)",
+    2475
   ],
   [
     "Canada (Prairies)",
-    "Canada (Quebec-Ontario)"
+    "Canada (Quebec-Ontario)",
+    800
   ],
   [
     "Canada (Prairies)",
-    "United States (Central)"
+    "United States (Central)",
+    1200
   ],
   [
     "Canada (Prairies)",
-    "United States (Northeast)"
+    "United States (Northeast)",
+    300
   ],
   [
     "Canada (Prairies)",
-    "United States (West)"
+    "United States (West)",
+    600
   ],
   [
     "Canada (Quebec-Ontario)",
-    "United States (Central)"
+    "United States (Central)",
+    400
   ],
   [
     "Canada (Quebec-Ontario)",
-    "United States (Northeast)"
+    "United States (Northeast)",
+    1500
   ],
   [
     "Central African Republic",
-    "Chad"
+    "Chad",
+    1197
   ],
   [
     "Central African Republic",
-    "DR Congo"
+    "DR Congo",
+    1577
   ],
   [
     "Central African Republic",
-    "Nigeria"
+    "Nigeria",
+    0
   ],
   [
     "Central African Republic",
-    "Republic of Congo"
+    "Republic of Congo",
+    467
   ],
   [
     "Central African Republic",
-    "South Sudan"
+    "South Sudan",
+    682
   ],
   [
     "Chad",
-    "Niger"
+    "Niger",
+    1175
   ],
   [
     "Chad",
-    "Nigeria"
+    "Nigeria",
+    87
   ],
   [
     "Chad",
-    "South Sudan"
+    "South Sudan",
+    0
   ],
   [
     "Chad",
-    "Sudan"
+    "Sudan",
+    1360
   ],
   [
     "China (North)",
-    "China (South)"
+    "China (South)",
+    1500
   ],
   [
     "China (North)",
-    "China (West)"
+    "China (West)",
+    2000
   ],
   [
     "China (North)",
-    "Mongolia"
+    "Mongolia",
+    4000
   ],
   [
     "China (North)",
-    "North Korea"
+    "North Korea",
+    1416
   ],
   [
     "China (North)",
-    "Russia (Far East)"
+    "Russia (Far East)",
+    3645
   ],
   [
     "China (South)",
-    "China (West)"
+    "China (West)",
+    1500
   ],
   [
     "China (South)",
-    "Laos"
+    "Laos",
+    423
   ],
   [
     "China (South)",
-    "Myanmar"
+    "Myanmar",
+    2185
   ],
   [
     "China (South)",
-    "Taiwan"
+    "Taiwan",
+    0
   ],
   [
     "China (South)",
-    "Vietnam"
+    "Vietnam",
+    1281
   ],
   [
     "China (West)",
-    "India"
+    "India",
+    3488
   ],
   [
     "China (West)",
-    "Kazakhstan"
+    "Kazakhstan",
+    1533
   ],
   [
     "China (West)",
-    "Kyrgyzstan"
+    "Kyrgyzstan",
+    858
   ],
   [
     "China (West)",
-    "Mongolia"
+    "Mongolia",
+    677
   ],
   [
     "China (West)",
-    "Nepal"
+    "Nepal",
+    1236
   ],
   [
     "China (West)",
-    "Pakistan"
+    "Pakistan",
+    596
   ],
   [
     "Colombia",
-    "Costa Rica-Panama"
+    "Costa Rica-Panama",
+    225
   ],
   [
     "Costa Rica-Panama",
-    "Honduras-El Salvador-Nicaragua"
+    "Honduras-El Salvador-Nicaragua",
+    309
   ],
   [
     "Croatia",
-    "Hungary"
+    "Hungary",
+    329
   ],
   [
     "Croatia",
-    "Italy"
+    "Italy",
+    0
   ],
   [
     "Croatia",
-    "Montenegro"
+    "Montenegro",
+    25
   ],
   [
     "Croatia",
-    "Serbia"
+    "Serbia",
+    241
   ],
   [
     "Croatia",
-    "Slovenia"
+    "Slovenia",
+    670
   ],
   [
     "Cuba",
-    "Haiti-Dominican Republic"
+    "Haiti-Dominican Republic",
+    0
   ],
   [
     "Cuba",
-    "Jamaica"
+    "Jamaica",
+    0
   ],
   [
     "Cuba",
-    "United States (Southeast)"
+    "United States (Southeast)",
+    0
   ],
   [
     "Czech Republic",
-    "Germany"
+    "Germany",
+    815
   ],
   [
     "Czech Republic",
-    "Hungary"
+    "Hungary",
+    0
   ],
   [
     "Czech Republic",
-    "Poland"
+    "Poland",
+    658
   ],
   [
     "Czech Republic",
-    "Slovakia"
+    "Slovakia",
+    215
   ],
   [
     "Denmark",
-    "Germany"
+    "Germany",
+    68
   ],
   [
     "Denmark",
-    "Norway"
+    "Norway",
+    0
   ],
   [
     "Denmark",
-    "Sweden"
+    "Sweden",
+    0
   ],
   [
     "Djibouti",
-    "Eritrea"
+    "Eritrea",
+    125
   ],
   [
     "Djibouti",
-    "Ethiopia"
+    "Ethiopia",
+    342
   ],
   [
     "Djibouti",
-    "Somalia"
+    "Somalia",
+    61
   ],
   [
     "Djibouti",
-    "Yemen"
+    "Yemen",
+    0
   ],
   [
     "DR Congo",
-    "Gabon"
+    "Gabon",
+    0
   ],
   [
     "DR Congo",
-    "Republic of Congo"
+    "Republic of Congo",
+    2410
   ],
   [
     "DR Congo",
-    "Rwanda"
+    "Rwanda",
+    217
   ],
   [
     "DR Congo",
-    "South Sudan"
+    "South Sudan",
+    628
   ],
   [
     "DR Congo",
-    "Tanzania"
+    "Tanzania",
+    459
   ],
   [
     "DR Congo",
-    "Uganda"
+    "Uganda",
+    765
   ],
   [
     "Egypt",
-    "Jordan"
+    "Jordan",
+    11
   ],
   [
     "Egypt",
-    "Lebanon-Israel"
+    "Lebanon-Israel",
+    277
   ],
   [
     "Egypt",
-    "Libya"
+    "Libya",
+    1115
   ],
   [
     "Egypt",
-    "Sudan"
+    "Sudan",
+    1273
   ],
   [
     "Equatorial Guinea",
-    "Gabon"
+    "Gabon",
+    350
   ],
   [
     "Equatorial Guinea",
-    "Nigeria"
+    "Nigeria",
+    0
   ],
   [
     "Eritrea",
-    "Ethiopia"
+    "Ethiopia",
+    912
   ],
   [
     "Eritrea",
-    "Saudi Arabia"
+    "Saudi Arabia",
+    0
   ],
   [
     "Eritrea",
-    "Sudan"
+    "Sudan",
+    605
   ],
   [
     "Eritrea",
-    "Yemen"
+    "Yemen",
+    0
   ],
   [
     "Estonia",
-    "Finland"
+    "Finland",
+    0
   ],
   [
     "Estonia",
-    "Latvia"
+    "Latvia",
+    339
   ],
   [
     "Estonia",
-    "Lithuania"
+    "Lithuania",
+    0
   ],
   [
     "Eswatini",
-    "Lesotho"
+    "Lesotho",
+    0
   ],
   [
     "Eswatini",
-    "Mozambique"
+    "Mozambique",
+    105
   ],
   [
     "Eswatini",
-    "South Africa"
+    "South Africa",
+    430
   ],
   [
     "Ethiopia",
-    "Kenya"
+    "Kenya",
+    861
   ],
   [
     "Ethiopia",
-    "Somalia"
+    "Somalia",
+    1600
   ],
   [
     "Ethiopia",
-    "South Sudan"
+    "South Sudan",
+    883
   ],
   [
     "Ethiopia",
-    "Sudan"
+    "Sudan",
+    723
   ],
   [
     "Ethiopia",
-    "Uganda"
+    "Uganda",
+    0
   ],
   [
     "Ethiopia",
-    "Yemen"
+    "Yemen",
+    0
   ],
   [
     "Fiji",
-    "Madagascar"
+    "Madagascar",
+    0
   ],
   [
     "Fiji",
-    "Mozambique"
+    "Mozambique",
+    0
   ],
   [
     "Fiji",
-    "Namibia"
+    "Namibia",
+    0
   ],
   [
     "Fiji",
-    "Papua New Guinea"
+    "Papua New Guinea",
+    0
   ],
   [
     "Fiji",
-    "Samoa-Tonga"
+    "Samoa-Tonga",
+    0
   ],
   [
     "Fiji",
-    "Solomon Islands"
+    "Solomon Islands",
+    0
   ],
   [
     "Fiji",
-    "Tanzania"
+    "Tanzania",
+    0
   ],
   [
     "Fiji",
-    "Vanuatu-New Caledonia"
+    "Vanuatu-New Caledonia",
+    0
   ],
   [
     "Fiji",
-    "Zimbabwe"
+    "Zimbabwe",
+    0
   ],
   [
     "Finland",
-    "Norway"
+    "Norway",
+    736
   ],
   [
     "Finland",
-    "Russia (European)"
+    "Russia (European)",
+    1340
   ],
   [
     "Finland",
-    "Sweden"
+    "Sweden",
+    614
   ],
   [
     "France",
-    "Germany"
+    "Germany",
+    451
   ],
   [
     "France",
-    "Italy"
+    "Italy",
+    488
   ],
   [
     "France",
-    "Spain"
+    "Spain",
+    623
   ],
   [
     "France",
-    "Switzerland"
+    "Switzerland",
+    573
   ],
   [
     "France",
-    "United Kingdom"
+    "United Kingdom",
+    0
   ],
   [
     "Gabon",
-    "Republic of Congo"
+    "Republic of Congo",
+    1903
   ],
   [
     "Gambia",
-    "Guinea"
+    "Guinea",
+    0
   ],
   [
     "Gambia",
-    "Guinea-Bissau"
+    "Guinea-Bissau",
+    0
   ],
   [
     "Gambia",
-    "Mali"
+    "Mali",
+    0
   ],
   [
     "Gambia",
-    "Senegal"
+    "Senegal",
+    740
   ],
   [
     "Georgia-Armenia-Azerbaijan",
-    "Iran"
+    "Iran",
+    35
   ],
   [
     "Georgia-Armenia-Azerbaijan",
-    "Kazakhstan"
+    "Kazakhstan",
+    0
   ],
   [
     "Georgia-Armenia-Azerbaijan",
-    "Turkey"
+    "Turkey",
+    520
   ],
   [
     "Germany",
-    "Netherlands"
+    "Netherlands",
+    577
   ],
   [
     "Germany",
-    "Poland"
+    "Poland",
+    456
   ],
   [
     "Germany",
-    "Sweden"
+    "Sweden",
+    0
   ],
   [
     "Germany",
-    "Switzerland"
+    "Switzerland",
+    334
   ],
   [
     "Ghana",
-    "Ivory Coast"
+    "Ivory Coast",
+    668
   ],
   [
     "Ghana",
-    "Togo"
+    "Togo",
+    877
   ],
   [
     "Greece",
-    "Montenegro"
+    "Montenegro",
+    0
   ],
   [
     "Greece",
-    "North Macedonia"
+    "North Macedonia",
+    246
   ],
   [
     "Greece",
-    "Serbia"
+    "Serbia",
+    0
   ],
   [
     "Greece",
-    "Turkey"
+    "Turkey",
+    206
   ],
   [
     "Guatemala-Belize",
-    "Honduras-El Salvador-Nicaragua"
+    "Honduras-El Salvador-Nicaragua",
+    459
   ],
   [
     "Guatemala-Belize",
-    "Mexico (South)"
+    "Mexico (South)",
+    1149
   ],
   [
     "Guinea",
-    "Guinea-Bissau"
+    "Guinea-Bissau",
+    386
   ],
   [
     "Guinea",
-    "Ivory Coast"
+    "Ivory Coast",
+    610
   ],
   [
     "Guinea",
-    "Liberia"
+    "Liberia",
+    563
   ],
   [
     "Guinea",
-    "Mali"
+    "Mali",
+    858
   ],
   [
     "Guinea",
-    "Senegal"
+    "Senegal",
+    330
   ],
   [
     "Guinea",
-    "Sierra Leone"
+    "Sierra Leone",
+    652
   ],
   [
     "Haiti-Dominican Republic",
-    "Jamaica"
+    "Jamaica",
+    0
   ],
   [
     "Hungary",
-    "Poland"
+    "Poland",
+    0
   ],
   [
     "Hungary",
-    "Romania"
+    "Romania",
+    443
   ],
   [
     "Hungary",
-    "Serbia"
+    "Serbia",
+    151
   ],
   [
     "Hungary",
-    "Slovakia"
+    "Slovakia",
+    677
   ],
   [
     "Hungary",
-    "Slovenia"
+    "Slovenia",
+    102
   ],
   [
     "India",
-    "Nepal"
+    "Nepal",
+    1690
   ],
   [
     "India",
-    "Pakistan"
+    "Pakistan",
+    3320
   ],
   [
     "India",
-    "Sri Lanka"
+    "Sri Lanka",
+    0
   ],
   [
     "Indonesia",
-    "Malaysia"
+    "Malaysia",
+    1782
   ],
   [
     "Indonesia",
-    "Micronesia"
+    "Micronesia",
+    0
   ],
   [
     "Indonesia",
-    "Papua New Guinea"
+    "Papua New Guinea",
+    820
   ],
   [
     "Iran",
-    "Iraq"
+    "Iraq",
+    1458
   ],
   [
     "Iran",
-    "Oman"
+    "Oman",
+    0
   ],
   [
     "Iran",
-    "Pakistan"
+    "Pakistan",
+    959
   ],
   [
     "Iran",
-    "Turkmenistan"
+    "Turkmenistan",
+    992
   ],
   [
     "Iran",
-    "UAE-Qatar-Kuwait-Bahrain"
+    "UAE-Qatar-Kuwait-Bahrain",
+    0
   ],
   [
     "Iraq",
-    "Saudi Arabia"
+    "Saudi Arabia",
+    814
   ],
   [
     "Iraq",
-    "Syria"
+    "Syria",
+    605
   ],
   [
     "Iraq",
-    "Turkey"
+    "Turkey",
+    352
   ],
   [
     "Iraq",
-    "UAE-Qatar-Kuwait-Bahrain"
+    "UAE-Qatar-Kuwait-Bahrain",
+    240
   ],
   [
     "Ireland",
-    "United Kingdom"
+    "United Kingdom",
+    499
   ],
   [
     "Italy",
-    "Slovenia"
+    "Slovenia",
+    232
   ],
   [
     "Italy",
-    "Switzerland"
+    "Switzerland",
+    740
   ],
   [
     "Ivory Coast",
-    "Liberia"
+    "Liberia",
+    716
   ],
   [
     "Ivory Coast",
-    "Sierra Leone"
+    "Sierra Leone",
+    0
   ],
   [
     "Japan",
-    "South Korea"
+    "South Korea",
+    0
   ],
   [
     "Jordan",
-    "Lebanon-Israel"
+    "Lebanon-Israel",
+    335
   ],
   [
     "Jordan",
-    "Saudi Arabia"
+    "Saudi Arabia",
+    744
   ],
   [
     "Jordan",
-    "Syria"
+    "Syria",
+    375
   ],
   [
     "Kazakhstan",
-    "Kyrgyzstan"
+    "Kyrgyzstan",
+    1051
   ],
   [
     "Kazakhstan",
-    "Russia (European)"
+    "Russia (European)",
+    3000
   ],
   [
     "Kazakhstan",
-    "Russia (West Siberia)"
+    "Russia (West Siberia)",
+    3846
   ],
   [
     "Kazakhstan",
-    "Uzbekistan"
+    "Uzbekistan",
+    2203
   ],
   [
     "Kenya",
-    "Somalia"
+    "Somalia",
+    682
   ],
   [
     "Kenya",
-    "South Sudan"
+    "South Sudan",
+    232
   ],
   [
     "Kenya",
-    "Tanzania"
+    "Tanzania",
+    769
   ],
   [
     "Kenya",
-    "Uganda"
+    "Uganda",
+    933
   ],
   [
     "Kyrgyzstan",
-    "Tajikistan"
+    "Tajikistan",
+    870
   ],
   [
     "Kyrgyzstan",
-    "Uzbekistan"
+    "Uzbekistan",
+    1099
   ],
   [
     "Laos",
-    "Myanmar"
+    "Myanmar",
+    235
   ],
   [
     "Laos",
-    "Thailand"
+    "Thailand",
+    1754
   ],
   [
     "Laos",
-    "Vietnam"
+    "Vietnam",
+    2130
   ],
   [
     "Latvia",
-    "Lithuania"
+    "Lithuania",
+    453
   ],
   [
     "Latvia",
-    "Poland"
+    "Poland",
+    0
   ],
   [
     "Lebanon-Israel",
-    "Syria"
+    "Syria",
+    451
   ],
   [
     "Lebanon-Israel",
-    "Turkey"
+    "Turkey",
+    0
   ],
   [
     "Lesotho",
-    "South Africa"
+    "South Africa",
+    909
   ],
   [
     "Liberia",
-    "Sierra Leone"
+    "Sierra Leone",
+    306
   ],
   [
     "Libya",
-    "Niger"
+    "Niger",
+    354
   ],
   [
     "Libya",
-    "Tunisia"
+    "Tunisia",
+    459
   ],
   [
     "Lithuania",
-    "Poland"
+    "Poland",
+    91
   ],
   [
     "Malawi",
-    "Mozambique"
+    "Mozambique",
+    1569
   ],
   [
     "Malawi",
-    "Tanzania"
+    "Tanzania",
+    475
   ],
   [
     "Malawi",
-    "Zambia"
+    "Zambia",
+    837
   ],
   [
     "Malawi",
-    "Zimbabwe"
+    "Zimbabwe",
+    0
   ],
   [
     "Malaysia",
-    "Thailand"
+    "Thailand",
+    506
   ],
   [
     "Mali",
-    "Mauritania"
+    "Mauritania",
+    2237
   ],
   [
     "Mali",
-    "Morocco"
+    "Morocco",
+    0
   ],
   [
     "Mali",
-    "Niger"
+    "Niger",
+    821
   ],
   [
     "Mali",
-    "Senegal"
+    "Senegal",
+    419
   ],
   [
     "Mauritania",
-    "Morocco"
+    "Morocco",
+    1561
   ],
   [
     "Mauritania",
-    "Senegal"
+    "Senegal",
+    813
   ],
   [
     "Mexico (Central)",
-    "Mexico (North)"
+    "Mexico (North)",
+    800
   ],
   [
     "Mexico (Central)",
-    "Mexico (South)"
+    "Mexico (South)",
+    600
   ],
   [
     "Mexico (North)",
-    "United States (Central)"
+    "United States (Central)",
+    1500
   ],
   [
     "Mexico (North)",
-    "United States (West)"
+    "United States (West)",
+    1641
   ],
   [
     "Micronesia",
-    "Papua New Guinea"
+    "Papua New Guinea",
+    0
   ],
   [
     "Moldova",
-    "Romania"
+    "Romania",
+    450
   ],
   [
     "Moldova",
-    "Ukraine"
+    "Ukraine",
+    939
   ],
   [
     "Mongolia",
-    "Russia (East Siberia)"
+    "Russia (East Siberia)",
+    3485
   ],
   [
     "Montenegro",
-    "North Macedonia"
+    "North Macedonia",
+    0
   ],
   [
     "Montenegro",
-    "Serbia"
+    "Serbia",
+    124
   ],
   [
     "Morocco",
-    "Spain"
+    "Spain",
+    17
   ],
   [
     "Mozambique",
-    "South Africa"
+    "South Africa",
+    491
   ],
   [
     "Mozambique",
-    "Tanzania"
+    "Tanzania",
+    756
   ],
   [
     "Mozambique",
-    "Zimbabwe"
+    "Zimbabwe",
+    1231
   ],
   [
     "Myanmar",
-    "Thailand"
+    "Thailand",
+    2416
   ],
   [
     "Namibia",
-    "South Africa"
+    "South Africa",
+    967
   ],
   [
     "Niger",
-    "Nigeria"
+    "Nigeria",
+    1497
   ],
   [
     "Niger",
-    "Togo"
+    "Togo",
+    0
   ],
   [
     "Nigeria",
-    "Togo"
+    "Togo",
+    0
   ],
   [
     "North Korea",
-    "Russia (Far East)"
+    "Russia (Far East)",
+    19
   ],
   [
     "North Korea",
-    "South Korea"
+    "South Korea",
+    238
   ],
   [
     "North Macedonia",
-    "Serbia"
+    "Serbia",
+    62
   ],
   [
     "Norway",
-    "Russia (European)"
+    "Russia (European)",
+    196
   ],
   [
     "Norway",
-    "Sweden"
+    "Sweden",
+    1619
   ],
   [
     "Oman",
-    "Saudi Arabia"
+    "Saudi Arabia",
+    676
   ],
   [
     "Oman",
-    "UAE-Qatar-Kuwait-Bahrain"
+    "UAE-Qatar-Kuwait-Bahrain",
+    410
   ],
   [
     "Oman",
-    "Yemen"
+    "Yemen",
+    288
   ],
   [
     "Pakistan",
-    "Tajikistan"
+    "Tajikistan",
+    0
   ],
   [
     "Papua New Guinea",
-    "Solomon Islands"
+    "Solomon Islands",
+    0
   ],
   [
     "Poland",
-    "Romania"
+    "Romania",
+    0
   ],
   [
     "Poland",
-    "Slovakia"
+    "Slovakia",
+    444
   ],
   [
     "Poland",
-    "Ukraine"
+    "Ukraine",
+    526
   ],
   [
     "Portugal",
-    "Spain"
+    "Spain",
+    1214
   ],
   [
     "Romania",
-    "Serbia"
+    "Serbia",
+    476
   ],
   [
     "Romania",
-    "Slovakia"
+    "Slovakia",
+    0
   ],
   [
     "Romania",
-    "Ukraine"
+    "Ukraine",
+    531
   ],
   [
     "Russia (East Siberia)",
-    "Russia (Far East)"
+    "Russia (Far East)",
+    3000
   ],
   [
     "Russia (East Siberia)",
-    "Russia (West Siberia)"
+    "Russia (West Siberia)",
+    2500
   ],
   [
     "Russia (European)",
-    "Russia (West Siberia)"
+    "Russia (West Siberia)",
+    2000
   ],
   [
     "Russia (European)",
-    "Ukraine"
+    "Ukraine",
+    1576
   ],
   [
     "Rwanda",
-    "Tanzania"
+    "Tanzania",
+    217
   ],
   [
     "Rwanda",
-    "Uganda"
+    "Uganda",
+    169
   ],
   [
     "Saudi Arabia",
-    "Syria"
+    "Syria",
+    0
   ],
   [
     "Saudi Arabia",
-    "UAE-Qatar-Kuwait-Bahrain"
+    "UAE-Qatar-Kuwait-Bahrain",
+    739
   ],
   [
     "Saudi Arabia",
-    "Yemen"
+    "Yemen",
+    1458
   ],
   [
     "Slovakia",
-    "Slovenia"
+    "Slovenia",
+    0
   ],
   [
     "Slovakia",
-    "Ukraine"
+    "Ukraine",
+    91
   ],
   [
     "Solomon Islands",
-    "Vanuatu-New Caledonia"
+    "Vanuatu-New Caledonia",
+    0
   ],
   [
     "Somalia",
-    "Yemen"
+    "Yemen",
+    0
   ],
   [
     "South Sudan",
-    "Sudan"
+    "Sudan",
+    1937
   ],
   [
     "South Sudan",
-    "Uganda"
+    "Uganda",
+    435
   ],
   [
     "Syria",
-    "Turkey"
+    "Turkey",
+    822
   ],
   [
     "Tajikistan",
-    "Turkmenistan"
+    "Turkmenistan",
+    0
   ],
   [
     "Tajikistan",
-    "Uzbekistan"
+    "Uzbekistan",
+    1161
   ],
   [
     "Tanzania",
-    "Uganda"
+    "Uganda",
+    396
   ],
   [
     "Tanzania",
-    "Zambia"
+    "Zambia",
+    338
   ],
   [
     "Turkmenistan",
-    "Uzbekistan"
+    "Uzbekistan",
+    1621
   ],
   [
     "United States (Central)",
-    "United States (Northeast)"
+    "United States (Northeast)",
+    1000
   ],
   [
     "United States (Central)",
-    "United States (Southeast)"
+    "United States (Southeast)",
+    1500
   ],
   [
     "United States (Central)",
-    "United States (West)"
+    "United States (West)",
+    2000
   ],
   [
     "United States (Northeast)",
-    "United States (Southeast)"
+    "United States (Southeast)",
+    800
   ],
   [
     "Zambia",
-    "Zimbabwe"
+    "Zimbabwe",
+    797
   ]
 ]

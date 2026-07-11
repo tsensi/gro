@@ -134,4 +134,28 @@ public class InfectionSpreadTests
         var map = AdjacencyMap.FromZones(earth.Zones);
         Assert.True(map.AreAdjacent("France", "Spain"));
     }
+
+    [Fact]
+    public void AdjacencyMap_LoadFromFile_ParsesBorderLengths()
+    {
+        var map = AdjacencyMap.LoadFromBordersDirectory();
+        Assert.True(map.AreAdjacent("Afghanistan", "Pakistan"));
+        Assert.Equal(2670, map.GetBorderLength("Afghanistan", "Pakistan"));
+        Assert.Equal(2670, map.GetBorderLength("Pakistan", "Afghanistan"));
+    }
+
+    [Fact]
+    public void AdjacencyMap_LoadFromFile_WaterBordersHaveZeroLength()
+    {
+        var map = AdjacencyMap.LoadFromBordersDirectory();
+        Assert.True(map.AreAdjacent("France", "United Kingdom"));
+        Assert.Equal(0, map.GetBorderLength("France", "United Kingdom"));
+    }
+
+    [Fact]
+    public void AdjacencyMap_GetBorderLength_NonAdjacentReturnsZero()
+    {
+        var map = AdjacencyMap.LoadFromBordersDirectory();
+        Assert.Equal(0, map.GetBorderLength("France", "Japan"));
+    }
 }

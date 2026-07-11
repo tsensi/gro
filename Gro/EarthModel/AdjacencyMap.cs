@@ -5,6 +5,7 @@ namespace Gro.EarthModel;
 public sealed class AdjacencyMap
 {
     private readonly Dictionary<string, HashSet<string>> _neighbors = new();
+    private readonly Dictionary<(string, string), int> _borderLengths = new();
 
     private AdjacencyMap() { }
 
@@ -12,10 +13,13 @@ public sealed class AdjacencyMap
     {
         var map = new AdjacencyMap();
         var json = File.ReadAllText(path);
-        var pairs = JsonSerializer.Deserialize<string[][]>(json)!;
-        foreach (var pair in pairs)
+        var entries = JsonSerializer.Deserialize<JsonElement[]>(json)!;
+        foreach (var entry in entries)
         {
-            map.AddEdge(pair[0], pair[1]);
+            var a = entry[0].GetString()!;
+            var b = entry[1].GetString()!;
+            int lengthKm = entry.GetArrayLength() > 2 ? entry[2].GetInt32() : 0;
+            map.AddEdge(a, b, lengthKm);
         }
         return map;
     }
@@ -41,7 +45,7 @@ public sealed class AdjacencyMap
             {
                 if (BoundariesWithinThreshold(childZones[i], childZones[j], Threshold))
                 {
-                    map.AddEdge(childZones[i].Name, childZones[j].Name);
+                    map.AddEdge(childZones[i].Name, childZones[j].Name, 0);
                 }
             }
         }
@@ -58,6 +62,12 @@ public sealed class AdjacencyMap
     public bool AreAdjacent(string a, string b)
     {
         return _neighbors.TryGetValue(a, out var set) && set.Contains(b);
+    }
+
+    public int GetBorderLength(string a, string b)
+    {
+        var key = string.Compare(a, b, StringComparison.Ordinal) < 0 ? (a, b) : (b, a);
+        return _borderLengths.TryGetValue(key, out var length) ? length : 0;
     }
 
     private static bool BoundariesWithinThreshold(Zone a, Zone b, double threshold)
@@ -95,7 +105,7 @@ public sealed class AdjacencyMap
         return Math.Sqrt((p.Lon - nx) * (p.Lon - nx) + (p.Lat - ny) * (p.Lat - ny));
     }
 
-    private void AddEdge(string a, string b)
+    private void AddEdge(string a, string b, int lengthKm)
     {
         if (!_neighbors.TryGetValue(a, out var setA))
         {
@@ -110,6 +120,9 @@ public sealed class AdjacencyMap
             _neighbors[b] = setB;
         }
         setB.Add(a);
+
+        var key = string.Compare(a, b, StringComparison.Ordinal) < 0 ? (a, b) : (b, a);
+        _borderLengths[key] = lengthKm;
     }
 
     private static string FindBordersDirectory()

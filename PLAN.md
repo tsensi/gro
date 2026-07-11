@@ -30,7 +30,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [~] Update the country adjacency table. 
   - [x] Find a list of borders using internet search. It must include border length and border types. Reduce it into a minimal format. Then write a CLI tool to extract the country adjacency in our game into the same.
   - [x] Next to `zones` create a folder `borders` that makes border adjacency explicit. Update the game code to use that.
-  - [ ] Update the zones and borders infos to contain country adjacency information, including border length.
+  - [x] Update the zones and borders infos to contain country adjacency information, including border length.
   - [ ] In the game, use the adjacency to decide spreadability. When a new country borders more than one infected zone, the player is allowed to decide from which zone to infect. The modal should thus have space for multiple source zones.
 
 This is an idle game. Research classics of the genre like Cookie Clicker
