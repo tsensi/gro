@@ -20,7 +20,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] For a fixed amount of biomass, the player can upgrade an infected zone and increase the growth factor there.
 - [x] When a modal window for a selected country is open, clicking outside should close the modal window.
 - [x] Add an opaque background to the country selection modal windows
-- [ ] Add a UI top bar that shows the total biomass, number of infected zones (/ total), and the current simulation time
+- [x] Add a UI top bar that shows the total biomass, number of infected zones (/ total), and the current simulation time
 - [ ] Add time controls like in Plague Inc to the top right of the UI top bar. Speeds should be x0 (pause), x1, x3, x10, x30
 - [ ] Every country that is infected should be painted in blue.
 - [ ] For every country, draw a number of dots representing biomass. Develop a re-usable component using a dot-based visual counting system that can easily scale over 10 magnitudes using distinct dot shapes. Document the counting shapes in VISUAL_NUMBERS.md

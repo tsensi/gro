@@ -145,7 +145,7 @@ public static class Program
         if (headless)
         {
             SDL.SDL_GetWindowSize(window, out int w, out int h);
-            ui.Update(() => BuildUI(state, animator, game, sim, adjacency));
+            ui.Update(() => BuildUI(state, animator, game, sim, adjacency, earth));
             ui.Layout(w, h);
             globe.Render(renderer, w, h, present: false);
             ui.Render(renderer);
@@ -183,7 +183,7 @@ public static class Program
 
             SDL.SDL_GetWindowSize(window, out int width, out int height);
 
-            ui.Update(() => BuildUI(state, animator, game, sim, adjacency));
+            ui.Update(() => BuildUI(state, animator, game, sim, adjacency, earth));
             ui.Layout(width, height);
 
             globe.Render(renderer, width, height, present: false);
@@ -197,7 +197,7 @@ public static class Program
         return 0;
     }
 
-    private static UIElement BuildUI(StateStore state, Animator animator, GameState game, SimLoop sim, AdjacencyMap adjacency)
+    private static UIElement BuildUI(StateStore state, Animator animator, GameState game, SimLoop sim, AdjacencyMap adjacency, Earth earth)
     {
         var children = new List<UIElement>();
 
@@ -212,6 +212,8 @@ public static class Program
         }
         else
         {
+            children.Add(BuildTopBar(sim, earth));
+
             var spreadTarget = state.Get<Zone?>("spreadTarget", null);
             if (spreadTarget != null)
             {
@@ -252,6 +254,51 @@ public static class Program
             {
                 FontSize = 16,
                 TextColor = Color.FromRgb(180, 255, 180),
+            })
+        );
+    }
+
+    private static UIElement BuildTopBar(SimLoop sim, Earth earth)
+    {
+        var resources = ServiceLocator.Get<ResourceService>();
+        int infectedCount = sim.World.Query<InfectionComponent>().Count();
+        int totalCountries = earth.GetByType(ZoneType.Country).Count();
+        double elapsedDays = sim.State.ElapsedDays;
+
+        int years = (int)(elapsedDays / 365.25);
+        int days = (int)(elapsedDays % 365.25);
+        string timeStr = years > 0 ? $"Year {years}, Day {days}" : $"Day {days}";
+
+        return UIElement.Row(
+            style: new UIStyle
+            {
+                Direction = LayoutDirection.Horizontal,
+                Gap = 24,
+                Padding = 10,
+                Anchor = Anchor.TopLeft,
+                OffsetX = 0,
+                OffsetY = 0,
+                Width = 4000,
+                Height = 36,
+                BackgroundColor = Color.FromRgba(10, 12, 25, 230),
+                BorderColor = Color.FromRgba(60, 80, 60, 180),
+                BorderWidth = 1,
+            },
+            key: "top-bar",
+            UIElement.Label($"Biomass: {resources.Biomass:F0}", style: new UIStyle
+            {
+                FontSize = 14,
+                TextColor = Color.FromRgb(140, 220, 140),
+            }),
+            UIElement.Label($"Infected: {infectedCount}/{totalCountries}", style: new UIStyle
+            {
+                FontSize = 14,
+                TextColor = Color.FromRgb(180, 140, 220),
+            }),
+            UIElement.Label(timeStr, style: new UIStyle
+            {
+                FontSize = 14,
+                TextColor = Color.FromRgb(180, 200, 220),
             })
         );
     }
