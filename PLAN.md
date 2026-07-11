@@ -3,88 +3,7 @@ Let's make an idle game. You play as an alien organism that lands in a random sp
 The game is written in pure C#. It should run using SDL with vulkan on this machine.
 All the UI will be a custom system inspired by React, meaning we can write immediate-mode style GUI but have it react to changes in the game.
 
-- [x] Set up a baseline C# project. Make sure it runs using SDL. Add tasks here to implement it step by step. If anything requires user input, mark it as INPUT NEEDED and mask the task as done using [x]
-- [x] Set up a basic earth model in pure C#, dividing the globe into countries or states using geo-coordinates. Divide the ocean into zones that correspond to their human names, e.g. Eastern Mediterranean. Research and add tasks, starting at the top level hierarchy (continents, oceans) and refining to a cell size around 1000km.
-- [x] Add a simple visualization of the polygons on the globe. In the SDL main window, render the globe showing the outlines. Use something like globe.gl as inspiration. Research, then add tasks to implement this step by step.
-- [x] Document how to run the project here.
-- [x] Add a way render each zone in a different style, varying outline color, width, and fill color and width
-- [x] Add mouse input, allowing to select any zone on the globe. Log the selected zone to the console.
-- [x] Allow rotating the globe with the mouse like in Google Earth. Add tasks here to break this down into simpler sub-tasks.
-- [x] Make sure that all of Europe is represented. For each European county, there should be a zone that contains it.
-- [x] Make sure that all of Africa is represented.
-- [x] Make sure that all of North America is represented. Split Canada into about 5 regions, split the US in 3-4 regions
-- [x] Make sure that all of Central America is represented. It's Mexico (split in 3 regions), plus 3 more regions
-- [x] Make sure that all of continental Asia is represented. Split large countries like China, Mongolia, Russia, ...
-- [x] Make sure that all of Oceania is represented.
-- [x] Antarctica should be split into 5 zones.
-- [x] The ocean zones are too large, break them into smaller segments.
-- [x] Document the current state of the project with naming and decisions in CLAUDE.md
-
 ## Zone tests
-
-- [x] Add a --sonnet flag to capi.mjs that uses Sonnet instead of Opus (with the correct pinned model). DO NOT RUN THE SCRIPT!
-
-The tests currently are failing, but running them all overwhelms the the token limits in the code agent. We have to break this down into separate tasks
-- [x] Look at Zone.cs Is it too large or complex? Can we extract algorithms like point-inside? If yes, add tasks here to do so
-  - Conclusion: No. Zone.cs is 87 lines with a single responsibility. The point-in-polygon, centroid, and antimeridian logic are tightly coupled to Boundary and not reused elsewhere. No extraction needed.
-- [x] Change the default behavior of the zone tests to run sequentially for each zone, instead of a large O(n^2) double loop. This means we have to dynamically create test cases for each zone. However, this is fine. They don't have to be harnessed unit tests, this should be a separate CLI tool.
-- [x] Define a geo-json inspired JSON format for the zone data. Add it in the Appendix further down. NOTE: The resolution should be on the order of 100m. Round to precision, making it easier to later fix correct tiling and adjacency.
-- [x] Extract ContinentData.cs into JSON and load it at app start. Each continent ahoudl be one file.
-- [x] Extract CountryData.cs into JSON and load it at app start. Each country zone should be one file.
-- [x] Extract OceanData.cs into JSON and load it at app start. Each ocean ZONE should be one file.
-- [x] We need better tools to deal with overlaps. Add tasks here to add CLI tools to validate, normalize polygons in the JSON format.
-- [x] Create a CLI tool to fix intersections between zones. Add a mode that subtracts one polygon from another.
-- [x] Add a "split-difference" mode to the fix-intersection tool. It intersects both polygons, then find the median line in the intersection area and adjusts both polygons to become a compromise solution.
-- [x] Now, create tasks for each letter of the alphabet. Run the zone overlap tests only for zones that start with that letter and fix the overlap errors that come up. For each country that comes up, add a task here to run the split-difference mode between two countries. If one intersection partner is an ocean, subtract it from the country zone.
-  - [x] Zone overlap fixes: letter A (Africa, Asia, Antarctica, Albania, Algeria, Angola, Afghanistan, Argentina, Australia, Austria, Arabia zones, Arctic/Atlantic/Andaman ocean zones)
-  - [x] Zone overlap fixes: letter B (Belgium, Belarus, Bangladesh, Benin, Bhutan, Bosnia, Botswana, Brazil, Bulgaria, Burkina Faso, Burundi, Baltic/Barents/Bay/Beaufort/Bering/Black ocean zones)
-  - [x] Zone overlap fixes: letter C (Canada regions, Cameroon, Cambodia, Chad, China regions, Colombia, Costa Rica-Panama, Croatia, Cuba, Czech Republic, Caribbean/Central/Coral ocean zones)
-  - [x] Zone overlap fixes: letter D (Denmark, Djibouti, DR Congo)
-  - [x] Zone overlap fixes: letter E (Egypt, Equatorial Guinea, Eritrea, Estonia, Eswatini, Ethiopia, Europe, East China Sea, Eastern Mediterranean, East Siberian Sea, Equatorial Pacific)
-  - [x] Zone overlap fixes: letter F (Fiji, Finland, France, French Polynesia)
-  - [x] Zone overlap fixes: letter G (Gabon, Gambia, Georgia-Armenia-Azerbaijan, Germany, Ghana, Greece, Greenland, Guatemala-Belize, Guinea, Guinea-Bissau, Gulf/Greenland ocean zones)
-  - [x] Zone overlap fixes: letter H (Haiti-Dominican Republic, Honduras-El Salvador-Nicaragua, Hungary)
-  - [x] Zone overlap fixes: letter I (Iceland, India, Indonesia, Iran, Iraq, Ireland, Italy, Ivory Coast, Indian Ocean)
-  - [x] Zone overlap fixes: letter J (Jamaica, Japan, Jordan)
-  - [x] Zone overlap fixes: letter K (Kazakhstan, Kenya, Kyrgyzstan, Kara Sea)
-  - [x] Zone overlap fixes: letter L (Laos, Latvia, Lebanon-Israel, Lesotho, Liberia, Libya, Lithuania, Laptev Sea)
-  - [x] Zone overlap fixes: letter M (Madagascar, Malawi, Malaysia, Mali, Mauritania, Mexico regions, Micronesia, Moldova, Mongolia, Montenegro, Morocco, Mozambique, Myanmar, Mediterranean/Mozambique Channel ocean zones)
-  - [x] Zone overlap fixes: letter N (Namibia, Nepal, Netherlands, New Zealand, Niger, Nigeria, North Korea, North Macedonia, Norway, North America, North Sea, Northeast/Northwest/Norwegian ocean zones)
-  - [x] Zone overlap fixes: letter O (Oceania, Oman)
-  - [x] Zone overlap fixes: letter P (Pakistan, Papua New Guinea, Philippines, Poland, Portugal, Pacific Ocean, Persian Gulf, Philippine Sea)
-  - [x] Zone overlap fixes: letter R (Republic of Congo, Romania, Russia regions, Rwanda, Red Sea)
-  - [x] Zone overlap fixes: letter S (Samoa-Tonga, Saudi Arabia, Senegal, Serbia, Sierra Leone, Slovakia, Slovenia, Solomon Islands, Somalia, South Africa, South Korea, South Sudan, Spain, Sri Lanka, Sudan, Sweden, Switzerland, Syria, South America, Southern Ocean, Sargasso/South China/Southeast/Southwest ocean zones)
-  - [x] Zone overlap fixes: letter T (Taiwan, Tajikistan, Tanzania, Thailand, Togo, Tunisia, Turkey, Turkmenistan, Tasman Sea)
-  - [x] Zone overlap fixes: letter U (UAE-Qatar-Kuwait-Bahrain, Uganda, Ukraine, United Kingdom, United States regions, Uzbekistan)
-  - [x] Zone overlap fixes: letter V (Vanuatu-New Caledonia, Vietnam)
-  - [x] Zone overlap fixes: letter W (Western Mediterranean)
-  - [x] Zone overlap fixes: letter Y (Yemen)
-  - [x] Zone overlap fixes: letter Z (Zambia, Zimbabwe)
-- [x] Now, after fixing, create tasks again for each letter of the alphabet and run the tests only for zones with that letter. Fix any remaining issues.
-- [x] Use the improved tooling to make sure the zones form a non-overlapping covering of the globe. This is a complex task. Please analyze it first, then make a plan here, breaking it into several `- [ ]` tasks.
-
-  **Analysis (2026-07-08):** Ran `Gro.ZoneCheck` — 0 top-level overlaps at its grid, but xunit fine-mesh (5°) catches 4 overlap points at lat 36 (Europe/Africa). Also 121 uncovered sample points at 5° resolution. The gaps cluster into 8 geographic regions where top-level zone boundaries don't fully tile the globe:
-
-  1. Southern Ocean/Oceania gap (lat -59 to -39, lon 141–176): Southern Ocean doesn't extend far enough north, or Oceania/Indian Ocean don't extend far enough south
-  2. South America Pacific coast (lat -34 to -9, lon -74 to -79): South America's west boundary doesn't meet Pacific Ocean
-  3. Southeast Asian seas (lat -14 to 16, lon 106–136): Pacific/Indian Ocean boundaries don't cover the waters near Indonesia/Philippines
-  4. Central American Pacific coast (lat 1–11, lon -84 to -89): North America's southern boundary doesn't meet Pacific Ocean
-  5. Eastern Mediterranean / Middle East (lat 21–41, lon 31–51): Asia boundary doesn't cover the Arabian Peninsula / eastern Mediterranean region
-  6. North Atlantic near Europe (lat 56–61, lon -9): Europe's western boundary doesn't meet Atlantic Ocean
-  7. Greenland / Canadian Arctic (lat 66–86, lon -179 to -19): North America and Arctic Ocean don't fully cover the high-latitude North Atlantic/Greenland area
-  8. Northern Russia / Ural region (lat 61–71, lon 46–56): Asia's northern boundary doesn't meet Arctic Ocean
-
-  Sub-tasks (fix each gap region by expanding the relevant top-level zone boundaries):
-  - [x] Fix overlap: Europe/Africa boundary at lat 36 (lon -4 to 11) — 4 points claimed by both
-  - [x] Fix coverage gap: Southern Ocean / Oceania (lat -59 to -39, lon 141–176)
-  - [x] Fix coverage gap: South America Pacific coast (lat -34 to -9, lon -74 to -79)
-  - [x] Fix coverage gap: Southeast Asian seas (lat -14 to 16, lon 106–136)
-  - [x] Fix coverage gap: Central American Pacific coast (lat 1–11, lon -84 to -89)
-  - [x] Fix coverage gap: Eastern Mediterranean / Middle East (lat 21–41, lon 31–51)
-  - [x] Fix coverage gap: North Atlantic near Europe (lat 56–61, lon -9)
-  - [x] Fix coverage gap: Greenland / Canadian Arctic (lat 66–86, lon -179 to -19)
-  - [x] Fix coverage gap: Northern Russia / Ural region (lat 61–71, lon 46–56)
-  - [x] Final validation: run `Gro.ZoneCheck` and `dotnet test` to confirm 0 overlaps and 0 uncovered points
 - [x] Fix any remaining zone coverage test failures
 
 - [x] Create a simple immediate-mode UI toolkit inspired by React.
@@ -99,6 +18,12 @@ The tests currently are failing, but running them all overwhelms the the token l
 - [x] The player farms a "biomass" resource. Add a global resource counter service / system. Use a ServiceLocator pattern
 - [x] On every turn, the biomass increases by the number of infected zones. This will later be refined.
 - [x] For a fixed amount of biomass, the player can upgrade an infected zone and increase the growth factor there.
+- [ ] When a modal window for a selected country is open, clicking outside should close the modal window.
+- [ ] Add an opaque background to the country selection modal windows
+- [ ] Add a UI top bar that shows the total biomass, number of infected zones (/ total), and the current simulation time
+- [ ] Add time controls like in Plague Inc to the top right of the UI top bar. Speeds should be x0 (pause), x1, x3, x10, x30
+- [ ] Every country that is infected should be painted in blue.
+- [ ] For every country, draw a number of dots representing biomass. Develop a re-usable component using a dot-based visual counting system that can easily scale over 10 magnitudes using distinct dot shapes. Document the counting shapes in VISUAL_NUMBERS.md
 
 This is an idle game. Research classics of the genre like Cookie Clicker
 - [x] Research competitor idle games and add a new file IDLE_IDEAS_PLAN.md in this `- [ ]` task format for all the things to add to make this game better
