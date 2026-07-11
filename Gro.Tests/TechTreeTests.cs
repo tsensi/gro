@@ -389,4 +389,173 @@ public class TechTreeTests
         Assert.NotNull(t5);
         Assert.Equal(5, t5.Tier);
     }
+
+    [Fact]
+    public void Serialization_ExtractAndApply_RoundTrips()
+    {
+        var world = new World();
+        var entity = world.SpawnInZone("France");
+        world.Set(entity, new InfectionComponent());
+        var research = new ResearchComponent();
+        research.StartResearch("infection_wave_1");
+        research.AddProgress("infection_wave_1", 0.6);
+        research.StartResearch("infection_wave_2");
+        research.AddProgress("infection_wave_2", 0.3);
+        world.Set(entity, research);
+
+        var saves = ResearchSerializer.Extract(world);
+        Assert.Single(saves);
+        Assert.Equal("France", saves[0].ZoneName);
+        Assert.Equal(0.6, saves[0].Progress["infection_wave_1"], precision: 10);
+        Assert.Equal(0.3, saves[0].Progress["infection_wave_2"], precision: 10);
+        Assert.Contains("infection_wave_1", saves[0].ActiveResearch);
+        Assert.Contains("infection_wave_2", saves[0].ActiveResearch);
+
+        var newWorld = new World();
+        var newEntity = newWorld.SpawnInZone("France");
+        newWorld.Set(newEntity, new InfectionComponent());
+        newWorld.Set(newEntity, new ResearchComponent());
+
+        ResearchSerializer.Apply(newWorld, saves);
+
+        var restored = newWorld.Get<ResearchComponent>(newEntity)!;
+        Assert.Equal(0.6, restored.GetProgress("infection_wave_1"), precision: 10);
+        Assert.Equal(0.3, restored.GetProgress("infection_wave_2"), precision: 10);
+        Assert.True(restored.IsResearching("infection_wave_1"));
+        Assert.True(restored.IsResearching("infection_wave_2"));
+    }
+
+    [Fact]
+    public void Serialization_JsonRoundTrip()
+    {
+        var saves = new List<ResearchSaveData>
+        {
+            new()
+            {
+                ZoneName = "Germany",
+                Progress = new Dictionary<string, double>
+                {
+                    ["infection_wave_1"] = 1.0,
+                    ["infection_wave_2"] = 0.45,
+                },
+                ActiveResearch = new List<string> { "infection_wave_2" },
+            }
+        };
+
+        var json = ResearchSerializer.ToJson(saves);
+        var restored = ResearchSerializer.FromJson(json);
+
+        Assert.Single(restored);
+        Assert.Equal("Germany", restored[0].ZoneName);
+        Assert.Equal(1.0, restored[0].Progress["infection_wave_1"]);
+        Assert.Equal(0.45, restored[0].Progress["infection_wave_2"], precision: 10);
+        Assert.Single(restored[0].ActiveResearch);
+        Assert.Equal("infection_wave_2", restored[0].ActiveResearch[0]);
+    }
+
+    [Fact]
+    public void Serialization_SkipsEmptyComponents()
+    {
+        var world = new World();
+        var entity = world.SpawnInZone("Spain");
+        world.Set(entity, new ResearchComponent());
+
+        var saves = ResearchSerializer.Extract(world);
+        Assert.Empty(saves);
+    }
+
+    [Fact]
+    public void Serialization_MultipleZones()
+    {
+        var world = new World();
+
+        var e1 = world.SpawnInZone("France");
+        var r1 = new ResearchComponent();
+        r1.StartResearch("infection_wave_1");
+        r1.AddProgress("infection_wave_1", 1.0);
+        world.Set(e1, r1);
+
+        var e2 = world.SpawnInZone("Germany");
+        var r2 = new ResearchComponent();
+        r2.StartResearch("infection_wave_1");
+        r2.AddProgress("infection_wave_1", 0.5);
+        world.Set(e2, r2);
+
+        var saves = ResearchSerializer.Extract(world);
+        Assert.Equal(2, saves.Count);
+
+        var france = saves.Find(s => s.ZoneName == "France")!;
+        var germany = saves.Find(s => s.ZoneName == "Germany")!;
+        Assert.Equal(1.0, france.Progress["infection_wave_1"]);
+        Assert.Equal(0.5, germany.Progress["infection_wave_1"], precision: 10);
+    }
+
+    [Fact]
+    public void Serialization_ApplyIgnoresMissingZones()
+    {
+        var world = new World();
+        var entity = world.SpawnInZone("France");
+        world.Set(entity, new ResearchComponent());
+
+        var saves = new List<ResearchSaveData>
+        {
+            new()
+            {
+                ZoneName = "NonExistentZone",
+                Progress = new Dictionary<string, double> { ["infection_wave_1"] = 0.5 },
+                ActiveResearch = new List<string> { "infection_wave_1" },
+            }
+        };
+
+        ResearchSerializer.Apply(world, saves);
+
+        var research = world.Get<ResearchComponent>(entity)!;
+        Assert.Equal(0.0, research.GetProgress("infection_wave_1"));
+    }
+
+    [Fact]
+    public void Serialization_FileRoundTrip()
+    {
+        var world = new World();
+        var entity = world.SpawnInZone("Italy");
+        var research = new ResearchComponent();
+        research.StartResearch("infection_wave_1");
+        research.AddProgress("infection_wave_1", 0.75);
+        world.Set(entity, research);
+
+        var tempFile = Path.Combine(Path.GetTempPath(), $"gro_test_{Guid.NewGuid()}.json");
+        try
+        {
+            ResearchSerializer.SaveToFile(world, tempFile);
+            Assert.True(File.Exists(tempFile));
+
+            var newWorld = new World();
+            var newEntity = newWorld.SpawnInZone("Italy");
+            newWorld.Set(newEntity, new ResearchComponent());
+
+            ResearchSerializer.LoadFromFile(newWorld, tempFile);
+
+            var restored = newWorld.Get<ResearchComponent>(newEntity)!;
+            Assert.Equal(0.75, restored.GetProgress("infection_wave_1"), precision: 10);
+            Assert.True(restored.IsResearching("infection_wave_1"));
+        }
+        finally
+        {
+            if (File.Exists(tempFile))
+                File.Delete(tempFile);
+        }
+    }
+
+    [Fact]
+    public void Serialization_LoadFromFile_NonexistentFileIsNoOp()
+    {
+        var world = new World();
+        var entity = world.SpawnInZone("Spain");
+        world.Set(entity, new ResearchComponent());
+
+        ResearchSerializer.LoadFromFile(world, "/tmp/nonexistent_gro_save.json");
+
+        var research = world.Get<ResearchComponent>(entity)!;
+        Assert.Equal(0.0, research.GetProgress("infection_wave_1"));
+    }
 }

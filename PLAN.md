@@ -13,7 +13,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
   - [x] Core data model: TechDefinition, TechRegistry (JSON loader), ResearchComponent (per-zone progress)
   - [x] Simulation systems: ResearchSystem (advances active research) + TechDiffusionSystem (spreads from established neighbors)
   - [x] JSON config: data/techs.json with Infection Wave tiers 1–5
-  - [ ] Serialization: save/load ResearchComponent state per zone
+  - [x] Serialization: save/load ResearchComponent state per zone
   - [ ] UI: show tech progress in zone sidebar, allow starting research from tech tree panel
 - [ ] When clicking any country, show the side bar with infection status, biomass, and techs. Allow opening the zone's tech tree from there.
 
