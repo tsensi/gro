@@ -166,7 +166,7 @@ public static class Program
             lastTick = now;
             animator.Tick(deltaMs);
 
-            double deltaDays = deltaMs / 1000.0 / 86400.0;
+            double deltaDays = deltaMs / 1000.0;
             sim.Tick(deltaDays);
 
             while (SDL.SDL_PollEvent(out SDL.SDL_Event e) != 0)
