@@ -456,8 +456,8 @@ public static class Program
             var sourceLink = sim.World.Get<ZoneLink>(sourceEntity);
             string sourceName = sourceLink?.ZoneName ?? "???";
             double sourceBiomass = sourceInfection?.Biomass ?? 0;
-            double afterTax = sourceBiomass * 0.6;
-            double each = afterTax / 2.0;
+            double afterAttrition = sourceBiomass * 0.6;
+            double each = afterAttrition / 2.0;
 
             var capturedEntity = sourceEntity;
             modalChildren.Add(UIElement.Panel(
@@ -475,7 +475,7 @@ public static class Program
                     FontSize = 12,
                     TextColor = Color.FromRgb(160, 180, 170),
                 }),
-                UIElement.Label($"40% tax. Each zone gets {each:F1}.", style: new UIStyle
+                UIElement.Label($"40% attrition. Each zone gets {each:F1}.", style: new UIStyle
                 {
                     FontSize = 11,
                     TextColor = Color.FromRgb(140, 160, 150),
@@ -491,7 +491,7 @@ public static class Program
 
                         var newEntity = sim.World.SpawnInZone(target.Name);
                         sim.World.Set(newEntity, new InfectionComponent { Biomass = half });
-                        Console.WriteLine($"Spread to {target.Name} from {sourceName}: {half:F1} biomass each (taxed 40%)");
+                        Console.WriteLine($"Spread to {target.Name} from {sourceName}: {half:F1} biomass each (40% attrition)");
                     }
                     state.Set<Zone?>("spreadTarget", null);
                     state.Set("spreadSources", new List<Entity>());

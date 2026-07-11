@@ -72,7 +72,7 @@ public class InfectionSpreadTests
     }
 
     [Fact]
-    public void Spread_SplitsBiomassWithTax()
+    public void Spread_SplitsBiomassWithAttrition()
     {
         var world = new World();
         var source = world.SpawnInZone("France");
