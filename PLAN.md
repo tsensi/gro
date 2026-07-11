@@ -6,6 +6,8 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 ## Zone tests
 - [x] Fix any remaining zone coverage test failures
 
+- [ ] Fix flaky `GamePlaythroughTests.InfectAlgeria_AfterTicks_BiomassAndTimeAdvance` — fails intermittently due to `ServiceLocator` shared static state race when run alongside other tests
+
 - [x] Create a simple immediate-mode UI toolkit inspired by React.
 
 - [x] Allow selecting a zone. Animate a UI panel in showing the zone's name and stats. There is a close button on the panel to dismiss it, animating it out
