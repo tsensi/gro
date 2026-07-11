@@ -6,7 +6,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 ## Zone tests
 - [x] Fix any remaining zone coverage test failures
 
-- [ ] Fix flaky `GamePlaythroughTests.InfectAlgeria_AfterTicks_BiomassAndTimeAdvance` — fails intermittently due to `ServiceLocator` shared static state race when run alongside other tests
+- [x] Fix flaky `GamePlaythroughTests.InfectAlgeria_AfterTicks_BiomassAndTimeAdvance` — fails intermittently due to `ServiceLocator` shared static state race when run alongside other tests
 
 - [x] Create a simple immediate-mode UI toolkit inspired by React.
 

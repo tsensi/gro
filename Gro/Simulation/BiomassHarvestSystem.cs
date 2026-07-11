@@ -5,6 +5,13 @@ namespace Gro.Simulation;
 
 public sealed class BiomassHarvestSystem : ISystem
 {
+    private readonly ResourceService _resources;
+
+    public BiomassHarvestSystem(ResourceService resources)
+    {
+        _resources = resources;
+    }
+
     public void Tick(SimState state)
     {
         int infectedCount = 0;
@@ -13,8 +20,7 @@ public sealed class BiomassHarvestSystem : ISystem
 
         if (infectedCount > 0)
         {
-            var resources = ServiceLocator.Get<ResourceService>();
-            resources.Add(infectedCount * state.DeltaDays);
+            _resources.Add(infectedCount * state.DeltaDays);
         }
     }
 }
