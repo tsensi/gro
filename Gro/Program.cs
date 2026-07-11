@@ -104,41 +104,6 @@ public static class Program
 
                 if (zone == null) return;
 
-                var infectedEntity = sim.World.EntitiesInZone(zone.Name)
-                    .FirstOrDefault(e => sim.World.Has<InfectionComponent>(e), Entity.None);
-                bool isInfected = infectedEntity != Entity.None;
-
-                if (isInfected)
-                {
-                    state.Set("upgradeZone", zone);
-                    state.Set("upgradeEntity", infectedEntity);
-                    return;
-                }
-
-                if (zone.Type == ZoneType.Country)
-                {
-                    var neighbors = adjacency.GetNeighbors(zone.Name);
-                    var sourceEntities = new List<Entity>();
-                    foreach (var neighborName in neighbors)
-                    {
-                        foreach (var e in sim.World.EntitiesInZone(neighborName))
-                        {
-                            if (sim.World.Has<InfectionComponent>(e))
-                            {
-                                sourceEntities.Add(e);
-                                break;
-                            }
-                        }
-                    }
-
-                    if (sourceEntities.Count > 0)
-                    {
-                        state.Set("spreadTarget", zone);
-                        state.Set("spreadSources", sourceEntities);
-                        return;
-                    }
-                }
-
                 state.Set("selectedZone", zone);
                 state.Set("panelDismissing", false);
                 animator.Animate(0f, 1f, 250f, EaseFunction.EaseOut,
@@ -239,7 +204,7 @@ public static class Program
                 var techTreeEntity = state.Get("techTreeEntity", Entity.None);
                 children.Add(BuildTechTreePanel(state, sim, techTreeZone, techTreeEntity, techRegistry));
             }
-            children.Add(BuildZonePanel(state, animator));
+            children.Add(BuildZonePanel(state, animator, sim, techRegistry));
         }
 
         return UIElement.Panel(
@@ -857,7 +822,7 @@ public static class Program
         );
     }
 
-    private static UIElement BuildZonePanel(StateStore state, Animator animator)
+    private static UIElement BuildZonePanel(StateStore state, Animator animator, SimLoop sim, TechRegistry techRegistry)
     {
         var zone = state.Get<Zone?>("selectedZone", null);
         float anim = state.Get("panelAnim", 0f);
@@ -866,8 +831,157 @@ public static class Program
         if (zone == null || anim <= 0f)
             return UIElement.Panel();
 
-        int panelWidth = 260;
+        int panelWidth = 280;
         int xOffset = (int)((1f - anim) * panelWidth);
+
+        var children = new List<UIElement>();
+
+        children.Add(UIElement.Row(
+            style: new UIStyle { Direction = LayoutDirection.Horizontal, Gap = 8 },
+            key: "zone-header",
+            UIElement.Label(zone.Name, style: new UIStyle
+            {
+                FontSize = 16,
+                TextColor = Color.FromRgb(240, 240, 255),
+            }),
+            UIElement.Button("X", () =>
+            {
+                if (!dismissing)
+                {
+                    state.Set("panelDismissing", true);
+                    animator.Animate(anim, 0f, 200f, EaseFunction.EaseIn,
+                        v => state.Set("panelAnim", v),
+                        () =>
+                        {
+                            state.Set<Zone?>("selectedZone", null);
+                            state.Set("panelDismissing", false);
+                        });
+                }
+            }, style: new UIStyle
+            {
+                Padding = 4,
+                BackgroundColor = Color.FromRgba(120, 40, 40, 200),
+                TextColor = Color.FromRgb(255, 200, 200),
+                BorderColor = Color.FromRgba(180, 80, 80, 180),
+                BorderWidth = 1,
+            })
+        ));
+
+        if (zone.Type == ZoneType.Country)
+        {
+            var infectedEntity = sim.World.EntitiesInZone(zone.Name)
+                .FirstOrDefault(e => sim.World.Has<InfectionComponent>(e), Entity.None);
+            bool isInfected = infectedEntity != Entity.None;
+
+            if (isInfected)
+            {
+                var infection = sim.World.Get<InfectionComponent>(infectedEntity)!;
+                children.Add(UIElement.Label("Status: INFECTED", style: new UIStyle
+                {
+                    FontSize = 12,
+                    TextColor = Color.FromRgb(100, 220, 100),
+                }));
+                children.Add(UIElement.Label($"Biomass: {infection.Biomass:F1}", style: new UIStyle
+                {
+                    FontSize = 12,
+                    TextColor = Color.FromRgb(140, 220, 140),
+                }));
+                children.Add(UIElement.Label($"Growth Level: {infection.GrowthLevel} (x{infection.GrowthMultiplier:F1})", style: new UIStyle
+                {
+                    FontSize = 12,
+                    TextColor = Color.FromRgb(180, 200, 170),
+                }));
+
+                var research = sim.World.Get<ResearchComponent>(infectedEntity);
+                if (research != null)
+                {
+                    var techLines = new List<UIElement>();
+                    foreach (var tech in techRegistry.All)
+                    {
+                        double progress = research.GetProgress(tech.Id);
+                        bool isResearching = research.IsResearching(tech.Id);
+                        bool isEstablished = research.IsFullyEstablished(tech.Id);
+
+                        if (!isEstablished && !isResearching && progress == 0)
+                            continue;
+
+                        string statusStr;
+                        Color statusColor;
+                        if (isEstablished)
+                        {
+                            statusStr = "DONE";
+                            statusColor = Color.FromRgb(100, 220, 100);
+                        }
+                        else if (isResearching)
+                        {
+                            statusStr = $"{(int)(progress * 100)}%";
+                            statusColor = Color.FromRgb(140, 200, 255);
+                        }
+                        else
+                        {
+                            statusStr = $"{(int)(progress * 100)}% (diffusing)";
+                            statusColor = Color.FromRgb(180, 180, 140);
+                        }
+
+                        techLines.Add(UIElement.Label($"  {tech.Name}: {statusStr}", style: new UIStyle
+                        {
+                            FontSize = 11,
+                            TextColor = statusColor,
+                        }));
+                    }
+
+                    if (techLines.Count > 0)
+                    {
+                        children.Add(UIElement.Label("Techs:", style: new UIStyle
+                        {
+                            FontSize = 12,
+                            TextColor = Color.FromRgb(140, 180, 220),
+                        }));
+                        children.AddRange(techLines);
+                    }
+                }
+
+                var capturedEntity = infectedEntity;
+                children.Add(UIElement.Button("Tech Tree", () =>
+                {
+                    state.Set("techTreeZone", zone);
+                    state.Set("techTreeEntity", capturedEntity);
+                }, style: new UIStyle
+                {
+                    Padding = 6,
+                    BackgroundColor = Color.FromRgba(40, 80, 140, 220),
+                    TextColor = Color.FromRgb(180, 220, 255),
+                    BorderColor = Color.FromRgba(80, 140, 220, 200),
+                    BorderWidth = 1,
+                }));
+            }
+            else
+            {
+                children.Add(UIElement.Label("Status: Not infected", style: new UIStyle
+                {
+                    FontSize = 12,
+                    TextColor = Color.FromRgb(180, 140, 140),
+                }));
+                children.Add(UIElement.Label("Biomass: 0", style: new UIStyle
+                {
+                    FontSize = 12,
+                    TextColor = Color.FromRgb(160, 160, 160),
+                }));
+            }
+        }
+        else
+        {
+            children.Add(UIElement.Label($"Type: {zone.Type}", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(180, 190, 210),
+            }));
+            children.Add(UIElement.Label($"Parent: {zone.ParentName ?? "none"}", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(180, 190, 210),
+            }));
+        }
 
         return UIElement.Panel(
             style: new UIStyle
@@ -877,57 +991,13 @@ public static class Program
                 Gap = 8,
                 Anchor = Anchor.TopRight,
                 OffsetX = xOffset,
-                OffsetY = 20,
+                OffsetY = 42,
                 BackgroundColor = Color.FromRgba(20, 25, 40, 220),
                 BorderColor = Color.FromRgba(80, 120, 180, 180),
                 BorderWidth = 1,
             },
             key: "zone-panel",
-            UIElement.Row(
-                style: new UIStyle { Direction = LayoutDirection.Horizontal, Gap = 8 },
-                key: "zone-header",
-                UIElement.Label(zone.Name, style: new UIStyle
-                {
-                    FontSize = 16,
-                    TextColor = Color.FromRgb(240, 240, 255),
-                }),
-                UIElement.Button("X", () =>
-                {
-                    if (!dismissing)
-                    {
-                        state.Set("panelDismissing", true);
-                        animator.Animate(anim, 0f, 200f, EaseFunction.EaseIn,
-                            v => state.Set("panelAnim", v),
-                            () =>
-                            {
-                                state.Set<Zone?>("selectedZone", null);
-                                state.Set("panelDismissing", false);
-                            });
-                    }
-                }, style: new UIStyle
-                {
-                    Padding = 4,
-                    BackgroundColor = Color.FromRgba(120, 40, 40, 200),
-                    TextColor = Color.FromRgb(255, 200, 200),
-                    BorderColor = Color.FromRgba(180, 80, 80, 180),
-                    BorderWidth = 1,
-                })
-            ),
-            UIElement.Label($"Type: {zone.Type}", style: new UIStyle
-            {
-                FontSize = 12,
-                TextColor = Color.FromRgb(180, 190, 210),
-            }),
-            UIElement.Label($"Parent: {zone.ParentName ?? "none"}", style: new UIStyle
-            {
-                FontSize = 12,
-                TextColor = Color.FromRgb(180, 190, 210),
-            }),
-            UIElement.Label($"Lat: {zone.Centroid.Lat:F1}  Lon: {zone.Centroid.Lon:F1}", style: new UIStyle
-            {
-                FontSize = 12,
-                TextColor = Color.FromRgb(160, 170, 190),
-            })
+            children.ToArray()
         );
     }
 }
