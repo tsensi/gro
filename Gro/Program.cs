@@ -553,6 +553,11 @@ public static class Program
                 FontSize = 16,
                 TextColor = Color.FromRgb(255, 220, 140),
             }),
+            UIElement.Label($"Biomass: {infection.Biomass:F1}", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(140, 220, 140),
+            }),
             UIElement.Label($"Growth Level: {infection.GrowthLevel} -> {nextLevel}", style: new UIStyle
             {
                 FontSize = 12,

@@ -33,7 +33,7 @@ This is an idle game. Research classics of the genre like Cookie Clicker
 - [x] Research competitor world domination/grand strategy games and add a new file DOMINATION_IDEAS_PLAN.md in this `- [ ]` task format for all the things to add to make this game better
 - [x] Time currently doesn't advance. Please fix that.
 - [x] Add a integration test that plays through the game, infecting Algeria and ensures that biomass > 0 and time > 0 after a sufficient number of ticks
-- [ ] The country-scale modal popup should show the biomass in the country.
+- [x] The country-scale modal popup should show the biomass in the country.
 
 ## How to run
 
