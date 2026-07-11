@@ -23,6 +23,7 @@ public sealed class GlobeRenderer
 
     public event Action<Zone?>? ZoneSelected;
     public HashSet<string> InfectedZones { get; } = new();
+    public Dictionary<string, double> ZoneBiomass { get; } = new();
 
     public GlobeRenderer(Earth earth)
     {
@@ -108,6 +109,7 @@ public sealed class GlobeRenderer
         DrawGlobeOutline(renderer);
         DrawGraticule(renderer);
         DrawZones(renderer);
+        DrawBiomassDots(renderer);
 
         if (present)
             SDL.SDL_RenderPresent(renderer);
@@ -186,6 +188,37 @@ public sealed class GlobeRenderer
             var outline = infected ? InfectedOutline : style.OutlineColor;
             SDL.SDL_SetRenderDrawColor(renderer, outline.R, outline.G, outline.B, outline.A);
             DrawOutline(renderer, zone.Boundary, infected ? 2 : style.OutlineWidth);
+        }
+    }
+
+    private static readonly Color DotColor = Color.FromRgb(180, 255, 180);
+
+    private void DrawBiomassDots(IntPtr renderer)
+    {
+        foreach (var zone in _earth.Zones)
+        {
+            if (zone.Type != ZoneType.Country) continue;
+            if (!ZoneBiomass.TryGetValue(zone.Name, out double biomass)) continue;
+            if (biomass < 1) continue;
+
+            var centroid = zone.Centroid;
+            var (cx, cy, visible) = Project(centroid.Lat, centroid.Lon);
+            if (!visible) continue;
+
+            var dots = DotCounter.Decompose(biomass);
+            if (dots.Count == 0) continue;
+
+            int dotSize = Math.Max(4, _radius / 80);
+            int spacing = dotSize + 2;
+            int totalWidth = dots.Count * spacing - 2;
+            int startX = cx - totalWidth / 2;
+
+            SDL.SDL_SetRenderDrawColor(renderer, DotColor.R, DotColor.G, DotColor.B, DotColor.A);
+            for (int i = 0; i < dots.Count; i++)
+            {
+                int dx = startX + i * spacing;
+                DotCounter.DrawDot(renderer, dots[i], dx, cy, dotSize);
+            }
         }
     }
 

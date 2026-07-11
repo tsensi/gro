@@ -619,11 +619,17 @@ public static class Program
     private static void SyncInfectedZones(GlobeRenderer globe, SimLoop sim)
     {
         globe.InfectedZones.Clear();
+        globe.ZoneBiomass.Clear();
         foreach (var entity in sim.World.Query<InfectionComponent>())
         {
             var link = sim.World.Get<ZoneLink>(entity);
             if (link != null)
+            {
                 globe.InfectedZones.Add(link.ZoneName);
+                var infection = sim.World.Get<InfectionComponent>(entity);
+                if (infection != null)
+                    globe.ZoneBiomass[link.ZoneName] = infection.Biomass;
+            }
         }
     }
 

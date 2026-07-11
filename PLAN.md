@@ -23,7 +23,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Add a UI top bar that shows the total biomass, number of infected zones (/ total), and the current simulation time
 - [x] Add time controls like in Plague Inc to the top right of the UI top bar. Speeds should be x0 (pause), x1, x3, x10, x30
 - [x] Every country that is infected should be painted in blue.
-- [ ] For every country, draw a number of dots representing biomass. Develop a re-usable component using a dot-based visual counting system that can easily scale over 10 magnitudes using distinct dot shapes. Document the counting shapes in VISUAL_NUMBERS.md
+- [x] For every country, draw a number of dots representing biomass. Develop a re-usable component using a dot-based visual counting system that can easily scale over 10 magnitudes using distinct dot shapes. Document the counting shapes in VISUAL_NUMBERS.md
 
 This is an idle game. Research classics of the genre like Cookie Clicker
 - [x] Research competitor idle games and add a new file IDLE_IDEAS_PLAN.md in this `- [ ]` task format for all the things to add to make this game better
