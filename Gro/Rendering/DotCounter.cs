@@ -41,7 +41,13 @@ public static class DotCounter
     public static List<DotShape> Decompose(double value)
     {
         var dots = new List<DotShape>();
-        if (value < 1) return dots;
+        if (value <= 0) return dots;
+
+        if (value < 1)
+        {
+            dots.Add(DotShape.SmallDot);
+            return dots;
+        }
 
         long remaining = (long)Math.Min(value, long.MaxValue / 2);
 

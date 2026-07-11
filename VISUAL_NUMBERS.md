@@ -44,6 +44,10 @@ The value **321** (6 dots total) would be displayed as:
 
 (Only 6 of 9 cells used; no rounding needed.)
 
+## Minimum Display Rule
+
+Any positive value always displays at least one SmallDot. This ensures the player can distinguish "zero" (empty grid) from "non-zero but small" (single dot). Values in the range (0, 1) show a single SmallDot.
+
 ## Design Rationale
 
 - **Distinct shapes**: Each magnitude has a unique silhouette, readable at a glance without counting.

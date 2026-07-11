@@ -27,6 +27,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Every country that is infected should be painted in blue.
 - [x] For every country, draw a number of dots representing biomass. Develop a re-usable component using a dot-based visual counting system that can easily scale over 10 magnitudes using distinct dot shapes. Document the counting shapes in VISUAL_NUMBERS.md
 - [x] The visual numbers should always show a 3x3 grid, rounding down by omitting the least-significant element. Update the code and the md file
+- [x] If the value in the visual number is >0, always show at least 1. Update the code and md file.
 - [x] The country biomass indicators don't update right now. They should. Fix it.
 - [x] Allow zooming in and out using the mouse wheel. The closest distance is still 200km above the surface of the planet, the furthest zoom factor is the current one. Make sure to update all raycasting logic.
 - [x] Update the country adjacency table. 
