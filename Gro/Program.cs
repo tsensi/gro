@@ -261,6 +261,13 @@ public static class Program
         return UIElement.Panel(
             style: new UIStyle
             {
+                Anchor = Anchor.Fill,
+                BackgroundColor = Color.FromRgba(0, 0, 0, 160),
+            },
+            key: "confirm-backdrop",
+            UIElement.Panel(
+            style: new UIStyle
+            {
                 Width = 320,
                 Padding = 16,
                 Gap = 12,
@@ -311,7 +318,7 @@ public static class Program
                     BorderWidth = 1,
                 })
             )
-        );
+        ));
     }
 
     private static UIElement BuildSpreadModal(StateStore state, SimLoop sim, Zone target, Entity sourceEntity)
@@ -324,6 +331,13 @@ public static class Program
         double each = afterTax / 2.0;
 
         return UIElement.Panel(
+            style: new UIStyle
+            {
+                Anchor = Anchor.Fill,
+                BackgroundColor = Color.FromRgba(0, 0, 0, 160),
+            },
+            key: "spread-backdrop",
+            UIElement.Panel(
             style: new UIStyle
             {
                 Width = 340,
@@ -387,7 +401,7 @@ public static class Program
                     BorderWidth = 1,
                 })
             )
-        );
+        ));
     }
 
     private static UIElement BuildUpgradeModal(StateStore state, SimLoop sim, Zone zone, Entity entity)
@@ -406,6 +420,13 @@ public static class Program
         double nextMultiplier = 1.0 + (nextLevel - 1) * 0.5;
 
         return UIElement.Panel(
+            style: new UIStyle
+            {
+                Anchor = Anchor.Fill,
+                BackgroundColor = Color.FromRgba(0, 0, 0, 160),
+            },
+            key: "upgrade-backdrop",
+            UIElement.Panel(
             style: new UIStyle
             {
                 Width = 340,
@@ -482,7 +503,7 @@ public static class Program
                     BorderWidth = 1,
                 })
             )
-        );
+        ));
     }
 
     private static UIElement BuildZonePanel(StateStore state, Animator animator)

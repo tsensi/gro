@@ -2,7 +2,7 @@ using Gro.Rendering;
 
 namespace Gro.UI;
 
-public enum Anchor { TopLeft, TopRight, Center }
+public enum Anchor { TopLeft, TopRight, Center, Fill }
 
 public sealed class UIStyle
 {

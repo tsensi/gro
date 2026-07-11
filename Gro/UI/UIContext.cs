@@ -135,7 +135,15 @@ public sealed class UIContext
     private void ApplyAnchors(UINode node, int windowWidth, int windowHeight)
     {
         var style = node.Element.Style;
-        if (style.Anchor == Anchor.TopRight)
+        if (style.Anchor == Anchor.Fill)
+        {
+            int dx = -node.Bounds.X;
+            int dy = -node.Bounds.Y;
+            node.Bounds = new Rect(0, 0, windowWidth, windowHeight);
+            foreach (var child in node.Children)
+                ShiftNode(child, dx, dy);
+        }
+        else if (style.Anchor == Anchor.TopRight)
         {
             int x = windowWidth - node.Bounds.W + style.OffsetX;
             int y = style.OffsetY;
