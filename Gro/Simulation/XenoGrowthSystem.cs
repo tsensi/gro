@@ -4,8 +4,8 @@ namespace Gro.Simulation;
 
 public sealed class XenoGrowthSystem : ISystem
 {
-    // ln(2) / 3652.5 days ≈ doubling time of 10 years
-    public const double GrowthRate = 0.00018971199848858813;
+    // ln(2) / 100 days ≈ doubling time of 100 game-days
+    public const double GrowthRate = 0.006931471805599453;
 
     public void Tick(SimState state)
     {

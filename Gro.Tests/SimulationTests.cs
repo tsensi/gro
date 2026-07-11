@@ -167,16 +167,16 @@ public class SimulationTests
     }
 
     [Fact]
-    public void XenoGrowth_DoublesInTenYears()
+    public void XenoGrowth_DoublesIn100Days()
     {
         var sim = new SimLoop();
         sim.AddSystem(new XenoGrowthSystem());
         var entity = sim.World.SpawnInZone("TestZone");
         sim.World.Set(entity, new InfectionComponent { Biomass = 10.0 });
 
-        double tenYears = 3652.5;
-        int steps = 3652;
-        double stepSize = tenYears / steps;
+        double hundredDays = 100.0;
+        int steps = 1000;
+        double stepSize = hundredDays / steps;
         for (int i = 0; i < steps; i++)
             sim.Tick(stepSize);
 
