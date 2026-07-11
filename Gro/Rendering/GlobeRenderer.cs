@@ -22,6 +22,7 @@ public sealed class GlobeRenderer
     private const int DragThreshold = 5;
 
     public event Action<Zone?>? ZoneSelected;
+    public HashSet<string> InfectedZones { get; } = new();
 
     public GlobeRenderer(Earth earth)
     {
@@ -163,24 +164,28 @@ public sealed class GlobeRenderer
         }
     }
 
+    private static readonly Color InfectedFill = Color.FromRgba(30, 60, 180, 120);
+    private static readonly Color InfectedOutline = Color.FromRgb(60, 100, 220);
+
     private void DrawZones(IntPtr renderer)
     {
         foreach (var zone in _earth.Zones)
         {
             var style = zone.Style;
+            bool infected = zone.Type == ZoneType.Country && InfectedZones.Contains(zone.Name);
             var projected = ProjectBoundary(zone.Boundary);
 
-            if (style.FillEnabled && projected.Count >= 3)
+            if ((style.FillEnabled || infected) && projected.Count >= 3)
             {
                 SDL.SDL_SetRenderDrawBlendMode(renderer, SDL.SDL_BlendMode.SDL_BLENDMODE_BLEND);
-                var fill = style.FillColor;
+                var fill = infected ? InfectedFill : style.FillColor;
                 SDL.SDL_SetRenderDrawColor(renderer, fill.R, fill.G, fill.B, fill.A);
                 FillProjectedPolygon(renderer, projected);
             }
 
-            var outline = style.OutlineColor;
+            var outline = infected ? InfectedOutline : style.OutlineColor;
             SDL.SDL_SetRenderDrawColor(renderer, outline.R, outline.G, outline.B, outline.A);
-            DrawOutline(renderer, zone.Boundary, style.OutlineWidth);
+            DrawOutline(renderer, zone.Boundary, infected ? 2 : style.OutlineWidth);
         }
     }
 

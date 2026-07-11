@@ -147,6 +147,7 @@ public static class Program
             SDL.SDL_GetWindowSize(window, out int w, out int h);
             ui.Update(() => BuildUI(state, animator, game, sim, adjacency, earth));
             ui.Layout(w, h);
+            SyncInfectedZones(globe, sim);
             globe.Render(renderer, w, h, present: false);
             ui.Render(renderer);
             SDL.SDL_RenderPresent(renderer);
@@ -186,6 +187,7 @@ public static class Program
             ui.Update(() => BuildUI(state, animator, game, sim, adjacency, earth));
             ui.Layout(width, height);
 
+            SyncInfectedZones(globe, sim);
             globe.Render(renderer, width, height, present: false);
             ui.Render(renderer);
             SDL.SDL_RenderPresent(renderer);
@@ -612,6 +614,17 @@ public static class Program
                 })
             )
         ));
+    }
+
+    private static void SyncInfectedZones(GlobeRenderer globe, SimLoop sim)
+    {
+        globe.InfectedZones.Clear();
+        foreach (var entity in sim.World.Query<InfectionComponent>())
+        {
+            var link = sim.World.Get<ZoneLink>(entity);
+            if (link != null)
+                globe.InfectedZones.Add(link.ZoneName);
+        }
     }
 
     private static UIElement BuildZonePanel(StateStore state, Animator animator)
