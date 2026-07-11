@@ -1,0 +1,42 @@
+[
+  {
+    "id": "infection_wave_1",
+    "name": "Infection Wave I",
+    "tier": 1,
+    "prerequisite": null,
+    "researchDays": 20,
+    "diffusionRatePerDay": 0.02
+  },
+  {
+    "id": "infection_wave_2",
+    "name": "Infection Wave II",
+    "tier": 2,
+    "prerequisite": "infection_wave_1",
+    "researchDays": 40,
+    "diffusionRatePerDay": 0.015
+  },
+  {
+    "id": "infection_wave_3",
+    "name": "Infection Wave III",
+    "tier": 3,
+    "prerequisite": "infection_wave_2",
+    "researchDays": 60,
+    "diffusionRatePerDay": 0.01
+  },
+  {
+    "id": "infection_wave_4",
+    "name": "Infection Wave IV",
+    "tier": 4,
+    "prerequisite": "infection_wave_3",
+    "researchDays": 80,
+    "diffusionRatePerDay": 0.008
+  },
+  {
+    "id": "infection_wave_5",
+    "name": "Infection Wave V",
+    "tier": 5,
+    "prerequisite": "infection_wave_4",
+    "researchDays": 100,
+    "diffusionRatePerDay": 0.005
+  }
+]

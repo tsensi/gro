@@ -9,7 +9,12 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] For every country, draw a number of dots representing biomass. Develop a re-usable component using a dot-based visual counting system that can easily scale over 10 magnitudes using distinct dot shapes. Document the counting shapes in VISUAL_NUMBERS.md
 - [x] The visual numbers should always show a 3x3 grid, rounding down by omitting the least-significant element. Update the code and the md file
 - [x] Rename "tax" with "attrition" in the docs and the codebase.
-- [ ] Add a tech tree system. Add tasks here to implement this, configs (JSON), serialization, UI. Break it into individual tasks. The first three techs are "Infection Wave" in five tiers. For now they do nothing. Research happens in a zone, it is NOT global. Multiple zones can research the same thing. Once it is established in a zone, it diffuses throughout neighboring infected countries slowly. Only when it is at 100% is it fully established and available. If starting research, it adds to the already existing diffusion influx. Research never decreases.
+- [x] Add a tech tree system. Add tasks here to implement this, configs (JSON), serialization, UI. Break it into individual tasks. The first three techs are "Infection Wave" in five tiers. For now they do nothing. Research happens in a zone, it is NOT global. Multiple zones can research the same thing. Once it is established in a zone, it diffuses throughout neighboring infected countries slowly. Only when it is at 100% is it fully established and available. If starting research, it adds to the already existing diffusion influx. Research never decreases.
+  - [x] Core data model: TechDefinition, TechRegistry (JSON loader), ResearchComponent (per-zone progress)
+  - [x] Simulation systems: ResearchSystem (advances active research) + TechDiffusionSystem (spreads from established neighbors)
+  - [x] JSON config: data/techs.json with Infection Wave tiers 1–5
+  - [ ] Serialization: save/load ResearchComponent state per zone
+  - [ ] UI: show tech progress in zone sidebar, allow starting research from tech tree panel
 - [ ] When clicking any country, show the side bar with infection status, biomass, and techs. Allow opening the zone's tech tree from there.
 
 ## How to run
