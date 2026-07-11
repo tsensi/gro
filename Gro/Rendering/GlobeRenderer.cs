@@ -14,6 +14,13 @@ public sealed class GlobeRenderer
     private int _centerY;
     private int _radius;
 
+    private double _zoom = 1.0;
+    private const double MinZoom = 1.0;
+    private const double EarthRadiusKm = 6371.0;
+    private const double MinAltitudeKm = 200.0;
+    private static readonly double MaxZoom = 1.0 / Math.Sqrt(1.0 - Math.Pow(EarthRadiusKm / (EarthRadiusKm + MinAltitudeKm), 2));
+    private const double ZoomStep = 1.15;
+
     private bool _isDragging;
     private int _dragStartX;
     private int _dragStartY;
@@ -75,6 +82,14 @@ public sealed class GlobeRenderer
             }
         }
 
+        if (e.type == SDL.SDL_EventType.SDL_MOUSEWHEEL)
+        {
+            if (e.wheel.y > 0)
+                _zoom = Math.Min(_zoom * ZoomStep, MaxZoom);
+            else if (e.wheel.y < 0)
+                _zoom = Math.Max(_zoom / ZoomStep, MinZoom);
+        }
+
         if (e.type == SDL.SDL_EventType.SDL_MOUSEBUTTONUP && e.button.button == SDL.SDL_BUTTON_LEFT)
         {
             bool wasDrag = Math.Abs(e.button.x - _dragStartX) > DragThreshold ||
@@ -101,7 +116,7 @@ public sealed class GlobeRenderer
     {
         _centerX = windowWidth / 2;
         _centerY = windowHeight / 2;
-        _radius = Math.Min(windowWidth, windowHeight) / 2 - 40;
+        _radius = (int)((Math.Min(windowWidth, windowHeight) / 2 - 40) * _zoom);
 
         SDL.SDL_SetRenderDrawColor(renderer, 10, 10, 30, 255);
         SDL.SDL_RenderClear(renderer);
