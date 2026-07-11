@@ -36,6 +36,8 @@ public static class DotCounter
         DotShape.Octagon,    // 10^10 = 10,000,000,000
     };
 
+    public const int GridSize = 9;
+
     public static List<DotShape> Decompose(double value)
     {
         var dots = new List<DotShape>();
@@ -52,6 +54,9 @@ public static class DotCounter
                 dots.Add(Shapes[mag]);
             remaining -= count * divisor;
         }
+
+        if (dots.Count > GridSize)
+            dots.RemoveRange(GridSize, dots.Count - GridSize);
 
         return dots;
     }

@@ -24,6 +24,8 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] Add time controls like in Plague Inc to the top right of the UI top bar. Speeds should be x0 (pause), x1, x3, x10, x30
 - [x] Every country that is infected should be painted in blue.
 - [x] For every country, draw a number of dots representing biomass. Develop a re-usable component using a dot-based visual counting system that can easily scale over 10 magnitudes using distinct dot shapes. Document the counting shapes in VISUAL_NUMBERS.md
+- [x] The visual numbers should always show a 3x3 grid, rounding down by omitting the least-significant element. Update the code and the md file
+- [ ] The country biomass indicators don't update right now. They should. Fix it.
 - [x] Allow zooming in and out using the mouse wheel. The closest distance is still 200km above the surface of the planet, the furthest zoom factor is the current one. Make sure to update all raycasting logic.
 
 This is an idle game. Research classics of the genre like Cookie Clicker
@@ -31,6 +33,7 @@ This is an idle game. Research classics of the genre like Cookie Clicker
 - [x] Research competitor world domination/grand strategy games and add a new file DOMINATION_IDEAS_PLAN.md in this `- [ ]` task format for all the things to add to make this game better
 - [x] Time currently doesn't advance. Please fix that.
 - [x] Add a integration test that plays through the game, infecting Algeria and ensures that biomass > 0 and time > 0 after a sufficient number of ticks
+- [ ] The country-scale modal popup should show the biomass in the country.
 
 ## How to run
 

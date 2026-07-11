@@ -37,13 +37,11 @@ public class DotCounterTests
     }
 
     [Fact]
-    public void Decompose_999_ReturnsNineOfEach()
+    public void Decompose_999_CapsAtGridSize()
     {
         var dots = DotCounter.Decompose(999);
-        Assert.Equal(27, dots.Count);
+        Assert.Equal(DotCounter.GridSize, dots.Count);
         Assert.Equal(9, dots.Count(d => d == DotShape.Square));
-        Assert.Equal(9, dots.Count(d => d == DotShape.Circle));
-        Assert.Equal(9, dots.Count(d => d == DotShape.SmallDot));
     }
 
     [Fact]
@@ -73,12 +71,19 @@ public class DotCounterTests
     [InlineData(1, 1)]
     [InlineData(10, 1)]
     [InlineData(100, 1)]
-    [InlineData(1234, 10)]
-    [InlineData(99999, 45)]
+    [InlineData(1234, 9)]
+    [InlineData(99999, 9)]
     public void Decompose_TotalDotCount(double value, int expectedCount)
     {
         var dots = DotCounter.Decompose(value);
         Assert.Equal(expectedCount, dots.Count);
+    }
+
+    [Fact]
+    public void Decompose_NeverExceedsGridSize()
+    {
+        var dots = DotCounter.Decompose(99_999_999_999.0);
+        Assert.True(dots.Count <= DotCounter.GridSize);
     }
 
     [Fact]

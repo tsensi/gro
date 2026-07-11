@@ -225,14 +225,21 @@ public sealed class GlobeRenderer
 
             int dotSize = Math.Max(4, _radius / 80);
             int spacing = dotSize + 2;
-            int totalWidth = dots.Count * spacing - 2;
-            int startX = cx - totalWidth / 2;
+            int cols = 3;
+            int rows = 3;
+            int gridWidth = cols * spacing - 2;
+            int gridHeight = rows * spacing - 2;
+            int startX = cx - gridWidth / 2;
+            int startY = cy - gridHeight / 2;
 
             SDL.SDL_SetRenderDrawColor(renderer, DotColor.R, DotColor.G, DotColor.B, DotColor.A);
             for (int i = 0; i < dots.Count; i++)
             {
-                int dx = startX + i * spacing;
-                DotCounter.DrawDot(renderer, dots[i], dx, cy, dotSize);
+                int col = i % cols;
+                int row = i / cols;
+                int dx = startX + col * spacing;
+                int dy = startY + row * spacing;
+                DotCounter.DrawDot(renderer, dots[i], dx, dy, dotSize);
             }
         }
     }

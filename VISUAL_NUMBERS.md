@@ -18,17 +18,31 @@ A visual counting system that represents numeric values using distinct dot shape
 | 10^9      | 1,000,000,000 | Ring     | Double-circle (thick ring)        |
 | 10^10     | 10,000,000,000| Octagon  | 8-sided polygon outline           |
 
-## Reading Example
+## Display Grid
+
+Dots are always displayed in a **3×3 grid** (9 cells maximum). Dots fill the grid left-to-right, top-to-bottom, from highest magnitude to lowest. If the full decomposition would exceed 9 dots, the least-significant dots are omitted (the value is effectively rounded down).
+
+### Reading Example
 
 The value **4,321** would be displayed as:
 
 ```
-◆◆◆◆ ■■■ ○○ •
- 4×   3×  2× 1×
-1000  100  10  1
+◆◆◆◆ ■■■ ○○
+ 4×   3×  2×
+1000  100  10
 ```
 
-Dots are ordered left-to-right from highest magnitude to lowest.
+(The single units dot is omitted to fit within 9 cells: 4+3+2 = 9.)
+
+The value **321** (6 dots total) would be displayed as:
+
+```
+■■■ ○○ •
+3×  2×  1×
+100  10  1
+```
+
+(Only 6 of 9 cells used; no rounding needed.)
 
 ## Design Rationale
 
