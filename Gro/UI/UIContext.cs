@@ -246,16 +246,21 @@ public sealed class UIContext
             UpdateHitTest(child);
     }
 
-    private void ProcessClick(UINode node)
+    private bool ProcessClick(UINode node)
     {
         foreach (var child in node.Children)
-            ProcessClick(child);
+        {
+            if (ProcessClick(child))
+                return true;
+        }
 
         if (node.Hovered && node.Element.OnClick != null)
         {
             node.Element.OnClick();
             HandledInput = true;
+            return true;
         }
+        return false;
     }
 
     private void RenderNode(IntPtr renderer, UINode node)

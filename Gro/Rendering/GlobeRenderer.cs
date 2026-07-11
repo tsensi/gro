@@ -87,6 +87,10 @@ public sealed class GlobeRenderer
                     var zone = _earth.ZoneAt(geo.Value);
                     ZoneSelected?.Invoke(zone);
                 }
+                else
+                {
+                    ZoneSelected?.Invoke(null);
+                }
             }
         }
     }

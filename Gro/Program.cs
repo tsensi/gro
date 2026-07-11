@@ -70,10 +70,14 @@ public static class Program
 
         globe.ZoneSelected += zone =>
         {
-            if (zone == null) return;
-
             if (game.Phase == GamePhase.SelectingRegion)
             {
+                if (state.Get<Zone?>("confirmZone", null) != null)
+                {
+                    state.Set<Zone?>("confirmZone", null);
+                    return;
+                }
+                if (zone == null) return;
                 if (zone.Type == ZoneType.Country)
                 {
                     state.Set("confirmZone", zone);
@@ -82,6 +86,19 @@ public static class Program
             }
             else
             {
+                if (state.Get<Zone?>("spreadTarget", null) != null)
+                {
+                    state.Set<Zone?>("spreadTarget", null);
+                    return;
+                }
+                if (state.Get<Zone?>("upgradeZone", null) != null)
+                {
+                    state.Set<Zone?>("upgradeZone", null);
+                    return;
+                }
+
+                if (zone == null) return;
+
                 var infectedEntity = sim.World.EntitiesInZone(zone.Name)
                     .FirstOrDefault(e => sim.World.Has<InfectionComponent>(e), Entity.None);
                 bool isInfected = infectedEntity != Entity.None;

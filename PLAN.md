@@ -18,7 +18,7 @@ All the UI will be a custom system inspired by React, meaning we can write immed
 - [x] The player farms a "biomass" resource. Add a global resource counter service / system. Use a ServiceLocator pattern
 - [x] On every turn, the biomass increases by the number of infected zones. This will later be refined.
 - [x] For a fixed amount of biomass, the player can upgrade an infected zone and increase the growth factor there.
-- [ ] When a modal window for a selected country is open, clicking outside should close the modal window.
+- [x] When a modal window for a selected country is open, clicking outside should close the modal window.
 - [ ] Add an opaque background to the country selection modal windows
 - [ ] Add a UI top bar that shows the total biomass, number of infected zones (/ total), and the current simulation time
 - [ ] Add time controls like in Plague Inc to the top right of the UI top bar. Speeds should be x0 (pause), x1, x3, x10, x30
