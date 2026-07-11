@@ -158,4 +158,36 @@ public class InfectionSpreadTests
         var map = AdjacencyMap.LoadFromBordersDirectory();
         Assert.Equal(0, map.GetBorderLength("France", "Japan"));
     }
+
+    [Fact]
+    public void MultipleInfectedNeighbors_AllDetected()
+    {
+        var world = new World();
+        var map = AdjacencyMap.LoadFromBordersDirectory();
+
+        var france = world.SpawnInZone("France");
+        world.Set(france, new InfectionComponent { Biomass = 50.0 });
+        var germany = world.SpawnInZone("Germany");
+        world.Set(germany, new InfectionComponent { Biomass = 30.0 });
+
+        string target = "Switzerland";
+        var neighbors = map.GetNeighbors(target);
+        var sourceEntities = new List<Entity>();
+        foreach (var neighborName in neighbors)
+        {
+            foreach (var e in world.EntitiesInZone(neighborName))
+            {
+                if (world.Has<InfectionComponent>(e))
+                {
+                    sourceEntities.Add(e);
+                    break;
+                }
+            }
+        }
+
+        Assert.True(sourceEntities.Count >= 2,
+            $"Expected at least 2 infected neighbors for {target}, found {sourceEntities.Count}");
+        Assert.Contains(france, sourceEntities);
+        Assert.Contains(germany, sourceEntities);
+    }
 }

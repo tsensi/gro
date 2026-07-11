@@ -89,6 +89,7 @@ public static class Program
                 if (state.Get<Zone?>("spreadTarget", null) != null)
                 {
                     state.Set<Zone?>("spreadTarget", null);
+                    state.Set("spreadSources", new List<Entity>());
                     return;
                 }
                 if (state.Get<Zone?>("upgradeZone", null) != null)
@@ -113,24 +114,23 @@ public static class Program
                 if (zone.Type == ZoneType.Country)
                 {
                     var neighbors = adjacency.GetNeighbors(zone.Name);
-                    Entity? sourceEntity = null;
+                    var sourceEntities = new List<Entity>();
                     foreach (var neighborName in neighbors)
                     {
                         foreach (var e in sim.World.EntitiesInZone(neighborName))
                         {
                             if (sim.World.Has<InfectionComponent>(e))
                             {
-                                sourceEntity = e;
+                                sourceEntities.Add(e);
                                 break;
                             }
                         }
-                        if (sourceEntity != null) break;
                     }
 
-                    if (sourceEntity != null)
+                    if (sourceEntities.Count > 0)
                     {
                         state.Set("spreadTarget", zone);
-                        state.Set("spreadSource", sourceEntity.Value);
+                        state.Set("spreadSources", sourceEntities);
                         return;
                     }
                 }
@@ -220,8 +220,8 @@ public static class Program
             var spreadTarget = state.Get<Zone?>("spreadTarget", null);
             if (spreadTarget != null)
             {
-                var sourceEntity = state.Get("spreadSource", Entity.None);
-                children.Add(BuildSpreadModal(state, sim, spreadTarget, sourceEntity));
+                var sources = state.Get<List<Entity>>("spreadSources", new List<Entity>());
+                children.Add(BuildSpreadModal(state, sim, spreadTarget, sources));
             }
             var upgradeZone = state.Get<Zone?>("upgradeZone", null);
             if (upgradeZone != null)
@@ -431,14 +431,93 @@ public static class Program
         ));
     }
 
-    private static UIElement BuildSpreadModal(StateStore state, SimLoop sim, Zone target, Entity sourceEntity)
+    private static UIElement BuildSpreadModal(StateStore state, SimLoop sim, Zone target, List<Entity> sourceEntities)
     {
-        var sourceInfection = sim.World.Get<InfectionComponent>(sourceEntity);
-        var sourceLink = sim.World.Get<ZoneLink>(sourceEntity);
-        string sourceName = sourceLink?.ZoneName ?? "???";
-        double sourceBiomass = sourceInfection?.Biomass ?? 0;
-        double afterTax = sourceBiomass * 0.6;
-        double each = afterTax / 2.0;
+        var modalChildren = new List<UIElement>();
+
+        modalChildren.Add(UIElement.Label($"Spread to {target.Name}?", style: new UIStyle
+        {
+            FontSize = 16,
+            TextColor = Color.FromRgb(220, 255, 220),
+        }));
+
+        if (sourceEntities.Count > 1)
+        {
+            modalChildren.Add(UIElement.Label("Choose source zone:", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = Color.FromRgb(180, 200, 190),
+            }));
+        }
+
+        foreach (var sourceEntity in sourceEntities)
+        {
+            var sourceInfection = sim.World.Get<InfectionComponent>(sourceEntity);
+            var sourceLink = sim.World.Get<ZoneLink>(sourceEntity);
+            string sourceName = sourceLink?.ZoneName ?? "???";
+            double sourceBiomass = sourceInfection?.Biomass ?? 0;
+            double afterTax = sourceBiomass * 0.6;
+            double each = afterTax / 2.0;
+
+            var capturedEntity = sourceEntity;
+            modalChildren.Add(UIElement.Panel(
+                style: new UIStyle
+                {
+                    Padding = 8,
+                    Gap = 4,
+                    BackgroundColor = Color.FromRgba(25, 35, 50, 200),
+                    BorderColor = Color.FromRgba(60, 140, 60, 150),
+                    BorderWidth = 1,
+                },
+                key: $"source-{sourceName}",
+                UIElement.Label($"From: {sourceName} ({sourceBiomass:F1} biomass)", style: new UIStyle
+                {
+                    FontSize = 12,
+                    TextColor = Color.FromRgb(160, 180, 170),
+                }),
+                UIElement.Label($"40% tax. Each zone gets {each:F1}.", style: new UIStyle
+                {
+                    FontSize = 11,
+                    TextColor = Color.FromRgb(140, 160, 150),
+                }),
+                UIElement.Button("Spread", () =>
+                {
+                    var infection = sim.World.Get<InfectionComponent>(capturedEntity);
+                    if (infection != null)
+                    {
+                        double remaining = infection.Biomass * 0.6;
+                        double half = remaining / 2.0;
+                        infection.Biomass = half;
+
+                        var newEntity = sim.World.SpawnInZone(target.Name);
+                        sim.World.Set(newEntity, new InfectionComponent { Biomass = half });
+                        Console.WriteLine($"Spread to {target.Name} from {sourceName}: {half:F1} biomass each (taxed 40%)");
+                    }
+                    state.Set<Zone?>("spreadTarget", null);
+                    state.Set("spreadSources", new List<Entity>());
+                }, style: new UIStyle
+                {
+                    Padding = 6,
+                    BackgroundColor = Color.FromRgba(40, 120, 40, 220),
+                    TextColor = Color.FromRgb(220, 255, 220),
+                    BorderColor = Color.FromRgba(80, 180, 80, 200),
+                    BorderWidth = 1,
+                })
+            ));
+        }
+
+        modalChildren.Add(UIElement.Button("Cancel", () =>
+        {
+            state.Set<Zone?>("spreadTarget", null);
+            state.Set("spreadSources", new List<Entity>());
+        }, style: new UIStyle
+        {
+            Padding = 8,
+            BackgroundColor = Color.FromRgba(100, 40, 40, 220),
+            TextColor = Color.FromRgb(255, 200, 200),
+            BorderColor = Color.FromRgba(180, 80, 80, 200),
+            BorderWidth = 1,
+        }));
 
         return UIElement.Panel(
             style: new UIStyle
@@ -448,70 +527,20 @@ public static class Program
             },
             key: "spread-backdrop",
             UIElement.Panel(
-            style: new UIStyle
-            {
-                Width = 340,
-                Padding = 16,
-                Gap = 12,
-                Anchor = Anchor.Center,
-                BackgroundColor = Color.FromRgba(15, 20, 35, 240),
-                BorderColor = Color.FromRgba(80, 180, 80, 200),
-                BorderWidth = 2,
-            },
-            key: "spread-modal",
-            UIElement.Label($"Spread to {target.Name}?", style: new UIStyle
-            {
-                FontSize = 16,
-                TextColor = Color.FromRgb(220, 255, 220),
-            }),
-            UIElement.Label($"From: {sourceName} ({sourceBiomass:F1} biomass)", style: new UIStyle
-            {
-                FontSize = 12,
-                TextColor = Color.FromRgb(160, 180, 170),
-            }),
-            UIElement.Label($"40% tax. Each zone gets {each:F1} biomass.", style: new UIStyle
-            {
-                FontSize = 12,
-                TextColor = Color.FromRgb(160, 180, 170),
-            }),
-            UIElement.Row(
-                style: new UIStyle { Direction = LayoutDirection.Horizontal, Gap = 12 },
-                key: "spread-buttons",
-                UIElement.Button("Spread", () =>
+                style: new UIStyle
                 {
-                    var infection = sim.World.Get<InfectionComponent>(sourceEntity);
-                    if (infection != null)
-                    {
-                        double remaining = infection.Biomass * 0.6;
-                        double half = remaining / 2.0;
-                        infection.Biomass = half;
-
-                        var newEntity = sim.World.SpawnInZone(target.Name);
-                        sim.World.Set(newEntity, new InfectionComponent { Biomass = half });
-                        Console.WriteLine($"Spread to {target.Name}: {half:F1} biomass each (taxed 40%)");
-                    }
-                    state.Set<Zone?>("spreadTarget", null);
-                }, style: new UIStyle
-                {
-                    Padding = 8,
-                    BackgroundColor = Color.FromRgba(40, 120, 40, 220),
-                    TextColor = Color.FromRgb(220, 255, 220),
+                    Width = 360,
+                    Padding = 16,
+                    Gap = 10,
+                    Anchor = Anchor.Center,
+                    BackgroundColor = Color.FromRgba(15, 20, 35, 240),
                     BorderColor = Color.FromRgba(80, 180, 80, 200),
-                    BorderWidth = 1,
-                }),
-                UIElement.Button("Cancel", () =>
-                {
-                    state.Set<Zone?>("spreadTarget", null);
-                }, style: new UIStyle
-                {
-                    Padding = 8,
-                    BackgroundColor = Color.FromRgba(100, 40, 40, 220),
-                    TextColor = Color.FromRgb(255, 200, 200),
-                    BorderColor = Color.FromRgba(180, 80, 80, 200),
-                    BorderWidth = 1,
-                })
+                    BorderWidth = 2,
+                },
+                key: "spread-modal",
+                modalChildren.ToArray()
             )
-        ));
+        );
     }
 
     private static UIElement BuildUpgradeModal(StateStore state, SimLoop sim, Zone zone, Entity entity)
