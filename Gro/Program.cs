@@ -54,7 +54,7 @@ public static class Program
         }
 
         var earth = Earth.Create();
-        var adjacency = new AdjacencyMap(earth.Zones);
+        var adjacency = AdjacencyMap.LoadFromBordersDirectory();
         var globe = new GlobeRenderer(earth);
         var ui = new UIContext();
         var animator = new Animator();

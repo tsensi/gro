@@ -1,13 +1,36 @@
+using System.Text.Json;
+
 namespace Gro.EarthModel;
 
 public sealed class AdjacencyMap
 {
-    private const double Threshold = 1.5;
-
     private readonly Dictionary<string, HashSet<string>> _neighbors = new();
 
-    public AdjacencyMap(IReadOnlyList<Zone> zones)
+    private AdjacencyMap() { }
+
+    public static AdjacencyMap LoadFromFile(string path)
     {
+        var map = new AdjacencyMap();
+        var json = File.ReadAllText(path);
+        var pairs = JsonSerializer.Deserialize<string[][]>(json)!;
+        foreach (var pair in pairs)
+        {
+            map.AddEdge(pair[0], pair[1]);
+        }
+        return map;
+    }
+
+    public static AdjacencyMap LoadFromBordersDirectory()
+    {
+        var dir = FindBordersDirectory();
+        var path = Path.Combine(dir, "adjacency.json");
+        return LoadFromFile(path);
+    }
+
+    public static AdjacencyMap FromZones(IReadOnlyList<Zone> zones)
+    {
+        const double Threshold = 1.5;
+        var map = new AdjacencyMap();
         var childZones = zones
             .Where(z => z.Type == ZoneType.Country || z.Type == ZoneType.OceanZone)
             .ToArray();
@@ -16,12 +39,13 @@ public sealed class AdjacencyMap
         {
             for (int j = i + 1; j < childZones.Length; j++)
             {
-                if (BoundariesWithinThreshold(childZones[i], childZones[j]))
+                if (BoundariesWithinThreshold(childZones[i], childZones[j], Threshold))
                 {
-                    AddEdge(childZones[i].Name, childZones[j].Name);
+                    map.AddEdge(childZones[i].Name, childZones[j].Name);
                 }
             }
         }
+        return map;
     }
 
     public IReadOnlySet<string> GetNeighbors(string zoneName)
@@ -36,13 +60,13 @@ public sealed class AdjacencyMap
         return _neighbors.TryGetValue(a, out var set) && set.Contains(b);
     }
 
-    private static bool BoundariesWithinThreshold(Zone a, Zone b)
+    private static bool BoundariesWithinThreshold(Zone a, Zone b, double threshold)
     {
         foreach (var p in a.Boundary)
         {
             for (int i = 0, j = b.Boundary.Length - 1; i < b.Boundary.Length; j = i++)
             {
-                if (PointToSegmentDist(p, b.Boundary[j], b.Boundary[i]) <= Threshold)
+                if (PointToSegmentDist(p, b.Boundary[j], b.Boundary[i]) <= threshold)
                     return true;
             }
         }
@@ -50,7 +74,7 @@ public sealed class AdjacencyMap
         {
             for (int i = 0, j = a.Boundary.Length - 1; i < a.Boundary.Length; j = i++)
             {
-                if (PointToSegmentDist(p, a.Boundary[j], a.Boundary[i]) <= Threshold)
+                if (PointToSegmentDist(p, a.Boundary[j], a.Boundary[i]) <= threshold)
                     return true;
             }
         }
@@ -86,5 +110,19 @@ public sealed class AdjacencyMap
             _neighbors[b] = setB;
         }
         setB.Add(a);
+    }
+
+    private static string FindBordersDirectory()
+    {
+        var dir = AppContext.BaseDirectory;
+        while (dir != null)
+        {
+            var bordersPath = Path.Combine(dir, "borders");
+            if (Directory.Exists(bordersPath))
+                return bordersPath;
+            dir = Directory.GetParent(dir)?.FullName;
+        }
+        throw new DirectoryNotFoundException(
+            "Could not find 'borders/' directory. Ensure it exists at the repository root.");
     }
 }

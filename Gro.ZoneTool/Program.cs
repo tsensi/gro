@@ -61,7 +61,7 @@ static int RunAdjacency(string[] args)
     }
 
     var earth = Earth.Create();
-    var adjacency = new AdjacencyMap(earth.Zones);
+    var adjacency = AdjacencyMap.FromZones(earth.Zones);
     var countryZones = earth.Zones
         .Where(z => z.Type == ZoneType.Country)
         .OrderBy(z => z.Name)

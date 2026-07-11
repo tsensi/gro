@@ -26,7 +26,7 @@ public class InfectionSpreadTests
             Boundary = new[] { new GeoCoord(20, 0), new GeoCoord(20, 10), new GeoCoord(25, 10), new GeoCoord(25, 0) },
         };
 
-        var map = new AdjacencyMap(new[] { zoneA, zoneB, zoneC });
+        var map = AdjacencyMap.FromZones(new[] { zoneA, zoneB, zoneC });
 
         Assert.True(map.AreAdjacent("A", "B"));
         Assert.False(map.AreAdjacent("A", "C"));
@@ -47,7 +47,7 @@ public class InfectionSpreadTests
             Boundary = new[] { new GeoCoord(5, 0), new GeoCoord(5, 5), new GeoCoord(10, 5), new GeoCoord(10, 0) },
         };
 
-        var map = new AdjacencyMap(new[] { zoneA, zoneB });
+        var map = AdjacencyMap.FromZones(new[] { zoneA, zoneB });
 
         Assert.True(map.AreAdjacent("A", "B"));
         Assert.True(map.AreAdjacent("B", "A"));
@@ -67,7 +67,7 @@ public class InfectionSpreadTests
             Boundary = new[] { new GeoCoord(0, 0), new GeoCoord(0, 5), new GeoCoord(5, 5) },
         };
 
-        var map = new AdjacencyMap(new[] { continent, country });
+        var map = AdjacencyMap.FromZones(new[] { continent, country });
         Assert.Empty(map.GetNeighbors("TestContinent"));
     }
 
@@ -115,7 +115,7 @@ public class InfectionSpreadTests
     public void AdjacencyMap_RealZones_FranceGermanyAdjacent()
     {
         var earth = Earth.Create();
-        var map = new AdjacencyMap(earth.Zones);
+        var map = AdjacencyMap.FromZones(earth.Zones);
         Assert.True(map.AreAdjacent("France", "Germany"));
     }
 
@@ -123,7 +123,7 @@ public class InfectionSpreadTests
     public void AdjacencyMap_RealZones_NonAdjacentCountries()
     {
         var earth = Earth.Create();
-        var map = new AdjacencyMap(earth.Zones);
+        var map = AdjacencyMap.FromZones(earth.Zones);
         Assert.False(map.AreAdjacent("France", "Japan"));
     }
 
@@ -131,7 +131,7 @@ public class InfectionSpreadTests
     public void AdjacencyMap_RealZones_FranceSpainAdjacent()
     {
         var earth = Earth.Create();
-        var map = new AdjacencyMap(earth.Zones);
+        var map = AdjacencyMap.FromZones(earth.Zones);
         Assert.True(map.AreAdjacent("France", "Spain"));
     }
 }
