@@ -6,6 +6,7 @@ using Gro.Infection;
 using Gro.Rendering;
 using Gro.Services;
 using Gro.Simulation;
+using Gro.TechTree;
 using Gro.UI;
 
 namespace Gro;
@@ -63,6 +64,9 @@ public static class Program
         sim.AddSystem(new XenoGrowthSystem());
         var resources = new ResourceService();
         sim.AddSystem(new BiomassHarvestSystem(resources));
+        var techRegistry = TechRegistry.LoadDefault();
+        sim.AddSystem(new ResearchSystem(techRegistry));
+        sim.AddSystem(new TechDiffusionSystem(techRegistry, adjacency));
         var game = new GameState();
 
         ServiceLocator.Register(resources);
@@ -145,7 +149,7 @@ public static class Program
         if (headless)
         {
             SDL.SDL_GetWindowSize(window, out int w, out int h);
-            ui.Update(() => BuildUI(state, animator, game, sim, adjacency, earth));
+            ui.Update(() => BuildUI(state, animator, game, sim, adjacency, earth, techRegistry));
             ui.Layout(w, h);
             SyncInfectedZones(globe, sim);
             globe.Render(renderer, w, h, present: false);
@@ -184,7 +188,7 @@ public static class Program
 
             SDL.SDL_GetWindowSize(window, out int width, out int height);
 
-            ui.Update(() => BuildUI(state, animator, game, sim, adjacency, earth));
+            ui.Update(() => BuildUI(state, animator, game, sim, adjacency, earth, techRegistry));
             ui.Layout(width, height);
 
             SyncInfectedZones(globe, sim);
@@ -199,7 +203,7 @@ public static class Program
         return 0;
     }
 
-    private static UIElement BuildUI(StateStore state, Animator animator, GameState game, SimLoop sim, AdjacencyMap adjacency, Earth earth)
+    private static UIElement BuildUI(StateStore state, Animator animator, GameState game, SimLoop sim, AdjacencyMap adjacency, Earth earth, TechRegistry techRegistry)
     {
         var children = new List<UIElement>();
 
@@ -227,7 +231,13 @@ public static class Program
             if (upgradeZone != null)
             {
                 var upgradeEntity = state.Get("upgradeEntity", Entity.None);
-                children.Add(BuildUpgradeModal(state, sim, upgradeZone, upgradeEntity));
+                children.Add(BuildUpgradeModal(state, sim, upgradeZone, upgradeEntity, techRegistry));
+            }
+            var techTreeZone = state.Get<Zone?>("techTreeZone", null);
+            if (techTreeZone != null)
+            {
+                var techTreeEntity = state.Get("techTreeEntity", Entity.None);
+                children.Add(BuildTechTreePanel(state, sim, techTreeZone, techTreeEntity, techRegistry));
             }
             children.Add(BuildZonePanel(state, animator));
         }
@@ -406,6 +416,7 @@ public static class Program
                     game.StartingZone = zone;
                     var entity = sim.World.SpawnInZone(zone.Name);
                     sim.World.Set(entity, new InfectionComponent { Biomass = 10.0 });
+                    sim.World.Set(entity, new ResearchComponent());
                     state.Set<Zone?>("confirmZone", null);
                     Console.WriteLine($"Infection started in: {zone.Name}");
                 }, style: new UIStyle
@@ -491,6 +502,7 @@ public static class Program
 
                         var newEntity = sim.World.SpawnInZone(target.Name);
                         sim.World.Set(newEntity, new InfectionComponent { Biomass = half });
+                        sim.World.Set(newEntity, new ResearchComponent());
                         Console.WriteLine($"Spread to {target.Name} from {sourceName}: {half:F1} biomass each (40% attrition)");
                     }
                     state.Set<Zone?>("spreadTarget", null);
@@ -543,7 +555,7 @@ public static class Program
         );
     }
 
-    private static UIElement BuildUpgradeModal(StateStore state, SimLoop sim, Zone zone, Entity entity)
+    private static UIElement BuildUpgradeModal(StateStore state, SimLoop sim, Zone zone, Entity entity, TechRegistry techRegistry)
     {
         var infection = sim.World.Get<InfectionComponent>(entity);
         if (infection == null)
@@ -558,6 +570,121 @@ public static class Program
         int nextLevel = infection.GrowthLevel + 1;
         double nextMultiplier = 1.0 + (nextLevel - 1) * 0.5;
 
+        var modalChildren = new List<UIElement>();
+
+        modalChildren.Add(UIElement.Label($"Upgrade {zone.Name}", style: new UIStyle
+        {
+            FontSize = 16,
+            TextColor = Color.FromRgb(255, 220, 140),
+        }));
+        modalChildren.Add(UIElement.Label($"Biomass: {infection.Biomass:F1}", style: new UIStyle
+        {
+            FontSize = 12,
+            TextColor = Color.FromRgb(140, 220, 140),
+        }));
+        modalChildren.Add(UIElement.Label($"Growth Level: {infection.GrowthLevel} -> {nextLevel}", style: new UIStyle
+        {
+            FontSize = 12,
+            TextColor = Color.FromRgb(160, 180, 170),
+        }));
+        modalChildren.Add(UIElement.Label($"Growth Multiplier: x{infection.GrowthMultiplier:F1} -> x{nextMultiplier:F1}", style: new UIStyle
+        {
+            FontSize = 12,
+            TextColor = Color.FromRgb(160, 180, 170),
+        }));
+        modalChildren.Add(UIElement.Label($"Cost: {cost} biomass (you have {resources.Biomass:F0})", style: new UIStyle
+        {
+            FontSize = 12,
+            TextColor = canAfford ? Color.FromRgb(140, 220, 140) : Color.FromRgb(220, 100, 100),
+        }));
+
+        var research = sim.World.Get<ResearchComponent>(entity);
+        if (research != null)
+        {
+            var activeTechs = new List<string>();
+            foreach (var tech in techRegistry.All)
+            {
+                double progress = research.GetProgress(tech.Id);
+                if (progress > 0 || research.IsResearching(tech.Id))
+                    activeTechs.Add($"{tech.Name}: {(int)(progress * 100)}%");
+            }
+            if (activeTechs.Count > 0)
+            {
+                modalChildren.Add(UIElement.Label("Research:", style: new UIStyle
+                {
+                    FontSize = 12,
+                    TextColor = Color.FromRgb(140, 180, 220),
+                }));
+                foreach (var techStr in activeTechs)
+                {
+                    modalChildren.Add(UIElement.Label($"  {techStr}", style: new UIStyle
+                    {
+                        FontSize = 11,
+                        TextColor = Color.FromRgb(120, 160, 200),
+                    }));
+                }
+            }
+        }
+
+        modalChildren.Add(UIElement.Row(
+            style: new UIStyle { Direction = LayoutDirection.Horizontal, Gap = 8 },
+            key: "upgrade-buttons",
+            UIElement.Button(canAfford ? "Upgrade" : "Can't Afford", () =>
+            {
+                if (canAfford)
+                {
+                    var inf = sim.World.Get<InfectionComponent>(entity);
+                    if (inf != null)
+                    {
+                        int c = InfectionComponent.UpgradeCost(inf.GrowthLevel);
+                        if (resources.TrySpend(c))
+                        {
+                            inf.GrowthLevel++;
+                            Console.WriteLine($"Upgraded {zone.Name} to growth level {inf.GrowthLevel} (x{inf.GrowthMultiplier:F1})");
+                        }
+                    }
+                }
+                state.Set<Zone?>("upgradeZone", null);
+            }, style: new UIStyle
+            {
+                Padding = 8,
+                BackgroundColor = canAfford
+                    ? Color.FromRgba(120, 100, 20, 220)
+                    : Color.FromRgba(60, 60, 60, 220),
+                TextColor = canAfford
+                    ? Color.FromRgb(255, 230, 150)
+                    : Color.FromRgb(140, 140, 140),
+                BorderColor = canAfford
+                    ? Color.FromRgba(180, 140, 40, 200)
+                    : Color.FromRgba(80, 80, 80, 200),
+                BorderWidth = 1,
+            }),
+            UIElement.Button("Tech Tree", () =>
+            {
+                state.Set("techTreeZone", zone);
+                state.Set("techTreeEntity", entity);
+                state.Set<Zone?>("upgradeZone", null);
+            }, style: new UIStyle
+            {
+                Padding = 8,
+                BackgroundColor = Color.FromRgba(40, 80, 140, 220),
+                TextColor = Color.FromRgb(180, 220, 255),
+                BorderColor = Color.FromRgba(80, 140, 220, 200),
+                BorderWidth = 1,
+            }),
+            UIElement.Button("Cancel", () =>
+            {
+                state.Set<Zone?>("upgradeZone", null);
+            }, style: new UIStyle
+            {
+                Padding = 8,
+                BackgroundColor = Color.FromRgba(100, 40, 40, 220),
+                TextColor = Color.FromRgb(255, 200, 200),
+                BorderColor = Color.FromRgba(180, 80, 80, 200),
+                BorderWidth = 1,
+            })
+        ));
+
         return UIElement.Panel(
             style: new UIStyle
             {
@@ -566,88 +693,20 @@ public static class Program
             },
             key: "upgrade-backdrop",
             UIElement.Panel(
-            style: new UIStyle
-            {
-                Width = 340,
-                Padding = 16,
-                Gap = 12,
-                Anchor = Anchor.Center,
-                BackgroundColor = Color.FromRgba(15, 20, 35, 240),
-                BorderColor = Color.FromRgba(180, 140, 40, 200),
-                BorderWidth = 2,
-            },
-            key: "upgrade-modal",
-            UIElement.Label($"Upgrade {zone.Name}", style: new UIStyle
-            {
-                FontSize = 16,
-                TextColor = Color.FromRgb(255, 220, 140),
-            }),
-            UIElement.Label($"Biomass: {infection.Biomass:F1}", style: new UIStyle
-            {
-                FontSize = 12,
-                TextColor = Color.FromRgb(140, 220, 140),
-            }),
-            UIElement.Label($"Growth Level: {infection.GrowthLevel} -> {nextLevel}", style: new UIStyle
-            {
-                FontSize = 12,
-                TextColor = Color.FromRgb(160, 180, 170),
-            }),
-            UIElement.Label($"Growth Multiplier: x{infection.GrowthMultiplier:F1} -> x{nextMultiplier:F1}", style: new UIStyle
-            {
-                FontSize = 12,
-                TextColor = Color.FromRgb(160, 180, 170),
-            }),
-            UIElement.Label($"Cost: {cost} biomass (you have {resources.Biomass:F0})", style: new UIStyle
-            {
-                FontSize = 12,
-                TextColor = canAfford ? Color.FromRgb(140, 220, 140) : Color.FromRgb(220, 100, 100),
-            }),
-            UIElement.Row(
-                style: new UIStyle { Direction = LayoutDirection.Horizontal, Gap = 12 },
-                key: "upgrade-buttons",
-                UIElement.Button(canAfford ? "Upgrade" : "Can't Afford", () =>
+                style: new UIStyle
                 {
-                    if (canAfford)
-                    {
-                        var inf = sim.World.Get<InfectionComponent>(entity);
-                        if (inf != null)
-                        {
-                            int c = InfectionComponent.UpgradeCost(inf.GrowthLevel);
-                            if (resources.TrySpend(c))
-                            {
-                                inf.GrowthLevel++;
-                                Console.WriteLine($"Upgraded {zone.Name} to growth level {inf.GrowthLevel} (x{inf.GrowthMultiplier:F1})");
-                            }
-                        }
-                    }
-                    state.Set<Zone?>("upgradeZone", null);
-                }, style: new UIStyle
-                {
-                    Padding = 8,
-                    BackgroundColor = canAfford
-                        ? Color.FromRgba(120, 100, 20, 220)
-                        : Color.FromRgba(60, 60, 60, 220),
-                    TextColor = canAfford
-                        ? Color.FromRgb(255, 230, 150)
-                        : Color.FromRgb(140, 140, 140),
-                    BorderColor = canAfford
-                        ? Color.FromRgba(180, 140, 40, 200)
-                        : Color.FromRgba(80, 80, 80, 200),
-                    BorderWidth = 1,
-                }),
-                UIElement.Button("Cancel", () =>
-                {
-                    state.Set<Zone?>("upgradeZone", null);
-                }, style: new UIStyle
-                {
-                    Padding = 8,
-                    BackgroundColor = Color.FromRgba(100, 40, 40, 220),
-                    TextColor = Color.FromRgb(255, 200, 200),
-                    BorderColor = Color.FromRgba(180, 80, 80, 200),
-                    BorderWidth = 1,
-                })
+                    Width = 360,
+                    Padding = 16,
+                    Gap = 10,
+                    Anchor = Anchor.Center,
+                    BackgroundColor = Color.FromRgba(15, 20, 35, 240),
+                    BorderColor = Color.FromRgba(180, 140, 40, 200),
+                    BorderWidth = 2,
+                },
+                key: "upgrade-modal",
+                modalChildren.ToArray()
             )
-        ));
+        );
     }
 
     private static void SyncInfectedZones(GlobeRenderer globe, SimLoop sim)
@@ -665,6 +724,137 @@ public static class Program
                     globe.ZoneBiomass[link.ZoneName] = infection.Biomass;
             }
         }
+    }
+
+    private static UIElement BuildTechTreePanel(StateStore state, SimLoop sim, Zone zone, Entity entity, TechRegistry techRegistry)
+    {
+        var research = sim.World.Get<ResearchComponent>(entity);
+        if (research == null)
+        {
+            state.Set<Zone?>("techTreeZone", null);
+            return UIElement.Panel();
+        }
+
+        var modalChildren = new List<UIElement>();
+        modalChildren.Add(UIElement.Label($"Tech Tree - {zone.Name}", style: new UIStyle
+        {
+            FontSize = 16,
+            TextColor = Color.FromRgb(180, 220, 255),
+        }));
+
+        foreach (var tech in techRegistry.All.OrderBy(t => t.Tier))
+        {
+            double progress = research.GetProgress(tech.Id);
+            bool isResearching = research.IsResearching(tech.Id);
+            bool isEstablished = research.IsFullyEstablished(tech.Id);
+
+            bool prereqMet = true;
+            if (tech.Prerequisite != null)
+                prereqMet = research.IsFullyEstablished(tech.Prerequisite);
+
+            string statusStr;
+            Color statusColor;
+            if (isEstablished)
+            {
+                statusStr = "DONE";
+                statusColor = Color.FromRgb(100, 220, 100);
+            }
+            else if (isResearching)
+            {
+                statusStr = $"{(int)(progress * 100)}%";
+                statusColor = Color.FromRgb(140, 200, 255);
+            }
+            else if (progress > 0)
+            {
+                statusStr = $"{(int)(progress * 100)}% (diffusing)";
+                statusColor = Color.FromRgb(180, 180, 140);
+            }
+            else if (!prereqMet)
+            {
+                statusStr = "locked";
+                statusColor = Color.FromRgb(120, 120, 120);
+            }
+            else
+            {
+                statusStr = "available";
+                statusColor = Color.FromRgb(180, 200, 180);
+            }
+
+            var techChildren = new List<UIElement>();
+            techChildren.Add(UIElement.Label($"T{tech.Tier} {tech.Name} [{statusStr}]", style: new UIStyle
+            {
+                FontSize = 12,
+                TextColor = statusColor,
+            }));
+
+            if (!isEstablished && !isResearching && prereqMet)
+            {
+                var capturedTech = tech;
+                techChildren.Add(UIElement.Button("Research", () =>
+                {
+                    research.StartResearch(capturedTech.Id);
+                    Console.WriteLine($"Started researching {capturedTech.Name} in {zone.Name}");
+                }, style: new UIStyle
+                {
+                    Padding = 4,
+                    FontSize = 11,
+                    BackgroundColor = Color.FromRgba(40, 100, 60, 220),
+                    TextColor = Color.FromRgb(180, 255, 200),
+                    BorderColor = Color.FromRgba(80, 180, 100, 200),
+                    BorderWidth = 1,
+                }));
+            }
+
+            modalChildren.Add(UIElement.Panel(
+                style: new UIStyle
+                {
+                    Padding = 6,
+                    Gap = 4,
+                    BackgroundColor = Color.FromRgba(25, 35, 55, 180),
+                    BorderColor = isResearching
+                        ? Color.FromRgba(80, 160, 220, 150)
+                        : Color.FromRgba(50, 60, 80, 120),
+                    BorderWidth = 1,
+                },
+                key: $"tech-{tech.Id}",
+                techChildren.ToArray()
+            ));
+        }
+
+        modalChildren.Add(UIElement.Button("Close", () =>
+        {
+            state.Set<Zone?>("techTreeZone", null);
+        }, style: new UIStyle
+        {
+            Padding = 8,
+            BackgroundColor = Color.FromRgba(80, 60, 60, 220),
+            TextColor = Color.FromRgb(220, 200, 200),
+            BorderColor = Color.FromRgba(140, 100, 100, 200),
+            BorderWidth = 1,
+        }));
+
+        return UIElement.Panel(
+            style: new UIStyle
+            {
+                Anchor = Anchor.Fill,
+                BackgroundColor = Color.FromRgba(0, 0, 0, 160),
+            },
+            key: "techtree-backdrop",
+            UIElement.Panel(
+                style: new UIStyle
+                {
+                    Width = 380,
+                    Padding = 16,
+                    Gap = 8,
+                    Anchor = Anchor.Center,
+                    BackgroundColor = Color.FromRgba(15, 20, 40, 240),
+                    BorderColor = Color.FromRgba(80, 140, 220, 200),
+                    BorderWidth = 2,
+                },
+                key: "techtree-modal",
+                modalChildren.ToArray()
+            )
+        );
     }
 
     private static UIElement BuildZonePanel(StateStore state, Animator animator)
